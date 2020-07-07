@@ -1,0 +1,313 @@
+@charset "UTF-8";
+
+body.report main div {
+	padding: 4px;
+	box-sizing: border-box;
+    width: 100%;
+	max-width: 1400px;
+	margin: 0 auto;
+}
+
+
+body.report main div#submission {
+	overflow: hidden;
+	position: relative;
+	margin-top: 2em;
+}
+body.report main div#submission section {
+	display: flex;
+	justify-content: space-between;
+    align-items: flex-end;
+}
+body.report main div#submission h1 {
+	color: #046;
+	font-size: 2.4rem;
+	text-align: center;
+	margin-bottom: .5em;
+	width: 100%;
+}
+body.report main div#submission dl {
+	/*float: left;
+    position: absolute;
+    bottom: 4px;*/
+}
+body.report main div#submission dl > * {
+	display: inline-block;
+	white-space: nowrap;
+	font-size: 1.4em;
+	font-weight: bold;
+    margin-top: .25em;
+}
+body.report main div#submission dl dd {
+	margin-right: 1em;
+}
+body.report main div#submission form {
+	/*float: right;*/
+	white-space: nowrap;
+}
+body.report main div#submission form button {
+	font-family: 游明朝,"Yu Mincho",YuMincho,"Hiragino Mincho ProN","Hiragino Mincho Pro",HGS明朝E,メイリオ,Meiryo,serif;
+    font-weight: bold;
+    display: inline-block;
+    white-space: nowrap;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #FFF;
+    text-align: center;
+    background-color: #046;
+    padding: 4px;
+    width: 7em;
+    margin: 0 4px;
+}
+body.report main div#submission form button span {
+	display: block;
+    padding: .5em;
+    border: solid 1px #FFF;
+}
+body.report main div#submission form button:first-child span::before {
+	font-family: 'IcoMoon-Free' !important;
+	content: "\e9c6";
+	margin-right: .25em;
+}
+body.report main div#submission form button:nth-child(2) span::before {
+	font-family: 'IcoMoon-Free' !important;
+	content: "\e9ac";
+	margin-right: .25em;
+}
+body.report main div#submission form button:last-child span::before {
+	font-family: 'IcoMoon-Free' !important;
+	content: "\e925";
+	margin-right: .25em;
+}
+body.report main div#submission a {
+	position: absolute;
+	top: 0;
+	font-weight: bold;
+    white-space: nowrap;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #FFF;
+    text-align: center;
+    background-color: #046;
+    padding: .5em;
+    width: 4em;
+    margin: 4px;
+}
+body.report main div#submission a::before {
+	font-family: 'IcoMoon-Free' !important;
+	content: "\e967";
+	margin-right: .25em;
+}
+
+
+body.report main section#report form {
+	display: flex;
+	flex-direction: row;
+	flex-flow: wrap;
+	justify-content: space-between;
+	flex-shrink: 1;
+}
+body.report main section#report form {
+	margin-bottom: 4em;
+}
+body.report main section#summary {
+	padding-top: 4em;
+	border-top: solid 1px #CCC;
+}
+body.report main section#report form::after {
+	font-family: 'IcoMoon-Free' !important;
+	content: "\ea43";
+	margin: 0 4px;
+	font-size: 2.1rem;
+	display: block;
+	text-align: center;
+}
+
+body.report main section table.achievement {
+	border-spacing: 0;
+	width: 100%;
+	font-size: 1.2rem;
+}
+body.report main section table.achievement caption {
+	text-align: left;
+	color: #420;
+	background-color: #E8D8B8;
+	white-space: nowrap;
+	padding: .5em;
+}
+body.report main section table.achievement caption dt {
+	display: inline-block;
+	white-space: nowrap;
+	font-weight: bold;
+}
+body.report main section table.achievement caption dd {
+	display: inline-block;
+	white-space: nowrap;
+}
+body.report main section table.achievement caption dt::after {
+	content: "：";
+}
+body.report main section table.achievement caption dl::after {
+	font-family: 'IcoMoon-Free' !important;
+	content: "\ea4c";
+	margin: -.125em 0 -.5em;
+	font-size: 1.8rem;
+	display: block;
+	text-align: center;
+	float: right;
+}
+
+body.report main section table.achievement th {
+	padding: .25em .5em;
+	text-align: left;
+	background-color: #F8F8F8;
+	border-bottom: solid 1px #CCC;
+	border-left: solid 1px #CCC;
+}
+body.report main section table.achievement th:first-child {
+	border-left: none;
+}
+body.report main section table.achievement td {
+	padding: .25em .5em;
+	background-color: #F8F8F8;
+	border-bottom: solid 1px #DDD;
+}
+body.report main section table.achievement td.date {
+	text-align: center;
+}
+body.report main section table.achievement td.quantity,
+body.report main section table.achievement td.grade,
+body.report main section table.achievement td.total {
+	text-align: right;
+}
+
+body.report main section h1,
+body.report main section h2 {
+	overflow: hidden;
+	width: 100%;
+}
+body.report main section h2 {
+	border-top: solid 1px #DDD;
+	padding-top: .5em;
+}
+body.report main section h1 label {
+	font-size: 1.6rem;
+	margin: 4px;
+	display: block;
+	float: left;
+}
+body.report main section h1 label input {
+	font-size: 1.6rem;
+	width: 65vw;
+}
+body.report main section h1 button,
+body.report main section h2 button {
+	font-family: 游明朝,"Yu Mincho",YuMincho,"Hiragino Mincho ProN","Hiragino Mincho Pro",HGS明朝E,メイリオ,Meiryo,serif;
+	font-weight: bold;
+	display: inline-block;
+	white-space: nowrap;
+	font-size: 1.2rem;
+	font-weight: bold;
+	color: #FFF;
+	text-align: center;
+	background-color: #046;
+	padding: .5em;
+	width: 7em;
+	margin: 4px;
+	float: right;
+}
+body.report main section h1 button::before,
+body.report main section h2 button::before {
+	font-family: 'IcoMoon-Free' !important;
+	content: "\e907";
+	margin-right: .25em;
+}
+
+body.report main section h2 label {
+    display: inline-block;
+    white-space: nowrap;
+    margin: 4px;
+}
+body.report main section h2 label span {
+    display: inline-block;
+    white-space: nowrap;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #FFF;
+    background-color: #046;
+    padding: .5em;
+}
+body.report main section h2 label input,
+body.report main section h2 label select {
+    display: inline-block;
+    vertical-align: top;
+    background-color: #EEE;
+    font-size: 1.2rem;
+    min-width: 8em;
+    height: 2em;
+    min-height: 24px;
+    padding: .5em;
+}
+
+body.report main section article textarea {
+	width: 100%;
+	font-size: 1.4rem;
+	min-height: 4.2em;
+	line-height: 1.4em;
+	resize: vertical;
+}
+
+body.report main section article.employee {
+	flex-grow: 2;
+	min-width: 400px;
+	width: auto;
+	max-width: 100%;
+}
+body.report main section article h1 {
+	font-size: 1.6rem;
+	font-weight: bold;
+	margin-bottom: .25em;
+}
+body.report main section article h1::before {
+    content: '■';
+}
+body.report main section article.employee textarea {
+	font-size: 1.4rem;
+	min-height: 4.2em;
+	line-height: 1.4em;
+}
+
+body.report main section h2 + article.employee textarea {
+	min-height: 8em;
+}
+
+
+body.report main section article.manager {
+	width: 35em;
+}
+body.report main section article.manager label {
+	display: inline-block;
+    white-space: nowrap;
+    margin: 4px;
+    max-width: 100%;
+}
+body.report main section article.manager label span {
+    display: inline-block;
+    white-space: nowrap;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #FFF;
+    background-color: #046;
+    padding: .5em;
+}
+body.report main section article.manager label select {
+	margin-left: -3px;
+    display: inline-block;
+    vertical-align: top;
+    background-color: #EEE;
+    font-size: 1rem;
+    min-width: 8em;
+    height: 2em;
+    min-height: 2px;
+    padding: .5em;
+}

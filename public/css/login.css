@@ -1,0 +1,66 @@
+@charset "UTF-8";
+
+body.login main {
+
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: none;
+    background-image: url(../img/login_bg.jpg);
+    background-size: cover;
+    background-position: 80% center;
+}
+
+/*body.login main::before {
+	content: '';
+	width: 25vw;
+	height: 25vw;
+	max-width: 120px;
+	max-height: 120px;
+	margin: auto auto 0;
+	background-image: url(../img/icon/00.svg);
+	background-size: cover;
+	background-repeat: no-repeat;
+}*/
+body.login main form {
+    background-color: rgba(255, 255, 255, .6);
+    width: 30%;
+    min-width: 280px;
+    max-width: 540px;
+    /*margin: 1em auto auto;*/
+    margin: 2.5%;
+    padding: 2.5%;
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+body.login main form p:last-child {
+    text-align: right;
+}
+
+body.login main form input {
+    display: block;
+    font-size: 2rem;
+    box-sizing: border-box;
+    width: 100%;
+    margin: .25em 0 1em;
+    padding: 1em;
+    border: none;
+    text-align: right;
+}
+
+body.login main form #login {
+    display: inline-block;
+    font-family: 游明朝, "Yu Mincho", YuMincho, "Hiragino Mincho ProN", "Hiragino Mincho Pro", HGS明朝E, メイリオ, Meiryo, serif;
+    font-size: 1.8rem;
+    padding: 4px;
+    border: none;
+    color: #FFF;
+    background-color: #046;
+}
+
+body.login main form #login span {
+    display: block;
+    padding: .5em;
+    border: solid 1px #FFF;
+}
