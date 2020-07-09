@@ -54,33 +54,13 @@ class TuserController extends Controller
             if ( empty($staff) || $staff->valid_flag == 0 ) {
                 return redirect()->back()->with('flash_message', 'スタッフの登録がない、または無効になっています。');
             }
-            // 営業所コード（t_staff/branch_code）から営業所マスタを検索し、営業所名をセット（t_branch/branch_name）
-            $branch = Tbranch::where('branch_code', $staff->branch_code)->first();
-
-            // notice 取得
-            $notice = Tnotice::first();
-            $array_line = explode("\n", $notice->notice);
-            $array = array_map('trim', $array_line);
-            $title = $array_line[0];
-            unset($array[0]);
-            $content = implode("\n", $array);
-
-            // スタッフ氏名と営業所名の取得と表示
-            $data = [
-                'staff_name' => $staff->staff_name,
-                'branch_name' => $branch->branch_name,
-                'authority_flag' => $user_record->authority_flag,
-                'title' => $title,
-                'content' => $content,
-                'content_update' => $notice->updated_datetime,
-            ];
 
             $request->session()->put('user_id', $user_record->user_id);
 
-            return view('info', $data);
+            return redirect('/top');
         
         } else {
-            // パスワードの照合
+            // パスワードの照合 不一致の場合
             if($user_record->allow_login_counts == 0){
                 Tuser::where('user_id', $user_record->user_id)->where('valid_flag', 1)->update(['valid_flag' => 0]);
                 return redirect()->back()->with('flash_message', 'アカウントがロックされました。管理者に確認してください。');
@@ -93,8 +73,18 @@ class TuserController extends Controller
     }
 
 
+    /**
+     * login後　TOPページ
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
     public function topPage(Request $request)
     {
+
+        if ( empty($request->session()->get('user_id')) ) {
+            return redirect('/');
+        }
+
         $user_record = Tuser::where('user_id', $request->session()->get('user_id'))->where('valid_flag', 1)->first();
         $staff = Tstaff::where('staff_code', $user_record->assigned_staff_code)->first(); 
         $branch = Tbranch::where('branch_code', $staff->branch_code)->first();
