@@ -26,6 +26,18 @@ $app = new Illuminate\Foundation\Application(
 |
 */
 
+switch ($_SERVER['SERVER_NAME'] . dirname($_SERVER['PHP_SELF']) ?? 'localhost') {
+    case 'daiichi-ghs.jp/dummy':
+        $app->loadEnvironmentFrom('.env.dummy');
+        break;
+    case 'daiichi-ghs.jp/system':
+        $app->loadEnvironmentFrom('.env.system');
+        break;
+    case 'localhost/sales_app/backend/public/':
+        $app->loadEnvironmentFrom('.env.prod');
+        break;
+}
+
 $app->singleton(
     Illuminate\Contracts\Http\Kernel::class,
     App\Http\Kernel::class
