@@ -80,14 +80,6 @@ class TuserController extends Controller
      */
     public function topPage(Request $request)
     {
-
-        if ( empty($request->session()->get('user_id')) ) {
-            return redirect('/');
-        }
-
-        $user_record = Tuser::where('user_id', $request->session()->get('user_id'))->where('valid_flag', 1)->first();
-        $staff = Tstaff::where('staff_code', $user_record->assigned_staff_code)->first(); 
-        $branch = Tbranch::where('branch_code', $staff->branch_code)->first();
         // notice 取得
         $notice = Tnotice::first();
         $array_line = explode("\n", $notice->notice);
@@ -96,17 +88,18 @@ class TuserController extends Controller
         unset($array[0]);
         $content = implode("\n", $array);
 
+        // 日付を整形
+        $date = Carbon::parse($notice->updated_datetime)->isoFormat('YYYY年MM月DD日(ddd)');
+
         // スタッフ氏名と営業所名の取得と表示
         $data = [
-            'staff_name' => $staff->staff_name,
-            'branch_name' => $branch->branch_name,
-            'authority_flag' => $user_record->authority_flag,
+            'staff_name' => $request->staff_name,
+            'branch_name' => $request->branch_name,
+            'authority_flag' => $request->authority_flag,
             'title' => $title,
             'content' => $content,
-            'content_update' => $notice->updated_datetime,
+            'content_update' => $date,
         ];
-
-        $request->session()->put('user_id', $user_record->user_id);
 
         return view('info', $data);
     }

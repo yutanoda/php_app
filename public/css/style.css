@@ -1,9 +1,11 @@
 @charset "UTF-8";
 
+@import url('versatile.css');
 @import url('login.css');
 @import url('info.css');
 @import url('search.css');
 @import url('report.css');
+@import url('appearance.css');
 
 @font-face {
     font-family: 'IcoMoon-Free';
@@ -88,7 +90,6 @@ header div section#userID {
 	background-size: contain;
 }*/
 header div section#userID article.user {
-
     max-width: 130px;
     min-width: 100px;
     margin: 8px 4px 8px 2px;
@@ -115,7 +116,6 @@ header div section#userID article.user h1 {
     font-size: 20px;
     font-weight: bold;
     padding-bottom: 6px;
-    color: #046;
 }
 
 header div section#userID article.user h2 {
@@ -128,23 +128,21 @@ header div section#userID article.user h2 {
 
 header div section#userID article.logout {
     text-align: center;
-    background-color: #046;
     height: 56px;
     padding: 2px;
 }
 
 header div section#userID article.logout #logout {
-    color: #FFF;
     display: block;
     line-height: 54px;
     width: 54px;
-    border: solid 1px #FFF;
+    border: solid 1px;
     font-size: 10px;
     font-weight: bold;
 }
 
 header nav {
-    background-color: #DDD;
+    background-color: rgba(170, 170, 170, .5);
 }
 
 header nav ul {
@@ -184,9 +182,7 @@ header nav ul li > * span {
 	border: solid 1px #FFF;
 }*/
 header nav ul li strong {
-    background-color: #FFF;
     display: block;
-    color: #046;
     text-align: center;
     font-size: 16px;
     padding: 4px;
@@ -195,13 +191,11 @@ header nav ul li strong {
 header nav ul li strong span {
     display: inline-block;
     padding: .75em;
-    border: solid 1px #046;
+    border: solid 1px;
 }
 
 header nav ul li a {
-    background-color: #046;
     display: block;
-    color: #FFF;
     text-align: center;
     font-size: 16px;
     font-weight: bold;
@@ -211,7 +205,8 @@ header nav ul li a {
 header nav ul li a span {
     display: inline-block;
     padding: .75em;
-    border: solid 1px #FFF;
+    border-style: solid;
+    border-width: 1px;
 }
 
 /**/
@@ -235,7 +230,6 @@ main {
 
 /*for iOS*/
 input {
-
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -243,6 +237,7 @@ input {
     max-width: 100%;
     border: none;
     border-radius: 0;
+    background-color: transparent;
 }
 
 select {
@@ -268,6 +263,7 @@ button {
 textarea {
     border: none;
     border-radius: 0;
+    background-color: transparent;
 }
 
 button::-webkit-search-decoration {
@@ -280,7 +276,7 @@ button::focus {
 
 
 
-/*準備中*/
+/*In preparation*/
 main.notyet {
     justify-content: center;
     width: 100%;

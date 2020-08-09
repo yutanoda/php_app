@@ -1,150 +1,231 @@
 @charset "UTF-8";
 
-body.report main div {
-	padding: 4px;
-	box-sizing: border-box;
+body.report main>div {
     width: 100%;
-	max-width: 1400px;
-	margin: 0 auto;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+body.report main div#demand {
+    padding: 4px;
+    box-sizing: border-box;
 }
 
 
 body.report main div#submission {
-	overflow: hidden;
-	position: relative;
-	margin-top: 2em;
+    overflow: hidden;
+    position: relative;
+    margin-top: 1em;
+    padding: 4px;
+    box-sizing: border-box;
 }
+
 body.report main div#submission section {
-	display: flex;
-	justify-content: space-between;
+    justify-content: space-between;
     align-items: flex-end;
 }
-body.report main div#submission h1 {
-	color: #046;
-	font-size: 2.4rem;
-	text-align: center;
-	margin-bottom: .5em;
-	width: 100%;
+
+@media (min-width: 768px) {
+    body.report main div#submission section {
+        display: flex;
+    }
 }
+
+body.report main div#submission h1 {
+    font-size: 2.4rem;
+    text-align: center;
+    margin: .5em auto .25em;
+    width: 100%;
+}
+
 body.report main div#submission dl {
-	/*float: left;
+    /*float: left;
     position: absolute;
     bottom: 4px;*/
+    display: inline-block;
+    margin-left: 4px;
 }
-body.report main div#submission dl > * {
-	display: inline-block;
-	white-space: nowrap;
-	font-size: 1.4em;
-	font-weight: bold;
+
+body.report main div#submission dl>* {
+    display: inline-block;
+    white-space: nowrap;
+    font-size: 1.4em;
+    font-weight: bold;
     margin-top: .25em;
 }
+
+@media (max-width: 767px) {
+    body.report main div#submission dl>* {
+        font-size: 1.6em;
+    }
+}
+
 body.report main div#submission dl dd {
-	margin-right: 1em;
+    margin-right: 1em;
 }
+
 body.report main div#submission form {
-	/*float: right;*/
-	white-space: nowrap;
+    white-space: nowrap;
 }
+
+@media (max-width: 767px) {
+    body.report main div#submission form {
+        float: right;
+    }
+}
+
 body.report main div#submission form button {
-	font-family: 游明朝,"Yu Mincho",YuMincho,"Hiragino Mincho ProN","Hiragino Mincho Pro",HGS明朝E,メイリオ,Meiryo,serif;
+    font-family: 游明朝, "Yu Mincho", YuMincho, "Hiragino Mincho ProN", "Hiragino Mincho Pro", HGS明朝E, メイリオ, Meiryo, serif;
     font-weight: bold;
     display: inline-block;
     white-space: nowrap;
     font-size: 1.2rem;
     font-weight: bold;
-    color: #FFF;
     text-align: center;
-    background-color: #046;
     padding: 4px;
     width: 7em;
-    margin: 0 4px;
+    margin: 8px 4px 0;
 }
+
+@media (max-width: 767px) {
+    body.report main div#submission form button {
+        font-size: 1.4em;
+    }
+}
+
 body.report main div#submission form button span {
-	display: block;
+    display: block;
     padding: .5em;
-    border: solid 1px #FFF;
+    border-style: solid;
+    border-width: 1px;
 }
+
 body.report main div#submission form button:first-child span::before {
-	font-family: 'IcoMoon-Free' !important;
-	content: "\e9c6";
-	margin-right: .25em;
+    font-family: 'IcoMoon-Free' !important;
+    content: "\e9c6";
+    margin-right: .25em;
 }
+
 body.report main div#submission form button:nth-child(2) span::before {
-	font-family: 'IcoMoon-Free' !important;
-	content: "\e9ac";
-	margin-right: .25em;
+    font-family: 'IcoMoon-Free' !important;
+    content: "\e9ac";
+    margin-right: .25em;
 }
+
 body.report main div#submission form button:last-child span::before {
-	font-family: 'IcoMoon-Free' !important;
-	content: "\e925";
-	margin-right: .25em;
+    font-family: 'IcoMoon-Free' !important;
+    content: "\e925";
+    margin-right: .25em;
 }
+
 body.report main div#submission a {
-	position: absolute;
-	top: 0;
-	font-weight: bold;
+    position: absolute;
+    top: 0;
+    font-weight: bold;
     white-space: nowrap;
     font-size: 1.2rem;
     font-weight: bold;
-    color: #FFF;
     text-align: center;
-    background-color: #046;
     padding: .5em;
     width: 4em;
     margin: 4px;
 }
+
+@media (max-width: 767px) {
+    body.report main div#submission a {
+        font-size: 1.4em;
+    }
+}
+
 body.report main div#submission a::before {
-	font-family: 'IcoMoon-Free' !important;
-	content: "\e967";
-	margin-right: .25em;
+    font-family: 'IcoMoon-Free' !important;
+    content: "\e967";
+    margin-right: .25em;
 }
 
 
+body.report main div#report {
+    padding: 4px;
+    box-sizing: border-box;
+}
+
 body.report main section#report form {
-	display: flex;
-	flex-direction: row;
-	flex-flow: wrap;
-	justify-content: space-between;
-	flex-shrink: 1;
+    display: flex;
+    flex-direction: row;
+    flex-flow: wrap;
+    justify-content: space-between;
+    flex-shrink: 1;
 }
+
 body.report main section#report form {
-	margin-bottom: 4em;
+    margin-bottom: 4em;
 }
-body.report main section#summary {
-	padding-top: 4em;
-	border-top: solid 1px #CCC;
+
+body.report main div#summary {
+    background-color: rgba(204, 204, 204, .375);
+    margin-top: auto;
+    max-width: none;
+    border-top: #DDD solid 1px;
 }
-body.report main section#report form::after {
-	font-family: 'IcoMoon-Free' !important;
-	content: "\ea43";
-	margin: 0 4px;
-	font-size: 2.1rem;
-	display: block;
-	text-align: center;
+
+body.report main div#summary section {
+    padding: 4px 4px 8px;
+    box-sizing: border-box;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 body.report main section table.achievement {
-	border-spacing: 0;
-	width: 100%;
-	font-size: 1.2rem;
+    border-spacing: 0;
+    width: calc(100% - 8px);
+    font-size: 1.2rem;
+    margin: auto 4px;
 }
+
+@media (max-width: 767px) {
+    body.report main section table.achievement {
+        font-size: 1.4rem;
+    }
+}
+
 body.report main section table.achievement caption {
-	text-align: left;
-	color: #420;
-	background-color: #E8D8B8;
-	white-space: nowrap;
-	padding: .5em;
+    text-align: left;
+    padding: 0 .5em .25em;
 }
+
+body.report main section table.achievement caption dl {
+    display: inline-block;
+    margin-top: .5em;
+}
+
 body.report main section table.achievement caption dt {
-	display: inline-block;
-	white-space: nowrap;
-	font-weight: bold;
+    display: inline-block;
+    white-space: nowrap;
+    font-weight: bold;
+    margin-bottom: .25em;
 }
+
 body.report main section table.achievement caption dd {
-	display: inline-block;
-	white-space: nowrap;
+    display: inline-block;
+    white-space: nowrap;
+    margin-right: 1em;
 }
-body.report main section table.achievement caption dt::after {
+
+body.report main section table.achievement caption dd input,
+body.report main section table.achievement caption dd select {
+    font-size: 1.2rem;
+    background-color: rgba(255, 255, 255, .5);
+    padding: .25em;
+    margin: -.25em 0 0;
+    vertical-align: middle;
+}
+
+body.report main section table.achievement caption dd input[type="date"] {
+    min-width: 8em;
+    height: 1.5em;
+}
+
+/*body.report main section table.achievement caption dt::after {
 	content: "：";
 }
 body.report main section table.achievement caption dl::after {
@@ -155,72 +236,203 @@ body.report main section table.achievement caption dl::after {
 	display: block;
 	text-align: center;
 	float: right;
-}
+}*/
 
 body.report main section table.achievement th {
-	padding: .25em .5em;
-	text-align: left;
-	background-color: #F8F8F8;
-	border-bottom: solid 1px #CCC;
-	border-left: solid 1px #CCC;
+    padding: .25em .5em;
+    text-align: left;
+    background-color: rgba(221, 221, 221, .25);
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-left-style: solid;
+    border-left-width: 1px;
+    white-space: nowrap;
 }
+
 body.report main section table.achievement th:first-child {
-	border-left: none;
+    border-left: none;
 }
+
 body.report main section table.achievement td {
-	padding: .25em .5em;
-	background-color: #F8F8F8;
-	border-bottom: solid 1px #DDD;
+    padding: .25em .5em;
+    background-color: rgba(221, 221, 221, .25);
+    border-bottom-styl: solid;
+    border-bottom-width: 1px;
 }
+
 body.report main section table.achievement td.date {
-	text-align: center;
+    text-align: center;
 }
+
 body.report main section table.achievement td.quantity,
 body.report main section table.achievement td.grade,
 body.report main section table.achievement td.total {
-	text-align: right;
+    text-align: right;
 }
+
+
+body.report main div section input.journal_switch {
+    -webkit-appearance: checkbox;
+    display: none;
+}
+
+body.report main section article.journal {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 2em;
+}
+
+body.report main section article.journal>section {
+    padding: 4px;
+    box-sizing: border-box;
+}
+
+body.report main section article.journal section.employee {
+    /*flex-basis: 52%;*/
+    flex-grow: 100;
+}
+
+body.report main section article.journal section.manager {
+    /*flex-basis: calc(48% - 46px);*/
+    flex-basis: 30%;
+    min-width: 27em;
+    flex-grow: 1;
+}
+
+/*body.report main div#demand section article.journal section.manager {
+	flex-basis: 45%;
+}*/
+body.report main section article.journal>label {
+    text-align: center;
+    align-self: flex-start;
+}
+
+body.report main section article.journal>label::after {
+    font-family: 'IcoMoon-Free' !important;
+    content: "\ea43";
+    margin: 0 4px;
+    font-size: 2.1rem;
+    display: block;
+    text-align: center;
+}
+
+@media (max-width: 767px) {
+    body.report main section article.journal>* {
+        flex-basis: 100%;
+    }
+
+    body.report main section article.journal>label {}
+}
+
+/*Action*/
+body.report main section input.journal_switch:checked+article.journal section.employee textarea {
+    min-height: 10em;
+    transition: all .5s 0s ease-in-out;
+}
+
+body.report main section input.journal_switch:checked+article.journal section.manager textarea {
+    min-height: 15em;
+    transition: all .5s 0s ease-in-out;
+}
+
+body.report main section input.journal_switch:checked+article.journal>label {
+    align-self: flex-end;
+}
+
+body.report main section input.journal_switch:checked+article.journal>label::after {
+    content: "\ea41";
+}
+
 
 body.report main section h1,
 body.report main section h2 {
-	overflow: hidden;
-	width: 100%;
+    overflow: hidden;
+    width: 100%;
+    margin: .25em auto 0;
 }
+
 body.report main section h2 {
-	border-top: solid 1px #DDD;
-	padding-top: .5em;
+    border-top: solid 1px #DDD;
+    padding-top: .5em;
 }
+
 body.report main section h1 label {
-	font-size: 1.6rem;
-	margin: 4px;
-	display: block;
-	float: left;
+    font-size: 1.6rem;
+    margin: .5em 4px;
+    display: block;
+    float: left;
 }
+
+body.report main section h1 label span {
+    display: inline-block;
+}
+
 body.report main section h1 label input {
-	font-size: 1.6rem;
-	width: 65vw;
+    font-family: 游明朝, "Yu Mincho", YuMincho, "Hiragino Mincho ProN", "Hiragino Mincho Pro", HGS明朝E, メイリオ, Meiryo, serif;
+    font-size: 1.6rem;
 }
-body.report main section h1 button,
-body.report main section h2 button {
-	font-family: 游明朝,"Yu Mincho",YuMincho,"Hiragino Mincho ProN","Hiragino Mincho Pro",HGS明朝E,メイリオ,Meiryo,serif;
-	font-weight: bold;
-	display: inline-block;
-	white-space: nowrap;
-	font-size: 1.2rem;
-	font-weight: bold;
-	color: #FFF;
-	text-align: center;
-	background-color: #046;
-	padding: .5em;
-	width: 7em;
-	margin: 4px;
-	float: right;
+
+/* -> JavaScript */
+body.report main section form:first-child h1 label input {
+    width: 17.5em;
 }
-body.report main section h1 button::before,
-body.report main section h2 button::before {
-	font-family: 'IcoMoon-Free' !important;
-	content: "\e907";
-	margin-right: .25em;
+
+body.report main section form:last-child h1 label input {
+    width: 4.5em;
+
+}
+
+@media (max-width: 767px) {
+
+    body.report main section h1 label,
+    body.report main section h1 label input {
+        font-size: 2rem;
+    }
+}
+
+body.report main section h1 span.buttons,
+body.report main section h2 span.buttons {
+    float: right;
+    display: inline-block;
+}
+
+body.report main section h1 span.buttons button,
+body.report main section h2 span.buttons button {
+    font-family: 游明朝, "Yu Mincho", YuMincho, "Hiragino Mincho ProN", "Hiragino Mincho Pro", HGS明朝E, メイリオ, Meiryo, serif;
+    font-weight: bold;
+    display: inline-block;
+    white-space: nowrap;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    padding: .75em .5em;
+    width: 7em;
+    margin: 4px;
+}
+
+@media (max-width: 767px) {
+
+    body.report main section h1 button,
+    body.report main section h2 button {
+        padding: .5em 1em;
+        font-size: 1.6rem;
+        width: auto;
+    }
+}
+
+body.report main section h1 button.update::before,
+body.report main section h2 button.update::before {
+    font-family: 'IcoMoon-Free' !important;
+    content: "\e907";
+    margin-right: .25em;
+}
+
+body.report main section h1 button.delete::before,
+body.report main section h2 button.delete::before {
+    font-family: 'IcoMoon-Free' !important;
+    content: "\e9ac";
+    margin-right: .25em;
 }
 
 body.report main section h2 label {
@@ -228,86 +440,179 @@ body.report main section h2 label {
     white-space: nowrap;
     margin: 4px;
 }
+
 body.report main section h2 label span {
     display: inline-block;
     white-space: nowrap;
     font-size: 1.2rem;
+    height: 1em;
     font-weight: bold;
-    color: #FFF;
-    background-color: #046;
-    padding: .5em;
+
+    padding: .75em .5em;
 }
+
 body.report main section h2 label input,
 body.report main section h2 label select {
     display: inline-block;
     vertical-align: top;
-    background-color: #EEE;
     font-size: 1.2rem;
     min-width: 8em;
-    height: 2em;
-    min-height: 24px;
-    padding: .5em;
+    background-color: rgba(204, 204, 204, .375);
+
+    height: 2.5em;
+    padding: .75em .5em;
 }
 
+body.report main section h2 label input {
+    /* for Chrome */
+    min-height: 36px;
+}
+
+body.report main section h2 label select {
+    margin-left: -3.5px;
+}
+
+@media (max-width: 767px) {
+    body.report main section h2 label {
+        margin: 4px;
+        max-width: calc(100vw - 16px);
+        overflow: hidden;
+    }
+
+    body.report main section h2 label span {
+        font-size: 1.6rem;
+        padding: .5em;
+    }
+
+    body.report main section h2 label input {
+        font-size: 1.6rem;
+        height: 2em;
+        padding: .5em;
+        /* for Chrome */
+        min-height: 29px;
+    }
+
+    body.report main section h2 label select {
+        padding: .25em .5em;
+        font-size: 1.6rem;
+        height: 2em;
+    }
+}
+
+
+
 body.report main section article textarea {
-	width: 100%;
-	font-size: 1.4rem;
-	min-height: 4.2em;
-	line-height: 1.4em;
-	resize: vertical;
+    width: 100%;
+    font-size: 1.4rem;
+    line-height: 1.4em;
+    resize: vertical;
+    resize: none;
+    box-sizing: border-box;
+}
+
+body.report main section article section.employee textarea {
+    min-height: 2.8em;
+    transition: all .25s 0s ease-in-out;
+}
+
+@media (min-width: 768px) {
+    body.report main section article section.employee textarea {
+        padding-right: 1em;
+    }
+}
+
+body.report main section article section.manager textarea {
+    min-height: 4.2em;
+    transition: all .25s 0s ease-in-out;
+}
+
+body.report main div#demand section article.journal section.employee textarea {
+    min-height: 30em;
+}
+
+body.report main div#demand section article.journal section.manager textarea {
+    min-height: calc(20em - 100px);
 }
 
 body.report main section article.employee {
-	flex-grow: 2;
-	min-width: 400px;
-	width: auto;
-	max-width: 100%;
+    flex-grow: 2;
+    min-width: 400px;
+    width: auto;
+    max-width: 100%;
 }
+
 body.report main section article h1 {
-	font-size: 1.6rem;
-	font-weight: bold;
-	margin-bottom: .25em;
+    font-size: 1.6rem;
+    font-weight: bold;
+    margin-bottom: .25em;
 }
+
+@media (max-width: 767px) {
+    body.report main section article h1 {
+        font-size: 1.8rem;
+    }
+}
+
 body.report main section article h1::before {
     content: '■';
 }
+
 body.report main section article.employee textarea {
-	font-size: 1.4rem;
-	min-height: 4.2em;
-	line-height: 1.4em;
+    font-size: 1.4rem;
+    min-height: 4.2em;
+    line-height: 1.4em;
 }
 
-body.report main section h2 + article.employee textarea {
-	min-height: 8em;
+body.report main section h2+article.employee textarea {
+    min-height: 8em;
+}
+
+@media (max-width: 767px) {
+    body.report main section article textarea {
+        font-size: 1.6rem;
+    }
 }
 
 
-body.report main section article.manager {
-	width: 35em;
-}
-body.report main section article.manager label {
-	display: inline-block;
+body.report main section article.journal section.manager label {
+    display: inline-block;
     white-space: nowrap;
-    margin: 4px;
+    margin: 8px 0;
     max-width: 100%;
 }
-body.report main section article.manager label span {
+
+body.report main section article.journal section.manager label span {
     display: inline-block;
     white-space: nowrap;
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: bold;
-    color: #FFF;
-    background-color: #046;
-    padding: .5em;
+    padding: .75em .5em;
 }
-body.report main section article.manager label select {
-	margin-left: -3px;
+
+@media (max-width: 767px) {
+    body.report main section article.journal section.manager label span {
+        font-size: 1.6rem;
+        padding: .5em;
+    }
+}
+
+body.report main section article.journal section.manager label select {
+    margin-left: -3.5px;
     display: inline-block;
     vertical-align: top;
-    background-color: #EEE;
-    font-size: 1rem;
-    min-width: 8em;
-    height: 2em;
+    background-color: rgba(204, 204, 204, .375);
+    font-size: 1.2rem;
+    max-width: 100%;
+    height: 2.5em;
     min-height: 2px;
-    padding: .5em;
+    padding: .25em .5em;
+}
+
+@media (max-width: 767px) {
+    body.report main section article.journal section.manager label select {
+        font-size: 1.6rem;
+        height: 2em;
+        padding: .5em;
+        min-height: 29px;
+    }
 }

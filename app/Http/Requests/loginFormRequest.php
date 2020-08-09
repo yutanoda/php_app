@@ -38,14 +38,14 @@ class loginFormRequest extends FormRequest
     public function messages()
     {
 
-            return [
-                'user_id.required' => 'ユーザー名とパスワードを入力してください。',
-                // 'user_id.max' => 'ユーザー名は9文字以内で入力してください。',
-                // 'user_id.starts_with' => 'ユーザー名の頭文字はdから始まります。',
-                'user_id.exists' => 'ユーザー名、またはパスワードが間違っています。',
-                'login_password.required' => 'ユーザー名とパスワードを入力してください。',
-                // 'login_password.max' => 'パスワードは5文字以内で入力してください。',
-                // 'login_password.numeric' => 'パスワードは整数で入力してください。',
-            ];
+        return [
+            'user_id.required' => 'ユーザー名とパスワードを入力してください。',
+            // 'user_id.max' => 'ユーザー名は9文字以内で入力してください。',
+            // 'user_id.starts_with' => 'ユーザー名の頭文字はdから始まります。',
+            'user_id.exists' => 'ユーザー名、またはパスワードが間違っています。',
+            'login_password.required' => 'ユーザー名とパスワードを入力してください。',
+            // 'login_password.max' => 'パスワードは5文字以内で入力してください。',
+            // 'login_password.numeric' => 'パスワードは整数で入力してください。',
+        ];
     }
 }

@@ -2,30 +2,78 @@
 @section('content')
 <body class="search">
 	<input type="checkbox" id="keyword_switch">
+	<header>
+		<div>
+			<section id="siteID">
+				<h1>第一学習社HS</h1>
+				<h2>営業支援システム</h2>
+			</section>
+			<section id="userID">
+				<article class="user">
+					<h1>第一 花子</h1>
+					<h2>つくば営業所</h2>
+				</article>
+				<article class="logout">
+					<a href="./" id="logout"><!--button type="submit" class="logoutbutton"-->ログアウト<!--/button--></a>
+				</article>
+			</section>
+		</div>
 		@include('common_header')
+    </header>
 	<main>
 		<div>
 			<section id="search">
-				<form>
+				<form name="search" >
 					<label><span>■年月</span><input type="month"></label>
-					<label><span>▼種別</span>
+					<label><span>▼タイトル</span>
 						<select>
 							<option>-未選択-</option>
-							<option>ガイダンス</option>
-							<option>商品関連</option>
-							<option>教育部関連</option>
-							<option>物流関連</option>
-							<option>業務関連</option>
-							<option>その他</option>
+							<option>新規採択活動</option>
+							<option>継続採択活動その他</option>
+							<option>営業活動気づき</option>
+							<option>次週営業ポイント</option>
 						</select>
 					</label>
-					<label><span>▼分類</span>
+					<label><span>▼営業所</span>
 						<select>
 							<option>-未選択-</option>
-							<option>業務関連</option>
-							<option>商品・市場に関する情報</option>
-							<option>探究への取り組み状況に関する情報</option>
-							<option>要検討・対応事項</option>
+							<option>札幌営業所</option>
+							<option>仙台営業所</option>
+							<option>新潟営業所</option>
+							<option>金沢出張所</option>
+							<option>つくば営業所</option>
+							<option>東京営業所</option>
+							<option>横浜営業所</option>
+							<option>名古屋営業所</option>
+							<option>大阪営業所</option>
+							<option>神戸営業所</option>
+							<option>広島営業所</option>
+							<option>福岡営業所</option>
+						</select>
+					</label>
+					<label><span>▼提出者</span>
+						<select>
+							<option>-未選択-</option>
+							<option>赤沼千晶</option>
+							<option>佐藤紀子</option>
+							<option>工藤みどり</option>
+							<option>倉島亜弥子</option>
+							<option>加藤弘子</option>
+							<option>廣田幸子</option>
+							<option>香取則子</option>
+							<option>新井直美</option>
+							<option>渡辺由美</option>
+							<option>清水歩実</option>
+							<option>吉江眞理</option>
+							<option>西宮直美</option>
+							<option>松野恵美</option>
+							<option>福田倫子</option>
+							<option>三宅理加</option>
+							<option>南郷裕子</option>
+							<option>川畑美保子</option>
+							<option>富田正子</option>
+							<option>井山尚子</option>
+							<option>岩田加代子</option>
 						</select>
 					</label>
 					<label><span>▼学校名</span>
@@ -51,6 +99,49 @@
 							<option>倉敷中央高校</option>
 						</select>
 					</label>
+					<label><span>▼ランク</span>
+						<select>
+							<option>-未選択-</option>
+							<option>A1</option>
+							<option>A2</option>
+							<option>A3</option>
+							<option>B1</option>
+							<option>B2</option>
+							<option>C1</option>
+							<option>C2</option>
+							<option>D1</option>
+							<option>D2</option>
+							<option>E1</option>
+							<option>F1</option>
+						</select>
+					</label>
+					<label><span>▼分類</span>
+						<select>
+							<option>-未選択-</option>
+							<option>業務関連</option>
+							<option>商品・市場に関する情報</option>
+							<option>探究への取り組み状況に関する情報</option>
+							<option>要検討・対応事項</option>
+						</select>
+					</label>
+					<!--label><span>▼分類2</span>
+						<select>
+							<option>-未選択-</option>
+							<option>業務関連</option>
+							<option>商品・市場に関する情報</option>
+							<option>探究への取り組み状況に関する情報</option>
+							<option>要検討・対応事項</option>
+						</select>
+					</label>
+					<label><span>▼分類3</span>
+						<select>
+							<option>-未選択-</option>
+							<option>業務関連</option>
+							<option>商品・市場に関する情報</option>
+							<option>探究への取り組み状況に関する情報</option>
+							<option>要検討・対応事項</option>
+						</select>
+					</label-->
 					<label class="keyword" for="keyword_switch"><span>■キーワード</span><input type="text" id="keywords" readonly="readonly" value="ガイダンス, 事前アンケート, 一般入試, 打ち合わせ, 文章トレーニングノート"></label>
 					<div class="buttons">
 						<button type="reset"><span>リセット</span></button>
@@ -226,7 +317,6 @@
 							</dd>
 						</dl><label class="close_keywords" for="keyword_switch"></label></article>
 					</div>
-					<button class="new"><span>新規依頼作成</span></button>
 				</form>
 			</section>
 			<section id="result">
@@ -236,94 +326,215 @@
 						<tr>
 							<th class="no">No.</th>
 							<th class="date">提出日</th>
+							<th class="user">提出者</th>
+							<th class="branch">営業所</th>
 							<th class="content">内容</th>
-							<th class="reply">返答</th>
+							<th class="comment">コメント</th>
 							<th class="controller"></th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td class="no" data-th="No.">00025<a href="correspondence_report.html">詳細</a></td>
+							<td class="no" data-th="No.">00025<a href="inclusion_report.html">詳細</a></td>
 							<td class="date" data-th="提出日：">2020/3/10</td>
-							<td  class="content">
+							<td class="user" data-th="提出者：">第一 太郎</td>
+							<td class="branch" data-th="営業所：">大阪</td>
+							<td class="content">
 								<article>
-									<h1 class="title">ガイダンス</h1>
-									<p>阿南高校ガイダンス講師の遅れについての報告1/21長野県阿南高校でのガイダンスがあり、14:25〜の実施で</p>
+									<h1 class="title">新規採択活動</h1>
+									<p>橘(C280)1年…小論は学研。今年は1回書き切りだったので来年はリピートを予定、点数表記が良いので第一も候補と。他校実績例を開かれ2回の黎明・郡山、会津、志望理由指導を採用した安積の例を紹介する。特化データ型にも興味有。
+									他校実績例を開かれ2回の黎明・郡山、会津、志望理由指導を採用した安積の例を紹介する。特化データ型にも興味有。
+									橘(C280)1年…小論は学研。今年は1回書き切りだったので来年はリピートを予定、点数表記が良いので第一も候補と。他校実績例を開かれ2回の黎明・郡山、会津、志望理由指導を採用した安積の例を紹介する。特化データ型にも興味有。
+									他校実績例を開かれ2回の黎明・郡山、会津、志望理由指導を採用した安積の例を紹介する。特化データ型にも興味有。
+									橘(C280)1年…小論は学研。今年は1回書き切りだったので来年はリピートを予定、点数表記が良いので第一も候補と。他校実績例を開かれ2回の黎明・郡山、会津、志望理由指導を採用した安積の例を紹介する。特化データ型にも興味有。
+									他校実績例を開かれ2回の黎明・郡山、会津、志望理由指導を採用した安積の例を紹介する。特化データ型にも興味有。
+									橘(C280)1年…小論は学研。今年は1回書き切りだったので来年はリピートを予定、点数表記が良いので第一も候補と。他校実績例を開かれ2回の黎明・郡山、会津、志望理由指導を採用した安積の例を紹介する。特化データ型にも興味有。
+									他校実績例を開かれ2回の黎明・郡山、会津、志望理由指導を採用した安積の例を紹介する。特化データ型にも興味有。</p>
 								</article>
 							</td>
-							<td class="reply">
+							<td class="comment">
 								<article>
-									講師への伝達必要では
+									<p>講師への伝達必要では</p>
 								</article>
 							</td>
 							<td class="controller"><label for="tablerow1_switch"></label></td>
 						</tr>
 						<tr>
-							<td class="no" data-th="No.">00025<a href="correspondence_report.html">詳細</a></td>
-							<td class="date" data-th="提出日：">未提出</td>
-							<td  class="content">
+							<td class="no" data-th="No.">00025<a href="inclusion_report.html">詳細</a></td>
+							<td class="date" data-th="提出日：">2020/3/10</td>
+							<td class="user" data-th="提出者：">第一 太郎</td>
+							<td class="branch" data-th="営業所：">大阪</td>
+							<td class="content">
 								<article>
-									<h1 class="title">ガイダンス</h1>
-									<p>阿南高校ガイダンス講師の遅れについての報告1/21長野県阿南高校でのガイダンスがあり、14:25〜の実施で</p>
-									<p>橘支給、東京教育部嶋田さんに連絡し、講師にはタクシーで学校へ向かう事、私は先生に事情を連絡し、待ってもらえるのか、無理ならガイダンスができない旨お伝えするよう</p>
+									<h1 class="title">新規採択活動</h1>
+									<p>橘(C280)1年…小論は学研。今年は1回書き切りだったので来年はリピートを予定、点数表記が良いので第一も候補と。他校実績例を開かれ2回の黎明・郡山、会津、志望理由指導を採用した安積の例を紹介する。特化データ型にも興味有。
+										他校実績例を開かれ2回の黎明・郡山、会津、志望理由指導を採用した安積の例を紹介する。特化データ型にも興味有。</p>
 								</article>
 							</td>
-							<td class="reply">
+							<td class="comment">
 								<article>
-									講師への伝達必要では
+									<p>講師への伝達必要では講師への伝達必要では講師への伝達必要では講師への伝達必要では講師への伝達必要では講師への伝達必要では講師への伝達必要では
+										講師への伝達必要では講師への伝達必要では講師への伝達必要では講師への伝達必要では講師への伝達必要では講師への伝達必要では
+										講師への伝達必要では
+										講師への伝達必要では講師への伝達必要では講師への伝達必要では講師への伝達必要では講師への伝達必要では
+										講師への伝達必要では
+										講師への伝達必要では講師への伝達必要では講師への伝達必要では講師への伝達必要では講師への伝達必要では
+									</p>
 								</article>
 							</td>
 							<td class="controller"><label for="tablerow2_switch"></label></td>
 						</tr>
 						<tr>
-							<td class="no" data-th="No."d>00025<a href="correspondence_report.html">詳細</a></td>
+							<td class="no" data-th="No.">00025<a href="inclusion_report.html">詳細</a></td>
 							<td class="date" data-th="提出日：">2020/3/10</td>
-							<td  class="content">
+							<td class="user" data-th="提出者：">第一 太郎</td>
+							<td class="branch" data-th="営業所：">大阪</td>
+							<td class="content">
 								<article>
-									<h1 class="title">ガイダンス</h1>
-									<p>橘支給、東京教育部嶋田さんに連絡し、講師にはタクシーで学校へ向かう事、私は先生に事情を連絡し、待ってもらえるのか、無理ならガイダンスができない旨お伝えするよう</p>							
-									<p>阿南高校ガイダンス講師の遅れについての報告1/21長野県阿南高校でのガイダンスがあり、14:25〜の実施で</p>
-									<p>橘支給、東京教育部嶋田さんに連絡し、講師にはタクシーで学校へ向かう事、私は先生に事情を連絡し、待ってもらえるのか、無理ならガイダンスができない旨お伝えするよう</p>							
+									<h1 class="title">新規採択活動</h1>
+									<p>橘(C280)1年…小論は学研。今年は1回書き切りだったので来年はリピートを予定、点数表記が良いので第一も候補と。他校実績例を開かれ2回の黎明・郡山、会津、志望理由指導を採用した安積の例を紹介する。特化データ型にも興味有。
+										他校実績例を開かれ2回の黎明・郡山、会津、志望理由指導を採用した安積の例を紹介する。特化データ型にも興味有。</p>
 								</article>
 							</td>
-							<td class="reply">
+							<td class="comment">
 								<article>
-									講師への伝達必要では
+									<p>講師への伝達必要では</p>
 								</article>
 							</td>
 							<td class="controller"><label for="tablerow3_switch"></label></td>
 						</tr>
 						<tr>
-							<td class="no" data-th="No.">00025<a href="correspondence_report.html">詳細</a></td>
+							<td class="no" data-th="No.">00025<a href="inclusion_report.html">詳細</a></td>
 							<td class="date" data-th="提出日：">2020/3/10</td>
-							<td  class="content">
+							<td class="user" data-th="提出者：">第一 太郎</td>
+							<td class="branch" data-th="営業所：">大阪</td>
+							<td class="content">
 								<article>
-									<h1 class="title">ガイダンス</h1>
-									<p>橘支給、東京教育部嶋田さんに連絡し、講師にはタクシーで学校へ向かう事、私は先生に事情を連絡し、待ってもらえるのか、無理ならガイダンスができない旨お伝えするよう</p>
+									<h1 class="title">新規採択活動</h1>
+									<p>橘(C280)1年…小論は学研。今年は1回書き切りだったので来年はリピートを予定、点数表記が良いので第一も候補と。他校実績例を開かれ2回の黎明・郡山、会津、志望理由指導を採用した安積の例を紹介する。特化データ型にも興味有。
+										他校実績例を開かれ2回の黎明・郡山、会津、志望理由指導を採用した安積の例を紹介する。特化データ型にも興味有。</p>
 								</article>
 							</td>
-							<td class="reply">
+							<td class="comment">
 								<article>
-									講師への伝達必要では
+									<p>講師への伝達必要では</p>
 								</article>
 							</td>
 							<td class="controller"><label for="tablerow4_switch"></label></td>
 						</tr>
 						<tr>
-							<td class="no" data-th="No.">00025<a href="correspondence_report.html">詳細</a></td>
+							<td class="no" data-th="No.">00025<a href="inclusion_report.html">詳細</a></td>
 							<td class="date" data-th="提出日：">2020/3/10</td>
-							<td  class="content">
+							<td class="user" data-th="提出者：">第一 太郎</td>
+							<td class="branch" data-th="営業所：">大阪</td>
+							<td class="content">
 								<article>
-									<h1 class="title">ガイダンス</h1>
-									<p>橘支給、東京教育部嶋田さんに連絡し、講師にはタクシーで学校へ向かう事、私は先生に事情を連絡し、待ってもらえるのか、無理ならガイダンスができない旨お伝えするよう</p>
+									<h1 class="title">新規採択活動</h1>
+									<p>橘(C280)1年…小論は学研。今年は1回書き切りだったので来年はリピートを予定、点数表記が良いので第一も候補と。他校実績例を開かれ2回の黎明・郡山、会津、志望理由指導を採用した安積の例を紹介する。特化データ型にも興味有。
+										他校実績例を開かれ2回の黎明・郡山、会津、志望理由指導を採用した安積の例を紹介する。特化データ型にも興味有。</p>
 								</article>
 							</td>
-							<td class="reply">
+							<td class="comment">
 								<article>
-									講師への伝達必要では
+									<p>講師への伝達必要では</p>
 								</article>
 							</td>
 							<td class="controller"><label for="tablerow5_switch"></label></td>
+						</tr>
+						<tr>
+							<td class="no" data-th="No.">00025<a href="inclusion_report.html">詳細</a></td>
+							<td class="date" data-th="提出日：">2020/3/10</td>
+							<td class="user" data-th="提出者：">第一 太郎</td>
+							<td class="branch" data-th="営業所：">大阪</td>
+							<td class="content">
+								<article>
+									<h1 class="title">新規採択活動</h1>
+									<p>橘(C280)1年…小論は学研。今年は1回書き切りだったので来年はリピートを予定、点数表記が良いので第一も候補と。他校実績例を開かれ2回の黎明・郡山、会津、志望理由指導を採用した安積の例を紹介する。特化データ型にも興味有。
+										他校実績例を開かれ2回の黎明・郡山、会津、志望理由指導を採用した安積の例を紹介する。特化データ型にも興味有。</p>
+								</article>
+							</td>
+							<td class="comment">
+								<article>
+									<p>講師への伝達必要では</p>
+								</article>
+							</td>
+							<td class="controller"><label for="tablerow6_switch"></label></td>
+						</tr>
+						<tr>
+							<td class="no" data-th="No.">00025<a href="inclusion_report.html">詳細</a></td>
+							<td class="date" data-th="提出日：">2020/3/10</td>
+							<td class="user" data-th="提出者：">第一 太郎</td>
+							<td class="branch" data-th="営業所：">大阪</td>
+							<td class="content">
+								<article>
+									<h1 class="title">新規採択活動</h1>
+									<p>橘(C280)1年…小論は学研。今年は1回書き切りだったので来年はリピートを予定、点数表記が良いので第一も候補と。他校実績例を開かれ2回の黎明・郡山、会津、志望理由指導を採用した安積の例を紹介する。特化データ型にも興味有。
+										他校実績例を開かれ2回の黎明・郡山、会津、志望理由指導を採用した安積の例を紹介する。特化データ型にも興味有。</p>
+								</article>
+							</td>
+							<td class="comment">
+								<article>
+									<p>講師への伝達必要では</p>
+								</article>
+							</td>
+							<td class="controller"><label for="tablerow7_switch"></label></td>
+						</tr>
+						<tr>
+							<td class="no" data-th="No.">00025<a href="inclusion_report.html">詳細</a></td>
+							<td class="date" data-th="提出日：">2020/3/10</td>
+							<td class="user" data-th="提出者：">第一 太郎</td>
+							<td class="branch" data-th="営業所：">大阪</td>
+							<td class="content">
+								<article>
+									<h1 class="title">新規採択活動</h1>
+									<p>橘(C280)1年…小論は学研。今年は1回書き切りだったので来年はリピートを予定、点数表記が良いので第一も候補と。他校実績例を開かれ2回の黎明・郡山、会津、志望理由指導を採用した安積の例を紹介する。特化データ型にも興味有。
+										他校実績例を開かれ2回の黎明・郡山、会津、志望理由指導を採用した安積の例を紹介する。特化データ型にも興味有。</p>
+								</article>
+							</td>
+							<td class="comment">
+								<article>
+									<p>講師への伝達必要では</p>
+								</article>
+							</td>
+							<td class="controller"><label for="tablerow8_switch"></label></td>
+						</tr>
+						<tr>
+							<td class="no" data-th="No.">00025<a href="inclusion_report.html">詳細</a></td>
+							<td class="date" data-th="提出日：">2020/3/10</td>
+							<td class="user" data-th="提出者：">第一 太郎</td>
+							<td class="branch" data-th="営業所：">大阪</td>
+							<td class="content">
+								<article>
+									<h1 class="title">新規採択活動</h1>
+									<p>橘(C280)1年…小論は学研。今年は1回書き切りだったので来年はリピートを予定、点数表記が良いので第一も候補と。他校実績例を開かれ2回の黎明・郡山、会津、志望理由指導を採用した安積の例を紹介する。特化データ型にも興味有。
+										他校実績例を開かれ2回の黎明・郡山、会津、志望理由指導を採用した安積の例を紹介する。特化データ型にも興味有。</p>
+								</article>
+							</td>
+							<td class="comment">
+								<article>
+									<p>講師への伝達必要では</p>
+								</article>
+							</td>
+							<td class="controller"><label for="tablerow9_switch"></label></td>
+						</tr>
+						<tr>
+							<td class="no" data-th="No.">00025<a href="inclusion_report.html">詳細</a></td>
+							<td class="date" data-th="提出日：">2020/3/10</td>
+							<td class="user" data-th="提出者：">第一 太郎</td>
+							<td class="branch" data-th="営業所：">大阪</td>
+							<td class="content">
+								<article>
+									<h1 class="title">新規採択活動</h1>
+									<p>橘(C280)1年…小論は学研。今年は1回書き切りだったので来年はリピートを予定、点数表記が良いので第一も候補と。他校実績例を開かれ2回の黎明・郡山、会津、志望理由指導を採用した安積の例を紹介する。特化データ型にも興味有。
+										他校実績例を開かれ2回の黎明・郡山、会津、志望理由指導を採用した安積の例を紹介する。特化データ型にも興味有。</p>
+								</article>
+							</td>
+							<td class="comment">
+								<article>
+									<p>講師への伝達必要では</p>
+								</article>
+							</td>
+							<td class="controller"><label for="tablerow10_switch"></label></td>
 						</tr>
 					</tbody>
 				</table>

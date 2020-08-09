@@ -9,4 +9,17 @@ class Treport extends Model
     //
 	protected $table = 't_report';
 	public $timestamps = false;
+	protected $dates = ['submitted_datetime'];
+	public function tstaff()
+	{
+		return $this->belongsTo(Tstaff::class, 'staff_code', 'staff_code');
+	}
+	public function tbranch()
+	{
+		return $this->belongsTo(Tbranch::class, 'branch_code', 'branch_code');
+	}
+	public function treportdetail()
+	{
+		return $this->belongsTo(Treportdetail::class, 'report_number', 'report_number');
+	}
 }
