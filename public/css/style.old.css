@@ -1,0 +1,287 @@
+@charset "UTF-8";
+
+@import url('versatile.css');
+@import url('login.css');
+@import url('info.css');
+@import url('search.css');
+@import url('report.css');
+@import url('appearance.css');
+
+@font-face {
+    font-family: 'IcoMoon-Free';
+    src: url('../font/IcoMoon-Free.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    text-decoration: none;
+}
+
+html {
+    font-size: 62.5%;
+    /*sample*/
+    font-size: 75%;
+    /*font1*/
+    /*font-size: 87.5%;font2*/
+    /*font-size: 100%;font3*/
+    -webkit-text-size-adjust: 100%;
+    height: 100%;
+}
+
+@media (max-width: 767px) {
+    html {
+        font-size: 62.5%;
+    }
+}
+
+body {
+    font-family: 游明朝, "Yu Mincho", YuMincho, "Hiragino Mincho ProN", "Hiragino Mincho Pro", HGS明朝E, メイリオ, Meiryo, serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-width: 320px;
+    min-height: 100vh;
+}
+
+header {
+    width: 100%;
+}
+
+header div {
+    /*max-width: 1400px;
+	height: 80px;*/
+    margin: auto;
+    overflow: hidden;
+}
+
+header div section#siteID {
+    float: left;
+    padding-top: 44px;
+    width: 186px;
+    margin: 8px;
+    height: 0;
+    overflow: hidden;
+    background-image: url(../img/logo.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+header div section#siteID * {
+    overflow: hidden;
+}
+
+header div section#userID {
+    float: right;
+    display: flex;
+    align-items: center;
+}
+
+/*header div section#userID:before {
+	content: '';
+	width: 80px;
+	height: 80px;
+	background-image: url(../img/icon/00.svg);
+	background-repeat: no-repeat;
+	background-size: contain;
+}*/
+header div section#userID article.user {
+    max-width: 130px;
+    min-width: 100px;
+    margin: 8px 4px 8px 2px;
+}
+
+@media (max-width: 398px) {
+
+    /*	header div section#userID article.user {
+		display: none;
+	}*/
+    body:not(.login) header div section#siteID {
+        width: 44px;
+        background-size: cover;
+    }
+}
+
+header div section#userID article.user>* {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+header div section#userID article.user h1 {
+    font-size: 20px;
+    font-weight: bold;
+    padding-bottom: 6px;
+}
+
+header div section#userID article.user h2 {
+    text-align: right;
+    padding-top: 5px;
+    font-size: 12px;
+    color: #888;
+    border-top: solid 1px #888;
+}
+
+header div section#userID article.logout {
+    text-align: center;
+    height: 56px;
+    padding: 2px;
+}
+
+header div section#userID article.logout #logout {
+    display: block;
+    line-height: 54px;
+    width: 54px;
+    border: solid 1px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+header nav {
+    background-color: rgba(170, 170, 170, .5);
+}
+
+header nav ul {
+    width: 100%;
+    max-width: 1400px;
+    margin: auto;
+    box-sizing: border-box;
+    list-style: none;
+    overflow: scroll;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 4px;
+    white-space: nowrap;
+}
+
+header nav ul li {
+    display: inline-block;
+    margin: 4px;
+}
+
+/*header nav ul li strong {
+	background-color: #046;
+}
+header nav ul li a {
+	background-color: #666;
+}
+header nav ul li > * {
+	display: block;
+	color: #FFF;
+	text-align: center;
+	font-size: 1.6rem;
+	padding: 4px;
+}
+header nav ul li > * span {
+	display: inline-block;
+	padding: .75em;
+	border: solid 1px #FFF;
+}*/
+header nav ul li strong {
+    display: block;
+    text-align: center;
+    font-size: 16px;
+    padding: 4px;
+}
+
+header nav ul li strong span {
+    display: inline-block;
+    padding: .75em;
+    border: solid 1px;
+}
+
+header nav ul li a {
+    display: block;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 4px;
+}
+
+header nav ul li a span {
+    display: inline-block;
+    padding: .75em;
+    border-style: solid;
+    border-width: 1px;
+}
+
+/**/
+header nav ul li:first-child>* span {
+    letter-spacing: 1em;
+    padding-left: 1.75em;
+}
+
+/**/
+
+
+main {
+    min-width: 100%;
+    max-width: 1400px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+/*for iOS*/
+input {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -webkit-appearance: none;
+    max-width: 100%;
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    outline: none;
+    background: transparent;
+    border-radius: 0;
+}
+
+button {
+    border-radius: 0;
+    -webkit-box-sizing: content-box;
+    -webkit-appearance: button;
+    appearance: button;
+    border: none;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+textarea {
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+}
+
+button::-webkit-search-decoration {
+    display: none;
+}
+
+button::focus {
+    outline-offset: -2px;
+}
+
+
+
+/*In preparation*/
+main.notyet {
+    justify-content: center;
+    width: 100%;
+    background-image: url(../img/doorknob.png);
+    background-size: 490px auto;
+    background-repeat: no-repeat;
+    background-position: center center;
+}

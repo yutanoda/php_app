@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+// Api Group Routings
+Route::group(['middleware' => ['api']], function(){
+  Route::get('/api/individual_result', 'Api\InclusionResultController@index')->name('api_individual_result');
 });

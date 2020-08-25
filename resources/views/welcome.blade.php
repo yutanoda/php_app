@@ -19,7 +19,7 @@
         </div>
     </header>
     <main>
-        <form method="post" name="login_form" id="login_form" action="{{ route('login') }}">
+        <form method="post" name="login_form" id="login_form" action="{{ route('login') }}" autocomplete="off">
             @csrf
              @if (session('flash_message'))
             <div class="flash_message">
