@@ -172,7 +172,7 @@ class IndividualResultController extends Controller
             'value1_arrays'=> $collem,
         ];
 
-    	return view('individual_result', $data);
+        return view('individual_result', $data);
     }
 
     /**

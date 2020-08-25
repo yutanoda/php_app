@@ -198,7 +198,7 @@ class InclusionResultController extends Controller
             'report_title' => $report_title,
         ];
 
-    	return view('inclusion_result', $data);
+        return view('inclusion_result', $data);
     }
 
 
