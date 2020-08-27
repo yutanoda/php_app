@@ -26,6 +26,8 @@ class InclusionResultController extends Controller
         // commonテーブルを取得
         $commons = Tcommon::where('common_id', 'keyword')->get(['value1', 'value2']);
         $commons_cate = Tcommon::where('common_id', 'keyword')->groupBy('value1')->get(['value1']);
+        // 1ページあたりの表示件数取得
+        $displayed_results = Tcommon::where('common_id', 'max_page_record')->first(['value1']);
 
         foreach ($commons_cate as $key => $value) {
             $collem[$value['value1']] = Tcommon::where('value1', $value['value1'])->get(['value2'])->toArray();
@@ -134,7 +136,7 @@ class InclusionResultController extends Controller
             $reports->whereIn('report_number', $reports_front);
         }
 
-        $reports = $reports->orderBy('submitted_datetime', 'DESC')->paginate(600);
+        $reports = $reports->orderBy('submitted_datetime', 'DESC')->paginate($displayed_results->value1);
 
         // レコードが0件の場合　エラーメッセージ
         if( $reports->first() ){
@@ -198,7 +200,7 @@ class InclusionResultController extends Controller
             'report_title' => $report_title,
         ];
 
-        return view('inclusion_result', $data);
+    	return view('inclusion_result', $data);
     }
 
 

@@ -34,7 +34,7 @@
 		<li><a href="{{ route('individual_result') }}" class="color_t1n color_b1n"><span>個別報告書</span></a></li>	
 		@endif
 
-		@if(request()->path() == 'correspondence_result')
+		<!-- @if(request()->path() == 'correspondence_result')
 		<li><strong class="color_t1 color_b1"><span>要望・提案書</span></strong></li>
 		@else
 		<li><a href="{{ route('correspondence_result') }}" class="color_t1n color_b1n"><span>要望・提案書</span></a></li>
@@ -46,7 +46,7 @@
 			@else
 			<li><a href="{{ route('sales_total') }}" class="color_t1n color_b1n"><span>営業集計</span></a></li>
 			@endif
-		@endif
+		@endif -->
 	</ul>
 </nav>
     </header>

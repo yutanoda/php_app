@@ -28,6 +28,8 @@ class IndividualResultController extends Controller
         $title_commons = Tcommon::where('valid_flag', 1)
         ->where('common_id', 'report_title')
         ->get(['value1', 'common_number']);
+                // 1ページあたりの表示件数取得
+        $displayed_results = Tcommon::where('common_id', 'max_page_record')->first(['value1']);
         // 学校名
         $search_school = Tschool::where('assigned_staff_code', $request->staff_code)
         ->get(['school_code', 'school_name']);
@@ -92,7 +94,7 @@ class IndividualResultController extends Controller
         }
         
         $reports = $reports->orderBy('submitted_datetime', 'DESC')
-                    ->paginate(600);
+                    ->paginate($displayed_results->value1);
 
         if ($reports->isEmpty()) {
             $message = '該当する報告書がありません。';
@@ -172,7 +174,7 @@ class IndividualResultController extends Controller
             'value1_arrays'=> $collem,
         ];
 
-        return view('individual_result', $data);
+    	return view('individual_result', $data);
     }
 
     /**
