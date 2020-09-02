@@ -156,5 +156,16 @@
 			</section>
 		</nav>
 	</main>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		// 第一学習社HSの削除
+			$('#result > article > ul > li.content > article > h1').each(function(){
+				var hs = $(this).text();
+				if ( hs.indexOf('第一学習社HS') != -1) {
+					var replace_str = hs.replace('第一学習社HS', '');
+					 $(this).text(replace_str);
+				}
+			});
+	</script>
 </body>
 @endsection

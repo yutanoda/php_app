@@ -5,6 +5,7 @@
 @endsection
 
 
+
 @section('content')
 <!-- 全社報告書 -->
 <body class="search hy">
@@ -14,12 +15,16 @@
 		<div>
 			<section id="search">
 				<form name="search" action="{{url('/inclusion_result')}}" method="GET">
-					<label><span class="color_t1n color_b1n">■年月</span><input type="month" name="keyword_date"></label>
+					<label><span class="color_t1n color_b1n">■年月</span><input type="month" name="keyword_date" @if(session('keyword_date')) value="{{ session('keyword_date') }}" @endif></label>
 					<label><span class="color_t1n color_b1n">▼タイトル</span>
 						<select name="keyword_title">
 							<option value="">-未選択-</option>
 							@foreach($title_commons as $title_common)
-							<option value="{{ $title_common->common_number }}">
+							<option value="{{ $title_common->common_number }}"
+								@if( session('keyword_title') && $title_common->common_number == session('keyword_title') )
+								selected
+								@endif
+								>
 								{{ $title_common->value1}}
 							</option>
 							@endforeach
@@ -29,7 +34,10 @@
 						<select name="keyword_branch">
 							<option value="">-未選択-</option>
 							@foreach($branch_commons as $branch_common)
-							<option value="{{ $branch_common->branch_code}}">{{ $branch_common->branch_name}}</option>
+							<option value="{{ $branch_common->branch_code}}"
+								@if( session('keyword_branch') && $branch_common->branch_code == session('keyword_branch') )
+								selected
+								@endif>{{ $branch_common->branch_name}}</option>
 							@endforeach
 						</select>
 					</label>
@@ -37,7 +45,11 @@
 						<select name="keyword_submitter">
 							<option value="">-未選択-</option>
 							@foreach($submitter_commons as $submitter_common)
-							<option value="{{ $submitter_common->staff_code}}">{{ $submitter_common->staff_name}}</option>
+							<option value="{{ $submitter_common->staff_code}}"
+								@if( session('keyword_submitter') && $submitter_common->staff_code == session('keyword_submitter') )
+								selected
+								@endif
+								>{{ $submitter_common->staff_name}}</option>
 							@endforeach
 						</select>
 					</label>
@@ -45,7 +57,11 @@
 						<select name="keyword_prefecture" id="prefecture_id">
 							<option value="">-未選択-</option>
 							@foreach($prefecture_commons as $prefecture_common)
-							<option value="{{ $prefecture_common->prefecture_code}}">{{ $prefecture_common->prefecture_name}}</option>
+							<option value="{{ $prefecture_common->prefecture_code}}"
+								@if( session('keyword_prefecture') && $prefecture_common->prefecture_code == session('keyword_prefecture') )
+								selected
+								@endif
+								>{{ $prefecture_common->prefecture_name}}</option>
 							@endforeach
 						</select>
 					</label>
@@ -53,7 +69,11 @@
 						<select name="keyword_school" id="keyword_school">
 							<option value="">-未選択-</option>
 							@foreach($school_commons as $school_common)
-							<option class="{{ $school_common->prefecture_code}}" value="{{ $school_common->school_code}}">{{ $school_common->school_name}}</option>
+							<option class="{{ $school_common->prefecture_code}}" value="{{ $school_common->school_code}}"
+								@if( session('keyword_school') && $school_common->school_code == session('keyword_school') )
+								selected
+								@endif
+								>{{ $school_common->school_name}}</option>
 							@endforeach
 						</select>
 					</label>
@@ -61,7 +81,11 @@
 						<select name="keyword_rank">
 							<option value="">-未選択-</option>
 							@foreach($rank_commons as $rank_common)
-							<option value="{{ $rank_common->common_number }}">{{ $rank_common->value1}}</option>
+							<option value="{{ $rank_common->common_number }}"
+								@if( session('keyword_rank') && $rank_common->common_number == session('keyword_rank') )
+								selected
+								@endif
+								>{{ $rank_common->value1}}</option>
 							@endforeach
 						</select>
 					</label>
@@ -69,11 +93,15 @@
 						<select name="keyword_category">
 							<option value="">-未選択-</option>
 							@foreach($category_commons as $category_common)
-							<option value="{{ $category_common->common_number }}">{{ $category_common->value1}}</option>
+							<option value="{{ $category_common->common_number }}"
+								@if( session('keyword_category') && $category_common->common_number == session('keyword_category') )
+								selected
+								@endif
+								>{{ $category_common->value1}}</option>
 							@endforeach
 						</select>
 					</label>
-					<label class="keyword" for="keyword_switch"><span class="color_t1n color_b1n">■キーワード</span><input type="text" id="keywords" readonly="readonly" value=""></label>
+					<label class="keyword" for="keyword_switch"><span class="color_t1n color_b1n">■キーワード</span><input type="text" id="keywords" readonly="readonly"  @if(session('keywords')) value="{{ session('keywords') }}" @endif ></label>
 					<div class="buttons">
 						<button type="reset" class="color_t1n color_b1n"><span>リセット</span></button>
 						<button type="submit" class="search color_t1n color_b1n"><span>検索</span></button>
@@ -182,6 +210,22 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script type="text/javascript">
 
+		// 都道府県が未選択で学校検索をクリックした場合、都道府県を選択するようメッセージ表示
+		$('#keyword_school').click(function(){
+			var prefecture = $('#prefecture_id').val();
+			if ( prefecture == '' ) {
+				alert('都道府県から選択してください。');
+			}
+		});
+// 第一学習社HSの削除
+			$('#result > article > ul > li.content > article > h1').each(function(){
+				var hs = $(this).text();
+				if ( hs.indexOf('第一学習社HS') != -1) {
+					var replace_str = hs.replace('第一学習社HS', '');
+					 $(this).text(replace_str);
+				}
+			});
+
 		// 検索用Ajax
 		$('#prefecture_id').change(function(){
 			$.ajax("{{url('/api/individual_result')}}",
@@ -194,7 +238,7 @@
 				$('#keyword_school > option').each(function(){
 					$(this).empty();
 				});
-				var option = '';
+				var option = '<option value="">-未選択-</option>';
 				$.each($.parseJSON(data), function(idx, obj) {
 					option += '<option value="' + obj.school_code + '">' + obj.school_name + '</option>';
 				});
