@@ -30,7 +30,7 @@
 					</dl>
 					<dl>
 						<dt>提出日：</dt>
-						@if ($t_report == null)
+						@if ($t_report->submitted_datetime == null)
 						<dd class="unsubmit">未提出</dd>
 						@else
 						<dd>{{ $t_report->submitted_datetime }}</dd>
