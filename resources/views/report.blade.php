@@ -151,12 +151,16 @@
 						@if ( $control == 2 && $t_report->status_flag < 1)
 						<span class="buttons">
 							<button type="submit" class="color_t1n color_b1n delete" name="register" value="detail_delete" onclick="return confirm('営業校を削除しますか？　この報告内容のみ削除されます。')">削除</button>	
+							@if( $t_report->status_flag < 1 )
 							<button type="submit" class="color_t1n color_b1n update" onclick="return confirm('この報告書を更新しますか？')" name="register" value="detail_update">更新</button>
+							@endif
 						</span>
 						@elseif( $authority_flag == '1'  && $t_report->status_flag < 1 )
 						<span class="buttons">
 							<button type="submit" class="color_t1n color_b1n delete" name="register" value="detail_delete" onclick="return confirm('営業校を削除しますか？　この報告内容のみ削除されます。')">削除</button>	
+							@if( $t_report->status_flag < 1 )
 							<button type="submit" class="color_t1n color_b1n update" onclick="return confirm('この報告書を更新しますか？')" name="register" value="detail_update">更新</button>
+							@endif
 						</span>
 						@endif
 					<label><span>面談者：</span><input name="note" type="text" value="{{ $report_detail->note }}"></label></h1>
