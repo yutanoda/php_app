@@ -10,6 +10,7 @@
 					<h2>{{ $branch_name }}</h2>
 				</article>
 				<article class="logout color_b1n">
+					<input type="hidden" name="location" value="" id="location">
 					<a href="{{ route('logout') }}" id="logout" class="color_t1n" onclick="return confirm('ログアウトしますか？　更新未完了の内容は破棄されます')">ログアウト</a>
 				</article>
 			</section>

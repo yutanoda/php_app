@@ -33,7 +33,7 @@
 						@if ($t_report == null)
 						<dd class="unsubmit">未提出</dd>
 						@else
-						<dd class="unsubmit">{{ $t_report->submitted_datetime }}</dd>
+						<dd>{{ $t_report->submitted_datetime }}</dd>
 						@endif
 					</dl>
 				</article>
@@ -42,9 +42,11 @@
 					@csrf
 					<input type="hidden" name="request_id" value="{{ $report_number }}">
 					@if( $t_report->status_flag < 1 )
-					<button type="submit" class="color_t1n color_b1n op" onclick="return confirm('報告書を提出しますか？　提出後は変更できません。')" name="register" value="register"><span>提出</span></button>
+					<button type="submit" class="color_t1n color_b1n op" onclick="post_t_report()" name="register" value="register"><span>提出</span></button>
 					@endif
+					@if( $t_report->status_flag < 1 )
 					<button type="submit" class="color_t1n color_b1n op" onclick="return confirm('報告書を削除しますか？　明細も全て削除されます。')" name="register" value="delete"><span>削除</span></button>
+					@endif
 					<button type="submit" class="color_t1n color_b1n op" onclick="return confirm('報告書を追加しますか？　追加後は報告内容を入力し、更新してください。')" name="register" value="add"><span>追加</span></button>
 				</form>
 				@endif
@@ -61,7 +63,7 @@
 				<form action="{{ url('report_register') }}" method="post">
 					@csrf
 					<input type="hidden" name="request_id" value="{{ $report_number }}">
-					<input type="hidden" name="detail_id" value="{{ $report_detail->detail_number }}">
+					<input type="hidden" name="detail_id" value="{{ $report_detail->detail_number }}" class="detail_id">
 					<table class="achievement">
 						<caption class="color_t2 color_b2">
 							<dl>
@@ -69,12 +71,14 @@
 							</dl>
 							<dl>
 								<dt>営業日</dt>
-								<dd><input type="date" name="action_date" value="{{ $report_detail->action_date }}"></dd>
+								<dd>
+									<input type="date" name="action_date" value="{{ $report_detail->action_date }}" @if ( $control == 1 ) disabled @endif>
+								</dd>
 							</dl>
 							<dl>
 								<dt>種別</dt>
 								<dd>
-									<select name="action_type">
+									<select name="action_type" @if ( $control == 1 ) disabled @endif>
 										@foreach ( $action_type as $action )
 										<option value="{{ $action->common_number }}">{{ $action->value1 }}</option>
 										@endforeach
@@ -82,9 +86,9 @@
 								</dd>
 							</dl>
 							<dl class="school">
-								<dt>営業校 {{ $report_detail->prefecture_name }}{{ $report_detail->address }}</dt>
+								<dt>営業校</dt>
 								<dd>
-									<select name="school_code">
+									<select name="school_code" @if ( $control == 1 ) disabled @endif>
 										<option value="">-未選択-</option>
 										@foreach ( $schools as $school )
 										<option value="{{ $school->school_code }}"
@@ -94,6 +98,7 @@
 											>{{ $school->school_name }}</option>
 										@endforeach
 									</select>
+									{{ $report_detail->prefecture_name }}{{ $report_detail->address }}
 								</dd>
 							</dl>
 							<dl>
@@ -102,7 +107,11 @@
 							</dl>
 							<dl>
 								<dt>ランク</dt>
-								<dd>{{ $report_detail->school_rank }}</dd>
+								@foreach ($school_rank as $index => $rank)
+									@if ( $report_detail->detail_number == $index )
+											<dd>{{ $rank['value1'] }}</dd>
+									@endif
+								@endforeach
 							</dl>
 							<dl>
 								<dt>実績</dt>
@@ -133,12 +142,12 @@
 						</tbody>
 					</table>
 					<h1>
-						@if ( $control == 2 )
+						@if ( $control == 2 && $t_report->status_flag < 1)
 						<span class="buttons">
 							<button type="submit" class="color_t1n color_b1n delete" name="register" value="detail_delete" onclick="return confirm('営業校を削除しますか？　この報告内容のみ削除されます。')">削除</button>	
 							<button type="submit" class="color_t1n color_b1n update" onclick="return confirm('この報告書を更新しますか？')" name="register" value="detail_update">更新</button>
 						</span>
-						@elseif( $authority_flag == '1' )
+						@elseif( $authority_flag == '1'  && $t_report->status_flag < 1 )
 						<span class="buttons">
 							<button type="submit" class="color_t1n color_b1n delete" name="register" value="detail_delete" onclick="return confirm('営業校を削除しますか？　この報告内容のみ削除されます。')">削除</button>	
 							<button type="submit" class="color_t1n color_b1n update" onclick="return confirm('この報告書を更新しますか？')" name="register" value="detail_update">更新</button>
@@ -272,7 +281,24 @@
 				alert('営業日・種別・営業校が正しいか確認してください。');
 				return false;
 			}
-		})
+		});
+
+
+		// 明細情報が一切ないときには提出させない
+		var post_t_report = function post_t_report(){
+			console.log('clock');
+			id = [];
+			$(function(){
+				$('.detail_id').each(function(){
+					id.push($(this).val());
+				});
+				if (id.length !== 0) {
+					return confirm('報告書を提出しますか？　提出後は変更できません。');
+				} else {
+					return confirm('報告内容が登録されていないため、提出できません。');
+				}
+			});
+		}
 
 
 	function textareaResize(event) {
