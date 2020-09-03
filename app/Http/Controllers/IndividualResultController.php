@@ -206,8 +206,7 @@ class IndividualResultController extends Controller
         $t_report->created_datetime = Carbon::now();
         $t_report->update_datetime = Carbon::now();
         // $t_report->update_datetime = null;
-        $t_report->submitted_datetime = Carbon::now();
-        // $t_report->submitted_datetime = null;
+        $t_report->submitted_datetime = null;
         $t_report->comment_datetime = null;
         $t_report->status_flag = 0;
         $t_report->save();
