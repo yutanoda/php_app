@@ -80,7 +80,7 @@
 								<dd>
 									<select name="action_type" @if ( $control == 1 ) disabled @endif>
 										@foreach ( $action_type as $action )
-										<option value="{{ $action->common_number }}">{{ $action->value1 }}</option>
+										<option value="{{ $action->common_number }}" @if ( $report_detail->action_type == $action->common_number) selected @endif >{{ $action->value1 }}</option>
 										@endforeach
 									</select>
 								</dd>
