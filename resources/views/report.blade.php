@@ -141,7 +141,7 @@
 								<td class="product">{{ $p->item_name }}</td>
 								<td class="quantity">{{ $p->sale_quantity }}</td>
 								<td class="grade">{{ $p->grade }}</td>
-								<td class="total">{{ $p->sales_amount }}</td>
+								<td class="total">{{ number_format($p->sales_amount, 0) }}</td>
 							</tr>
 							@endforeach
 							@endif
