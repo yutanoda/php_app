@@ -115,7 +115,13 @@
 							</dl>
 							<dl>
 								<dt>実績</dt>
-								<dd>TODO {{ $sum }}</dd>
+								<dd>
+									@foreach ($sum as $sum_index => $total)
+										@if ( $report_detail->detail_number == $sum_index )
+											{{  number_format($total, 0) }}
+										@endif
+								@endforeach
+								</dd>
 							</dl>
 						</caption>
 						<thead>

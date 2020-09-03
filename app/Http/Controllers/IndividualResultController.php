@@ -57,8 +57,8 @@ class IndividualResultController extends Controller
 
                 if( $request->keyword_title ){
                     // タイトル検索
-                    $reports_front2 = Treportdetail::orWhere('report_title1', $request->keyword_title)
-                    ->orWhere('report_title2', $request->keyword_title)
+                    $reports_front2 = Treportdetail::where('report_title1', $request->keyword_title)
+                    ->where('report_title2', $request->keyword_title)
                     ->get(['report_number']);
                     $reports->whereIn('report_number', $reports_front2);
                 }
@@ -69,23 +69,23 @@ class IndividualResultController extends Controller
     
         // 日付検索
         if($request->keyword_date){
-            $reports->where('submitted_datetime', 'like', substr($request->keyword_date, 0, 4) .'%');
+            $reports->where('submitted_datetime', 'like', $request->keyword_date .'%');
         }
         
         // キーワード検索
         if ( $request->keywords ) {
 
             foreach ($request->keywords as $key => $value) {
-                $reports_front = Treportdetail::orWhere('report1', 'like', $value. '%')
-                ->orWhere('report2', 'like', $value. '%')
-                ->orWhere('comment', 'like', $value. '%')
+                $reports_front = Treportdetail::orWhere('report1', 'like', '%' . $value . '%')
+                ->orWhere('report2', 'like', '%' . $value . '%')
+                ->orWhere('comment', 'like', '%' . $value . '%')
                 ->get(['report_number'])
                 ->toArray();
             }
             foreach ($request->keywords as $key => $value) {
-                $reports_front2 = Treport::orWhere('total_evaluation', 'like', $value. '%')
-                ->orWhere('next_action', 'like', $value. '%')
-                ->orWhere('comment', 'like', $value. '%')
+                $reports_front2 = Treport::orWhere('total_evaluation', 'like', '%' . $value . '%')
+                ->orWhere('next_action', 'like', '%' . $value . '%')
+                ->orWhere('comment', 'like', '%' . $value . '%')
                 ->get(['report_number'])
                 ->toArray();
             }
@@ -174,6 +174,7 @@ class IndividualResultController extends Controller
             'value1_arrays'=> $collem,
         ];
 
+
     	return view('individual_result', $data);
     }
 
@@ -247,7 +248,7 @@ class IndividualResultController extends Controller
     {
         // 報告書の一覧表示
         if( strpos($request->headers->get('referer'), 'inclusion_result') ){
-            $control = 1;
+            $control = 1; // 全社報告書
         }else{
             $control = 2;
         }
@@ -266,6 +267,7 @@ class IndividualResultController extends Controller
                                 't_report_detail.action_type',
                                 's.school_name AS school_name',
                                 's.school_code AS school_code',
+                                's.school_rank AS school_rank',
                                 's.number_of_students AS number_of_students',
                                 's.school_rank AS school_rank',
                                 'tp.prefecture_name',
@@ -279,6 +281,8 @@ class IndividualResultController extends Controller
 
         // 実績
         $school_code_array = [];
+        $school_rank = [];
+        $sum = [];
 
         if ( $t_report_detail->isEmpty() ) {
             $performance = null;
@@ -294,12 +298,16 @@ class IndividualResultController extends Controller
                                 ]);
                 if ( $value->school_code ) {
                     array_push($school_code_array, $value->school_code);
+                    $sum[$value->detail_number] = Tsalesresult::where('school_code', $value->school_code)->sum('sales_amount');
+                }
+                if ( $value->school_rank ) {
+                    $school_rank[$value->detail_number] = Tcommon::where('common_id', 'school_rank')
+                    ->where('common_number', $value->school_rank)
+                    ->first(['value1'])->toArray();
                 }
             }
         }
-        // print_r($performance);
 
-        $sum = Tsalesresult::whereIn('school_code', $school_code_array)->sum('sales_amount');
         // 分類
         $report_category = Tcommon::where('valid_flag', 1)->where('common_id', 'report_category')->get();
         $t_staff = Tstaff::where('staff_code', $t_report->staff_code)->first();
@@ -321,6 +329,7 @@ class IndividualResultController extends Controller
             'performance' => $performance,
             'sum' => $sum,
             'report_category' => $report_category,
+            'school_rank' => $school_rank,
         ];
 
         return view('report', $data);
