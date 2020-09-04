@@ -82,33 +82,44 @@ class TuserController extends Controller
     {
         // notice 取得
         $notice = Tnotice::first();
-        $array_line = explode("\n", $notice->notice);
-        $array = array_map('trim', $array_line);
-        $title = $array_line[0];
-        unset($array[0]);
-        $content = implode("\n", $array);
+        // $array_line = explode("\n", $notice->notice);
+        // $array = array_map('trim', $array_line);
+        // $title = $array_line[0];
+        // unset($array[0]);
+        // $content = implode("\n", $array);
 
         // 日付を整形
         $date = Carbon::parse($notice->updated_datetime)->isoFormat('YYYY年MM月DD日(ddd)');
+
+        // 一週間前のものかどうかを判定
+        $one_week_before = Carbon::now()->subWeek(1);
+        if ( $one_week_before->gte(Carbon::parse($notice->updated_datetime)) ) {
+            $red = 1;
+        } else {
+            $red = 0;
+        }
 
         // スタッフ氏名と営業所名の取得と表示
         $data = [
             'staff_name' => $request->staff_name,
             'branch_name' => $request->branch_name,
             'authority_flag' => $request->authority_flag,
-            'title' => $title,
-            'content' => $content,
+            // 'title' => $title,
+            // 'content' => $content,
+            'content' => $notice,
             'content_update' => $date,
+            'red' => $red,
         ];
 
         return view('info', $data);
     }
 
+
     public function updateContent(Request $request)
     {
         $user_record = Tuser::where('user_id', $request->session()->get('user_id'))->where('valid_flag', 1)->first();
         $staff = Tstaff::where('staff_code', $user_record->assigned_staff_code)->first(); 
-        $staff_code = (integer)$staff->staff_code;
+        $staff_code = (int)$staff->staff_code;
         $content = $request->title . $request->content;
         $update_data = [
             'notice' => $content,
@@ -127,8 +138,20 @@ class TuserController extends Controller
     public function logout(Request $request)
     {
 
-        $user_id = $request->session()->pull('user_id');
-        $login = Tlogin::where('login_user_id', $user_id)->update(['login_flag' => 2]);
+        $user_id = $request->session()->get('user_id');
+        var_dump($user_id);
+        $logout = new Tlogin();
+        $logout->login_flag = 2;
+        // $logout->login_datetime = date('Y-m-d H:i:s', strtotime('0000-00-00 00:00:00'));
+        $logout->login_datetime = Carbon::parse('0')->toDateTimeString();
+        $logout->logout_datetime = Carbon::now();
+        $logout->login_user_id = $user_id;
+        $logout->logout_location = $request->location;
+        $logout->save();
+
+        // $login = Tlogin::where('login_user_id', $user_id)->update([
+        //     'login_flag' => 2
+        // ]);
         // ログインページを表示　※ユーザー名、パスワード欄を消去
         // return redirect('/')->with('logout', 'logout');
         return redirect('/');
