@@ -240,7 +240,11 @@
 								<select name="report_category">
 									<option value="">-未選択-</option>
 									@foreach ( $action_type as $action )
-									<option value="{{ $action->common_number }}">{{ $action->value1 }}</option>
+									<option value="{{ $action->common_number }}" 
+										@if ($t_report->report_category == $action->common_number)
+										 selected 
+										@endif
+										>{{ $action->value1 }}</option>
 									@endforeach
 								</select>
 							</label>
@@ -303,6 +307,9 @@
 		});
 		$(function() {
 		    $('textarea').textareaAutoHeight();
+		    $('input[name=note]').each(function(){
+		    	$(this).css({'width': '27em'});
+		    });
 		    $('input[name=note]').autosizeInput();
 		});
 

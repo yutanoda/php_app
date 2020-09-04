@@ -381,13 +381,13 @@ class IndividualResultController extends Controller
                 $t_report_detail->updated_datetime = Carbon::now();
                 $t_report_detail->action_date = Carbon::now();
                 $t_report_detail->school_code = 0;
-                $t_report_detail->note = 0;
-                $t_report_detail->comment_datetime = Carbon::now();
+                $t_report_detail->note = null;
+                $t_report_detail->comment_datetime = null;
                 $t_report_detail->save();
                 return redirect(route('detail_report', ['report_number' => $request->request_id]));
                 break;
             case 'update_footer':
-                if ($request->comment ) {
+                if ( $request->comment ) {
                     $comment_datetime = Carbon::now();
                     $comment_staff_code = $request->staff_code;
                 } else {
@@ -426,7 +426,7 @@ class IndividualResultController extends Controller
                         'report1' => $request->report1,
                         'report2' => $request->report2,
                         'comment' => $request->comment,
-                        // 'report_category' => $request->category,
+                        'report_category' => $request->category,
                     ]);
                 return redirect(route('detail_report', ['report_number' => $request->request_id]));
                 break;
