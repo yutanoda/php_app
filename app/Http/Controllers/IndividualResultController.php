@@ -274,6 +274,7 @@ class IndividualResultController extends Controller
                                 't_report_detail.report1',
                                 't_report_detail.report2',
                                 't_report_detail.comment',
+                                't_report_detail.report_category',
                             ]);
 
 
@@ -318,6 +319,7 @@ class IndividualResultController extends Controller
             'authority_flag' => $request->authority_flag,
             'report_number' => $request->report_number,
             'staff_type' => $request->staff_type,
+
             't_report' => $t_report,
             't_staff' => $t_staff,
 

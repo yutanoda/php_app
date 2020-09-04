@@ -155,12 +155,10 @@
 							<button type="submit" class="color_t1n color_b1n update" onclick="return confirm('この報告書を更新しますか？')" name="register" value="detail_update">更新</button>
 							@endif
 						</span>
-						@elseif( $authority_flag == '1'  && $t_report->status_flag < 1 )
+						@elseif( $control == 1 && $authority_flag == '1')
 						<span class="buttons">
 							<button type="submit" class="color_t1n color_b1n delete" name="register" value="detail_delete" onclick="return confirm('営業校を削除しますか？　この報告内容のみ削除されます。')">削除</button>	
-							@if( $t_report->status_flag < 1 )
 							<button type="submit" class="color_t1n color_b1n update" onclick="return confirm('この報告書を更新しますか？')" name="register" value="detail_update">更新</button>
-							@endif
 						</span>
 						@endif
 					<label><span>面談者：</span><input name="note" type="text" value="{{ $report_detail->note }}"></label></h1>
@@ -188,25 +186,18 @@
 									@endforeach
 								</select>
 							</label>
-							@endif
-							<!--label><span>▼分類2</span>
-								<select>
-									<option>-未選択-</option>
-									<option>業務関連</option>
-									<option>商品・市場に関する情報</option>
-									<option>探究への取り組み状況に関する情報</option>
-									<option>要検討・対応事項</option>
+							@else
+							<textarea name="comment" >{{ $report_detail->comment }}</textarea>
+							<label><span class="color_t1n color_b1n">▼分類</span>
+								<select name="category">
+									@foreach ( $report_category as $category ) 
+									@if($report_detail->report_category == $category->common_number)
+									<option value="{{$category->common_number}}" selected>{{ $category->value1 }}</option>
+									@endif
+									@endforeach
 								</select>
 							</label>
-							<label><span>▼分類3</span>
-								<select>
-									<option>-未選択-</option>
-									<option>業務関連</option>
-									<option>商品・市場に関する情報</option>
-									<option>探究への取り組み状況に関する情報</option>
-									<option>要検討・対応事項</option>
-								</select>
-							</label-->
+							@endif
 						</section>
 					</article>
 				</form>
@@ -243,7 +234,7 @@
 						</section>
 						<section class="manager">
 							<h1>コメント</h1>
-							@if ( $authority_flag >= 3 && $t_report->report_category != 0 )
+							@if ( $authority_flag >= 3 )
 							<textarea name="comment" >{{ $t_report->comment }}</textarea>
 							<label><span class="color_t1n color_b1n">▼分類</span>
 								<select name="report_category">
@@ -253,25 +244,18 @@
 									@endforeach
 								</select>
 							</label>
-							@endif
-							<!--label><span>▼分類2</span>
-								<select>
-									<option>-未選択-</option>
-									<option>業務関連</option>
-									<option>商品・市場に関する情報</option>
-									<option>探究への取り組み状況に関する情報</option>
-									<option>要検討・対応事項</option>
+							@else
+							<textarea name="comment" disabled="">{{ $t_report->comment }}</textarea>
+							<label><span class="color_t1n color_b1n">▼分類</span>
+								<select name="report_category">
+									@foreach ( $action_type as $action )
+									@if ($t_report->report_category == $action->common_number)
+									<option value="{{ $action->common_number }}">{{ $action->value1 }}</option>
+									@endif
+									@endforeach
 								</select>
 							</label>
-							<label><span>▼分類3</span>
-								<select>
-									<option>-未選択-</option>
-									<option>業務関連</option>
-									<option>商品・市場に関する情報</option>
-									<option>探究への取り組み状況に関する情報</option>
-									<option>要検討・対応事項</option>
-								</select>
-							</label-->	
+							@endif
 						</section>
 					</article>
 				</form>
