@@ -161,7 +161,7 @@
 							<button type="submit" class="color_t1n color_b1n update" onclick="return confirm('この報告書を更新しますか？')" name="register" value="detail_update">更新</button>
 						</span>
 						@endif
-					<label><span>面談者：</span><input name="note" type="text" value="{{ $report_detail->note }}"></label></h1>
+					<label><span>面談者：</span><input name="note" type="text" value="{{ $report_detail->note }}" id="input"></label></h1>
 					<input type="checkbox" id="journal1_switch" class="journal_switch" checked="checked">
 					<article class="journal">
 						<section class="employee">
@@ -268,6 +268,7 @@
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <script src="{{ asset('js/jquery.autoexpand.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/jquery.textarea-auto-height.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.autosize.input.js') }}"></script>
 	<script type="text/javascript">
 		$('#report > section > form > h1 > span > button.color_t1n.color_b1n.update').click(function ($this) {
 			var date = $(this).parent('.buttons').parent('h1').prev('.achievement').find('input[type=date]').val();
@@ -302,7 +303,9 @@
 		});
 		$(function() {
 		    $('textarea').textareaAutoHeight();
+		    $('input[name=note]').autosizeInput();
 		});
+
 	</script>
 </body>
 @endsection
