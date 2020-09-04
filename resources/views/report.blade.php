@@ -91,7 +91,7 @@
 									<select name="school_code" @if ( $control == 1 ) disabled @endif>
 										<option value="">-未選択-</option>
 										@foreach ( $schools as $school )
-										<option value="{{ $school->school_code }}"
+										<option value="{{ $school->school_code }}" 
 											@if($report_detail->school_code == $school->school_code)
 											selected
 											@endif
@@ -169,17 +169,17 @@
 						<section class="employee">
 							<div>
 								<h1>新規採択活動</h1>
-								<textarea name="report1"  onkeydown="textareaResize(event)">{{ $report_detail->report1 }}</textarea>
+								<textarea name="report1" >{{ $report_detail->report1 }}</textarea>
 							</div>
 							<div>
 								<h1>継続採択活動その他</h1>
-								<textarea name="report2"  onkeydown="textareaResize(event)">{{ $report_detail->report2 }}</textarea>
+								<textarea name="report2" >{{ $report_detail->report2 }}</textarea>
 							</div>	
 						</section>
 						<section class="manager">
 							<h1>コメント</h1>
 							@if ( $staff_type >= 3 )
-							<textarea name="comment"  onkeydown="textareaResize(event)">{{ $report_detail->comment }}</textarea>
+							<textarea name="comment" >{{ $report_detail->comment }}</textarea>
 							<label><span class="color_t1n color_b1n">▼分類</span>
 								<select name="category">
 									<option value="">-未選択-</option>
@@ -234,17 +234,17 @@
 						<section class="employee">
 							<div>
 								<h1>営業活動の気づき</h1>
-								<textarea name="total_evaluation"  onkeydown="textareaResize(event)">{{ $t_report->total_evaluation }}</textarea>
+								<textarea name="total_evaluation" >{{ $t_report->total_evaluation }}</textarea>
 							</div>
 							<div>
 								<h1>来週の活動POINT</h1>
-								<textarea name="next_action"  onkeydown="textareaResize(event)">{{ $t_report->next_action }}</textarea>
+								<textarea name="next_action" >{{ $t_report->next_action }}</textarea>
 							</div>	
 						</section>
 						<section class="manager">
 							<h1>コメント</h1>
 							@if ( $staff_type >= 3 && $t_report->report_category != 0 )
-							<textarea name="comment"  onkeydown="textareaResize(event)">{{ $t_report->comment }}</textarea>
+							<textarea name="comment" >{{ $t_report->comment }}</textarea>
 							<label><span class="color_t1n color_b1n">▼分類</span>
 								<select name="report_category">
 									<option value="">-未選択-</option>
@@ -282,6 +282,8 @@
 		<div id="totop"></div>
 	</footer>
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="{{ asset('js/jquery.autoexpand.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.textarea-auto-height.js') }}"></script>
 	<script type="text/javascript">
 		$('#report > section > form > h1 > span > button.color_t1n.color_b1n.update').click(function ($this) {
 			var date = $(this).parent('.buttons').parent('h1').prev('.achievement').find('input[type=date]').val();
@@ -311,46 +313,12 @@
 		}
 
 
-	function textareaResize(event) {
-	    try {
-	        elem_id = event.srcElement.id;
-	    } catch ( e ) {
-	        elem_id = event.target.id;
-	    }
-	    var keycode = event.keyCode;
-	    if (keycode == 13) {
-	        var m = document.getElementById(elem_id);
-	        try{
-		        var r = m.getAttribute("rows");
-	        }catch (e) {
-	        	var r = 7;
-	        }
-
-	        m.setAttribute("rows", parseInt(r)+1);
-	    }
-	}
-
-// $(function(){
-// 	$('#summary').css({
-// 		'backgournd-color': '#E8E8E9',
-// 		'color': '#000000',
-// 	});
-// 	$("#summary > section > form > article > section.employee > div:nth-child(1) > textarea").css({
-// 		'color': '#000000',
-// 	});
-// });
-
-$(function(){
-  $('textarea')
-  .on('change keyup keydown paste cut', function(){
-    if ($(this).outerHeight() > this.scrollHeight){
-      $(this).height(1)
-    }
-    while ($(this).outerHeight() < this.scrollHeight){
-      $(this).height($(this).height() + 1)
-    }
-  });
-});
+		$('textarea').each(function(){
+			$(this).autoExpand();
+		});
+		$(function() {
+		    $('textarea').textareaAutoHeight();
+		});
 	</script>
 </body>
 @endsection
