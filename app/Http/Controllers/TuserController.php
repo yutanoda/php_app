@@ -35,7 +35,7 @@ class TuserController extends Controller
             // 認証失敗許諾回数をリセット　 　最初に取得した初期値で上書き更新
             if( $user_record->allow_login_counts != 5 ){
 
-                Tuser::where('user_id', $user_id)->where('valid_flag', 1)->update(['allow_login_counts' => 5]);
+                Tuser::where('user_id', $request->user_id)->where('valid_flag', 1)->update(['allow_login_counts' => 5]);
                 
             }
             // ログインの記録
