@@ -178,7 +178,7 @@
 						</section>
 						<section class="manager">
 							<h1>コメント</h1>
-							@if ( $staff_type >= 3 )
+							@if ( $authority_flag >= 3 )
 							<textarea name="comment" >{{ $report_detail->comment }}</textarea>
 							<label><span class="color_t1n color_b1n">▼分類</span>
 								<select name="category">
@@ -243,7 +243,7 @@
 						</section>
 						<section class="manager">
 							<h1>コメント</h1>
-							@if ( $staff_type >= 3 && $t_report->report_category != 0 )
+							@if ( $authority_flag >= 3 && $t_report->report_category != 0 )
 							<textarea name="comment" >{{ $t_report->comment }}</textarea>
 							<label><span class="color_t1n color_b1n">▼分類</span>
 								<select name="report_category">
