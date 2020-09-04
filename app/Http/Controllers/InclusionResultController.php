@@ -66,26 +66,30 @@ class InclusionResultController extends Controller
         $reports = Treport::where('valid_flag', 1)->where('status_flag', 1);
         // 日付検索
         if ( $request->keyword_date ) {
-                if($keyword_date != ''){
-                    $keyword_date = substr($keyword_date, 0, 4);
-                    $reports->where('submitted_datetime', 'like', $keyword_date.'%');
-                }
+            $reports->where('submitted_datetime', 'like', $request->keyword_date.'%');
         }
         // タイトル・検索・ランク条件検索
-        if ( $request->keyword_school || $request->keyword_title || $request->keyword_rank) {
-        
-            if ( $request->keyword_school ){
-                // 学校検索
-                $reports_front = Treportdetail::where('school_code', $request->keyword_school)
-                ->get(['report_number']);
-                $reports->whereIn('report_number', $reports_front);        
+        if ( $request->keyword_title || $request->keyword_rank || $request->keyword_prefecture ) {
 
+            // 学校名の未選択も可能にし、未選択の場合は選択都道府県に該当する学校全てが検索対象
+            if ( $request->keyword_prefecture ) {
+                // 学校検索 指定校あり
+                if ( $request->keyword_school ){
+                    $reports_front = Treportdetail::where('school_code', $request->keyword_school)
+                    ->get(['report_number']);
+                    $reports->whereIn('report_number', $reports_front);
+                } else {
+                    // 指定校なし 未選択の場合は選択都道府県に該当する学校全てが検索対象
+                    $search_school_code = Tschool::where('prefecture_code', $request->prefecture_code)->get(['school_code'])->toArray();
+                    $reports_front = Treportdetail::whereIn('school_code', $search_school_code)->get(['report_number']);
+                    $reports->whereIn('report_number', $reports_front);
+                }
             }
 
             if( $request->keyword_title ){
                 // タイトル検索
-                $reports_front2 = Treportdetail::orWhere('report_title1', $request->keyword_title)
-                ->orWhere('report_title2', $request->keyword_title)
+                $reports_front2 = Treportdetail::where('report_title1', $request->keyword_title)
+                ->where('report_title2', $request->keyword_title)
                 ->get(['report_number']);
                 $reports->whereIn('report_number', $reports_front2);
             }
@@ -119,16 +123,16 @@ class InclusionResultController extends Controller
         if ( $request->keywords ) {
 
             foreach ($request->keywords as $key => $value) {
-                $reports_front = Treportdetail::orWhere('report1', 'like', $value. '%')
-                ->orWhere('report2', 'like', $value. '%')
-                ->orWhere('comment', 'like', $value. '%')
+                $reports_front = Treportdetail::orWhere('report1', 'like','%' . $value . '%')
+                ->orWhere('report2', 'like', '%' . $value . '%')
+                ->orWhere('comment', 'like', '%' . $value . '%')
                 ->get(['report_number'])
                 ->toArray();
             }
             foreach ($request->keywords as $key => $value) {
-                $reports_front2 = Treport::orWhere('total_evaluation', 'like', $value. '%')
-                ->orWhere('next_action', 'like', $value. '%')
-                ->orWhere('comment', 'like', $value. '%')
+                $reports_front2 = Treport::orWhere('total_evaluation', 'like', '%' . $value . '%')
+                ->orWhere('next_action', 'like', '%' . $value . '%')
+                ->orWhere('comment', 'like', '%' . $value . '%')
                 ->get(['report_number'])
                 ->toArray();
             }
@@ -137,6 +141,23 @@ class InclusionResultController extends Controller
         }
 
         $reports = $reports->orderBy('submitted_datetime', 'DESC')->paginate($displayed_results->value1);
+
+        // 検索結果を保持
+        $request->session()->flash('keyword_school', $request->keyword_school);
+        $request->session()->flash('keyword_title', $request->keyword_title);
+        $request->session()->flash('keyword_branch', $request->keyword_branch);
+        $request->session()->flash('keyword_submitter', $request->keyword_submitter);
+        $request->session()->flash('keyword_prefecture', $request->keyword_prefecture);
+        $request->session()->flash('keyword_rank', $request->keyword_rank);
+        $request->session()->flash('keyword_category', $request->keyword_category);
+        $request->session()->flash('keyword_date', $request->keyword_date);
+
+        if ( is_array($request->keywords) ) {
+            $keywords = implode($request->keywords, ',');
+        }else{
+            $keywords = null;
+        }
+        $request->session()->flash('keywords', $keywords);
 
         // レコードが0件の場合　エラーメッセージ
         if( $reports->first() ){
