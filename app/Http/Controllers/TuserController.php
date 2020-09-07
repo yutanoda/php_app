@@ -139,21 +139,12 @@ class TuserController extends Controller
     {
 
         $user_id = $request->session()->get('user_id');
-        var_dump($user_id);
         $logout = new Tlogin();
         $logout->login_flag = 2;
-        // $logout->login_datetime = date('Y-m-d H:i:s', strtotime('0000-00-00 00:00:00'));
-        $logout->login_datetime = Carbon::parse('0')->toDateTimeString();
         $logout->logout_datetime = Carbon::now();
         $logout->login_user_id = $user_id;
         $logout->logout_location = $request->location;
         $logout->save();
-
-        // $login = Tlogin::where('login_user_id', $user_id)->update([
-        //     'login_flag' => 2
-        // ]);
-        // ログインページを表示　※ユーザー名、パスワード欄を消去
-        // return redirect('/')->with('logout', 'logout');
         return redirect('/');
     }
 
