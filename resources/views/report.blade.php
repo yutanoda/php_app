@@ -76,13 +76,13 @@
 							<dl>
 								<dt>営業日</dt>
 								<dd>
-									<input type="date" name="action_date" value="{{ $report_detail->action_date }}" @if ( $control == 1 ) disabled @endif>
+									<input type="date" name="action_date" value="{{ $report_detail->action_date }}" @if ( $control == 1 ) readonly="" @endif>
 								</dd>
 							</dl>
 							<dl>
 								<dt>種別</dt>
 								<dd>
-									<select name="action_type" @if ( $control == 1 ) disabled @endif>
+									<select name="action_type" @if ( $control == 1 ) readonly="" @endif>
 										@foreach ( $action_type as $action )
 										<option value="{{ $action->common_number }}" @if ( $report_detail->action_type == $action->common_number) selected @endif >{{ $action->value1 }}</option>
 										@endforeach
@@ -92,7 +92,7 @@
 							<dl class="school">
 								<dt>営業校</dt>
 								<dd>
-									<select name="school_code" @if ( $control == 1 ) disabled @endif>
+									<select name="school_code" @if ( $control == 1 ) readonly="" @endif>
 										<option value="">-未選択-</option>
 										@foreach ( $schools as $school )
 										<option value="{{ $school->school_code }}" 
@@ -160,29 +160,29 @@
 							@endif
 						</span>
 						{{-- @elseif( $control == 1 && $authority_flag == '1') $t_staff->staff_type? --}}
-						@elseif( $control == 1 && $t_staff->staff_type >= 3)
+						@elseif( $control == 1 && $staff_type >= 3)
 						<span class="buttons">
-							<button type="submit" class="color_t1n color_b1n delete" name="register" value="detail_delete" onclick="return confirm('営業校を削除しますか？　この報告内容のみ削除されます。')">削除</button>	
+<!-- 							<button type="submit" class="color_t1n color_b1n delete" name="register" value="detail_delete" onclick="return confirm('営業校を削除しますか？　この報告内容のみ削除されます。')">削除</button>	 -->
 							<button type="submit" class="color_t1n color_b1n update" onclick="return confirm('この報告書を更新しますか？')" name="register" value="detail_update">更新</button>
 						</span>
 						@endif
-					<label><span>面談者：</span><input name="note" type="text" value="{{ $report_detail->note }}" id="input" @if ($t_report->status_flag >= 1) disabled @endif></label></h1>
+					<label><span>面談者：</span><input name="note" type="text" value="{{ $report_detail->note }}" id="input" @if ($t_report->status_flag >= 1) readonly="" @endif></label></h1>
 					<input type="checkbox" id="journal1_switch" class="journal_switch" checked="checked">
 					<article class="journal">
 						<section class="employee">
 							<div>
 								<h1>新規採択活動</h1>
-								<textarea name="report1"  @if ($t_report->status_flag >= 1) disabled @endif>{{ $report_detail->report1 }}</textarea>
+								<textarea name="report1"  @if ($t_report->status_flag >= 1) readonly="" @endif>{{ $report_detail->report1 }}</textarea>
 							</div>
 							<div>
 								<h1>継続採択活動その他</h1>
-								<textarea name="report2"  @if ($t_report->status_flag >= 1) disabled @endif>{{ $report_detail->report2 }}</textarea>
+								<textarea name="report2"  @if ($t_report->status_flag >= 1) readonly="" @endif>{{ $report_detail->report2 }}</textarea>
 							</div>	
 						</section>
 						<section class="manager">
 							<h1>コメント</h1>
 							{{-- @if ( $authority_flag >= 3 ) --}}
-							@if ( $t_staff->staff_type >= 3 )
+							@if ( $staff_type >= 3 )
 							<textarea name="comment" >{{ $report_detail->comment }}</textarea>
 							<label><span class="color_t1n color_b1n">▼分類</span>
 								<select name="category">
@@ -193,9 +193,9 @@
 								</select>
 							</label>
 							@else
-							<textarea name="comment" >{{ $report_detail->comment }}</textarea>
+							<textarea name="comment" readonly=""="">{{ $report_detail->comment }}</textarea>
 							<label><span class="color_t1n color_b1n">▼分類</span>
-								<select name="category">
+								<select name="category" readonly=""="">
 									@foreach ( $report_category as $category ) 
 									@if($report_detail->report_category == $category->common_number)
 									<option value="{{$category->common_number}}" selected>{{ $category->value1 }}</option>
@@ -220,7 +220,7 @@
 						<span class="buttons">
 							<button type="submit" class="color_t1n color_b1n update" name="register" value="update_footer">更新</button>
 						</span>
-						@elseif( $authority_flag == '1' )
+						@elseif( $staff_type >= 3 )
 						<span class="buttons">
 							<button type="submit" class="color_t1n color_b1n update" name="register" value="update_footer">更新</button>
 						</span>
@@ -240,7 +240,7 @@
 						</section>
 						<section class="manager">
 							<h1>コメント</h1>
-							@if ( $authority_flag >= 3 )
+							@if ( $staff_type >= 3 )
 							<textarea name="comment" >{{ $t_report->comment }}</textarea>
 							<label><span class="color_t1n color_b1n">▼分類</span>
 								<select name="report_category">
@@ -255,7 +255,7 @@
 								</select>
 							</label>
 							@else
-							<textarea name="comment" disabled="">{{ $t_report->comment }}</textarea>
+							<textarea name="comment" readonly="">{{ $t_report->comment }}</textarea>
 							<label><span class="color_t1n color_b1n">▼分類</span>
 								<select name="report_category">
 									@foreach ( $action_type as $action )

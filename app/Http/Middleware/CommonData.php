@@ -34,6 +34,7 @@ class CommonData
             'authority_flag' => $user_record->authority_flag,
             'staff_code' => $staff->staff_code,
             'branch_code' => $branch->branch_code,
+            'staff_type' => $staff->staff_type,
         ];
         $request->merge($data);
         return $next($request);
