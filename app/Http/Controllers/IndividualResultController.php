@@ -416,6 +416,9 @@ class IndividualResultController extends Controller
                 return redirect(route('detail_report', ['report_number' => $request->request_id]));
                 break;
             case 'detail_update':
+                if (!$request->category) {
+                    $request->category = 0;
+                }
                 Treportdetail::where('report_number', $request->request_id)
                     ->where('detail_number', $request->detail_id)
                     ->update([
