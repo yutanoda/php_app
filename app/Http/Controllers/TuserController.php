@@ -61,8 +61,8 @@ class TuserController extends Controller
         
         } else {
             // パスワードの照合 不一致の場合
-            if($user_record->allow_login_counts == 0){
-                Tuser::where('user_id', $user_record->user_id)->where('valid_flag', 1)->update(['valid_flag' => 0]);
+            if($user_record->allow_login_counts == 1){
+                Tuser::where('user_id', $user_record->user_id)->where('valid_flag', 1)->update(['valid_flag' => 0, 'allow_login_counts' => 0]);
                 return redirect()->back()->with('flash_message', 'アカウントがロックされました。管理者に確認してください。');
             } else {
                 Tuser::where('user_id', $user_record->user_id)->where('valid_flag', 1)->decrement('allow_login_counts');
