@@ -32,12 +32,7 @@ class TuserController extends Controller
         }
 
         if( $request->login_password == $user_record->login_password ){
-            // 認証失敗許諾回数をリセット　 　最初に取得した初期値で上書き更新
-            if( $user_record->allow_login_counts != 5 ){
 
-                Tuser::where('user_id', $request->user_id)->where('valid_flag', 1)->update(['allow_login_counts' => 5]);
-                
-            }
             // ログインの記録
             $login_info = new Tlogin();
             $login_info->login_flag = 1;
