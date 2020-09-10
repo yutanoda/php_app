@@ -378,7 +378,7 @@ class IndividualResultController extends Controller
                     $t_report_detail->detail_number = $max_detail_number + 1;
                 }
                 $t_report_detail->created_datetime = Carbon::now();
-                $t_report_detail->updated_datetime = Carbon::now();
+                $t_report_detail->updated_datetime = null;
                 $t_report_detail->action_date = Carbon::now();
                 $t_report_detail->school_code = 0;
                 $t_report_detail->note = null;
@@ -430,6 +430,7 @@ class IndividualResultController extends Controller
                         'report2' => $request->report2,
                         'comment' => $request->comment,
                         'report_category' => $request->category,
+                        'updated_datetime' => Carbon::now()
                     ]);
                 return redirect(route('detail_report', ['report_number' => $request->request_id]));
                 break;
