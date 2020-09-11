@@ -27,5 +27,4 @@ class InclusionReportController extends Controller
     	return view('inclusion_report');
     }
 
-
 }
