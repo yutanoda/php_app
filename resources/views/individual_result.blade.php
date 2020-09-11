@@ -118,7 +118,7 @@
 								<article>
 									@foreach($report_title as $key => $title)
 										@if ( $key == $report->report_number )
-											@if($title['1report_title'] !== NULL)
+											@if($title['1report'] !== NULL)
 												<h1 class="title">{{ $title['1report_title'] }}</h1>
 												<p>{{ $title['1report'] }}</p>
 											@else
