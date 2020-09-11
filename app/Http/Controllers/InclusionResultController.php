@@ -224,6 +224,4 @@ class InclusionResultController extends Controller
     	return view('inclusion_result', $data);
     }
 
-
-
 }

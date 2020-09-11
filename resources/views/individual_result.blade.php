@@ -118,7 +118,7 @@
 								<article>
 									@foreach($report_title as $key => $title)
 										@if ( $key == $report->report_number )
-											@if($title['1report_title'] != null)
+											@if($title['1report'] !== NULL)
 												<h1 class="title">{{ $title['1report_title'] }}</h1>
 												<p>{{ $title['1report'] }}</p>
 											@else
@@ -158,7 +158,8 @@
 	</main>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script type="text/javascript">
-		// 第一学習社HSの削除
+		// 第一学習社HSの削除 
+		/*
 			$('#result > article > ul > li.content > article > h1').each(function(){
 				var hs = $(this).text();
 				if ( hs.indexOf('第一学習社HS') != -1) {
@@ -166,6 +167,7 @@
 					 $(this).text(replace_str);
 				}
 			});
+		*/
 	</script>
 </body>
 @endsection

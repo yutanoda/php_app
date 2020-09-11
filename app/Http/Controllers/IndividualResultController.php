@@ -136,7 +136,8 @@ class IndividualResultController extends Controller
                 $report_title[(integer)$value->report_number] = Treportdetail::leftjoin('t_common AS c', 't_report_detail.report_title1', '=', 'c.common_number')
                 ->leftjoin('t_common AS c2', 't_report_detail.report_title2', '=', 'c2.common_number')
                 ->where('t_report_detail.report_number', (integer)$value->report_number)
-                // ->where('c.common_id', 'report_title')
+                ->where('c.common_id', 'report_title')
+                ->where('c2.common_id', 'report_title')
                 ->first([
                     'report_number', 
                     'report1 AS 1report', 
