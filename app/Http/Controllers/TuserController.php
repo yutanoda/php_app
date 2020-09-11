@@ -132,14 +132,10 @@ class TuserController extends Controller
      */
     public function logout(Request $request)
     {
-
         $user_id = $request->session()->get('user_id');
-        $logout = new Tlogin();
-        $logout->login_flag = 2;
-        $logout->logout_datetime = Carbon::now();
-        $logout->login_user_id = $user_id;
-        $logout->logout_location = $request->location;
-        $logout->save();
+        $logout = Tlogin::where('login_user_id', $user_id)->where('login_flag',1)->orderBy('login_datetime', 'desc')->first();
+        $logout->update(['login_flag' => 2, 'logout_datetime' => Carbon::now()]);
+        
         return redirect('/');
     }
 
