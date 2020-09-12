@@ -83,7 +83,6 @@
 			<section id="result">
 				<!-- <input type="checkbox" id="tablerow1_switch" class="tablerow_switch"><input type="checkbox" id="tablerow2_switch" class="tablerow_switch"><input type="checkbox" id="tablerow3_switch" class="tablerow_switch"><input type="checkbox" id="tablerow4_switch" class="tablerow_switch"><input type="checkbox" id="tablerow5_switch" class="tablerow_switch"><input type="checkbox" id="tablerow6_switch" class="tablerow_switch"><input type="checkbox" id="tablerow7_switch" class="tablerow_switch"><input type="checkbox" id="tablerow8_switch" class="tablerow_switch"><input type="checkbox" id="tablerow9_switch" class="tablerow_switch"><input type="checkbox" id="tablerow10_switch" class="tablerow_switch"> -->
 				<article class="table">
-@if($message == null)
 					<ul class="thead color_t2 color_b2">
 						<li class="no">No.</li>
 						<li class="date">提出日</li>
@@ -92,6 +91,16 @@
 						<li class="comment">コメント</li>
 						<li class="controller"></li>
 					</ul>
+					@if($message)
+						<ul class="tbody">
+						<li></li>
+						<li></li>
+						<li></li>
+						<li>{{$message}}</li>
+						<li></li>
+						<li></li>
+						</ul>
+					@else
 						@foreach ($reports as $report)
 						<input type="checkbox" id="tablerow{{$loop->iteration}}_switch" class="tablerow_switch">
 						<ul class="tbody" style="height: 83px;">
@@ -113,7 +122,7 @@
 										@endif
 									@endforeach
 								</ul>
-							</td>
+							</li>
 							<li class="content">
 								<article>
 									@foreach($report_title as $key => $title)
@@ -139,12 +148,10 @@
 								</article>
 							</li>
 							<li class="controller"><label for="tablerow{{$loop->iteration}}_switch"></label></li>
-						</li>
-					</ul>
+							</li>
+						</ul>
 						@endforeach
-@else
-	{{$message}}
-@endif
+					@endif
 			</section>
 		</div>
 		<nav id="pagination">

@@ -150,7 +150,13 @@
 					</ul>
 						@if($message)
 						<ul class="tbody">
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
 						<li>{{$message}}</li>
+						<li></li>
+						<li></li>
 						</ul>
 						@else
 						@foreach ($reports as $report)
