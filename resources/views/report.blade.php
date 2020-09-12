@@ -166,7 +166,7 @@
 							<button type="submit" class="color_t1n color_b1n update" onclick="return confirm('この報告書を更新しますか？')" name="register" value="detail_update">更新</button>
 						</span>
 						@endif
-					<label><span>面談者：</span><input name="note" type="text" value="{{ $report_detail->note }}" id="input" @if ($t_report->status_flag >= 1) readonly="" @endif></label></h1>
+					<label><span>面談者：</span><input name="note" type="text" @if ($report_detail->note !== NULL) value="{{ $report_detail->note }}" @endif id="input" @if ($t_report->status_flag >= 1) readonly="" @endif></label></h1>
 					<input type="checkbox" id="journal1_switch" class="journal_switch" checked="checked">
 					<article class="journal">
 						<section class="employee">
@@ -231,11 +231,11 @@
 						<section class="employee">
 							<div>
 								<h1>営業活動の気づき</h1>
-								<textarea name="total_evaluation" >{{ $t_report->total_evaluation }}</textarea>
+								<textarea name="total_evaluation" @if ($t_report->status_flag >= 1) readonly="" @endif>{{ $t_report->total_evaluation }}</textarea>
 							</div>
 							<div>
 								<h1>来週の活動POINT</h1>
-								<textarea name="next_action" >{{ $t_report->next_action }}</textarea>
+								<textarea name="next_action" @if ($t_report->status_flag >= 1) readonly="" @endif>{{ $t_report->next_action }}</textarea>
 							</div>	
 						</section>
 						<section class="manager">
