@@ -57,10 +57,16 @@ class IndividualResultController extends Controller
 
                 if( $request->keyword_title ){
                     // タイトル検索
-                    $reports_front2 = Treportdetail::where('report_title1', $request->keyword_title)
-                    ->where('report_title2', $request->keyword_title)
-                    ->get(['report_number']);
-                    $reports->whereIn('report_number', $reports_front2);
+                    if ( $request->keyword_title == 1 ){
+                        $reports_front2 = Treportdetail::whereNotNull('report1')
+                        ->get(['report_number']);
+                        $reports->whereIn('report_number', $reports_front2);
+                    } elseif ( $request->keyword_title == 2 ) {
+                        $reports_front2 = Treportdetail::whereNotNull('report2')
+                        ->where('report1', NULL)
+                        ->get(['report_number']);
+                        $reports->whereIn('report_number', $reports_front2);
+                    }
                 }
 
             }

@@ -173,7 +173,7 @@
 											@if($title['1report'] !== NULL)
 												<h1 class="title">{{ $title['1report_title'] }}</h1>
 												<p>{{ $title['1report'] }}</p>
-											@else
+											@elseif($title['2report'] !== NULL)
 												<h1 class="title">{{ $title['2report_title'] }}</h1>
 												<p>{{ $title['2report'] }}</p>
 											@endif
