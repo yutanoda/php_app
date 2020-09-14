@@ -310,6 +310,7 @@ class IndividualResultController extends Controller
 
         // 分類
         $report_category = Tcommon::where('valid_flag', 1)->where('common_id', 'report_category')->get();
+        $footer_report_category = Tcommon::where('valid_flag', 1)->where('common_id', 'report_category')->get();
         $t_staff = Tstaff::where('staff_code', $t_report->staff_code)->first();
         $school = Tschool::where('assigned_staff_code', $t_staff->staff_code)->get(); 
 
@@ -330,6 +331,7 @@ class IndividualResultController extends Controller
             'performance' => $performance,
             'sum' => $sum,
             'report_category' => $report_category,
+            'footer_report_category' => $footer_report_category,
             'school_rank' => $school_rank,
         ];
 

@@ -158,7 +158,7 @@
 							@endif
 						</span>
 						{{-- @elseif( $control == 1 && $authority_flag == '1') $t_staff->staff_type? --}}
-						@elseif( $control == 1 && $staff_type >= 3)
+						@elseif( $staff_type >= 3)
 						<span class="buttons">
 <!-- 							<button type="submit" class="color_t1n color_b1n delete" name="register" value="detail_delete" onclick="return confirm('営業校を削除しますか？　この報告内容のみ削除されます。')">削除</button>	 -->
 							<button type="submit" class="color_t1n color_b1n update" onclick="return confirm('この報告書を更新しますか？')" name="register" value="detail_update">更新</button>
@@ -243,12 +243,8 @@
 							<label><span class="color_t1n color_b1n">▼分類</span>
 								<select name="report_category">
 									<option value="">-未選択-</option>
-									@foreach ( $action_type as $action )
-									<option value="{{ $action->common_number }}" 
-										@if ($t_report->report_category == $action->common_number)
-										 selected 
-										@endif
-										>{{ $action->value1 }}</option>
+									@foreach ( $footer_report_category as $category ) 
+									<option value="{{$category->common_number}}" @if($t_report->report_category == $category->common_number) selected @endif>{{ $category->value1 }}</option>
 									@endforeach
 								</select>
 							</label>
