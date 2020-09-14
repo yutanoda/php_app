@@ -433,12 +433,6 @@ class IndividualResultController extends Controller
                         'report_category' => $request->category,
                         'updated_datetime' => Carbon::now()
                     ]);
-                Treport::where('report_number', $request->request_id)
-                ->update(
-                    [
-                        'report_category' => $request->category, 
-                    ]
-                );
                 return redirect(route('detail_report', ['report_number' => $request->request_id]));
                 break;
             default:
