@@ -165,6 +165,7 @@
 						</span>
 						@endif
 					<label><span>面談者：</span><input name="note" type="text" @if ($report_detail->note !== NULL) value="{{ $report_detail->note }}" @endif id="input" @if ($t_report->status_flag >= 1) readonly="" @endif></label></h1>
+					<input type="hidden" name="control" value= {{ $control }}>
 					<input type="checkbox" id="journal1_switch" class="journal_switch" checked="checked">
 					<article class="journal">
 						<section class="employee">
@@ -252,10 +253,9 @@
 							<textarea name="comment" readonly="">{{ $t_report->comment }}</textarea>
 							<label><span class="color_t1n color_b1n">▼分類</span>
 								<select name="report_category">
-									@foreach ( $action_type as $action )
-									@if ($t_report->report_category == $action->common_number)
-									<option value="{{ $action->common_number }}">{{ $action->value1 }}</option>
-									@endif
+									<option value="">-未選択-</option>
+									@foreach ( $footer_report_category as $category ) 
+									<option value="{{$category->common_number}}" @if($t_report->report_category == $category->common_number) selected @endif>{{ $category->value1 }}</option>
 									@endforeach
 								</select>
 							</label>

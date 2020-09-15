@@ -248,8 +248,13 @@ class IndividualResultController extends Controller
         // 報告書の一覧表示
         if( strpos($request->headers->get('referer'), 'inclusion_result') ){
             $control = 1; // 全社報告書
-        }else{
-            $control = 2;
+        } else {
+            if (session('control')){
+                $control = session('control');
+                $request->session()->forget('control');
+            } else {
+                $control = 2;
+            }
         }
 
         // ヘッダー・フッター部分
@@ -435,7 +440,7 @@ class IndividualResultController extends Controller
                         'report_category' => $request->category,
                         'updated_datetime' => Carbon::now()
                     ]);
-                return redirect(route('detail_report', ['report_number' => $request->request_id]));
+                return redirect(route('detail_report', ['report_number' => $request->request_id]))->with('control', $request->control);
                 break;
             default:
                 break;
