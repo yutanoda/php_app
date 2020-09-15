@@ -15,9 +15,9 @@
 		<div>
 			<section id="search">
 				<form name="search" action="{{url('/inclusion_result')}}" method="GET">
-					<label><span class="color_t1n color_b1n">■年月</span><input type="month" name="keyword_date" @if(session('keyword_date')) value="{{ session('keyword_date') }}" @endif></label>
+					<label><span class="color_t1n color_b1n">■年月</span><input type="month" name="keyword_date" id="keyword_date" @if(session('keyword_date')) value="{{ session('keyword_date') }}" @endif></label>
 					<label><span class="color_t1n color_b1n">▼タイトル</span>
-						<select name="keyword_title">
+						<select name="keyword_title" id="keyword_title">
 							<option value="">-未選択-</option>
 							@foreach($title_commons as $title_common)
 							<option value="{{ $title_common->common_number }}"
@@ -31,7 +31,7 @@
 						</select>
 					</label>
 					<label><span class="color_t1n color_b1n">▼営業所</span>
-						<select name="keyword_branch">
+						<select name="keyword_branch" id="keyword_branch">
 							<option value="">-未選択-</option>
 							@foreach($branch_commons as $branch_common)
 							<option value="{{ $branch_common->branch_code}}"
@@ -42,7 +42,7 @@
 						</select>
 					</label>
 					<label><span class="color_t1n color_b1n">▼提出者</span>
-						<select name="keyword_submitter">
+						<select name="keyword_submitter" id="keyword_submitter">
 							<option value="">-未選択-</option>
 							@foreach($submitter_commons as $submitter_common)
 							<option value="{{ $submitter_common->staff_code}}"
@@ -78,7 +78,7 @@
 						</select>
 					</label>
 					<label><span class="color_t1n color_b1n">▼ランク</span>
-						<select name="keyword_rank">
+						<select name="keyword_rank" id="keyword_rank">
 							<option value="">-未選択-</option>
 							@foreach($rank_commons as $rank_common)
 							<option value="{{ $rank_common->common_number }}"
@@ -90,7 +90,7 @@
 						</select>
 					</label>
 					<label><span class="color_t1n color_b1n">▼分類</span>
-						<select name="keyword_category">
+						<select name="keyword_category" id="keyword_category">
 							<option value="">-未選択-</option>
 							@foreach($category_commons as $category_common)
 							<option value="{{ $category_common->common_number }}"
@@ -103,7 +103,7 @@
 					</label>
 					<label class="keyword" for="keyword_switch"><span class="color_t1n color_b1n">■キーワード</span><input type="text" id="keywords" readonly="readonly"  @if(session('keywords')) value="{{ session('keywords') }}" @endif ></label>
 					<div class="buttons">
-						<button type="reset" class="color_t1n color_b1n"><span>リセット</span></button>
+						<button type="submit" class="color_t1n color_b1n" id="reset"><span>リセット</span></button>
 						<button type="submit" class="search color_t1n color_b1n"><span>検索</span></button>
 					</div>
 					<div id="keyword"><article>
@@ -254,6 +254,30 @@
 			.fail(function() {
 			window.alert('正しい結果を得られませんでした。');
 			});
+		});
+
+		let reset = document.getElementById('reset');
+
+		let keyword_date = document.getElementById('keyword_date');
+		let keyword_title = document.getElementById('keyword_title');
+		let keyword_branch = document.getElementById('keyword_branch');
+		let keyword_submitter = document.getElementById('keyword_submitter');
+		let prefecture_id = document.getElementById('prefecture_id');
+		let keyword_school = document.getElementById('keyword_school');
+		let keyword_rank = document.getElementById('keyword_rank');
+		let keyword_category = document.getElementById('keyword_category');
+		let keywords = document.getElementById('keywords');
+
+		reset.addEventListener('click', function() {
+			keyword_date.value = "";
+			keyword_title.value = "";
+			keyword_branch.value = "";
+			keyword_submitter.value = "";
+			prefecture_id.value = "";
+			keyword_school.value = "";
+			keyword_rank.value = "";
+			keyword_category.value = "";
+			keywords = "";
 		});
 	</script>
 </body>

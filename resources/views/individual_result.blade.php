@@ -13,9 +13,9 @@
 		<div>
 			<section id="search">
 				<form>
-					<label><span class="color_t1n color_b1n">■年月</span><input type="month" name="keyword_date" @if(session('keyword_date')) value="{{ session('keyword_date') }}" @endif></label>
+					<label><span class="color_t1n color_b1n">■年月</span><input type="month" name="keyword_date" id="keyword_date" @if(session('keyword_date')) value="{{ session('keyword_date') }}" @endif></label>
 					<label><span class="color_t1n color_b1n">▼タイトル</span>
-						<select name="keyword_title">
+						<select name="keyword_title" id="keyword_title">
 							<option value="">-未選択-</option>
 							@foreach($title_commons as $title_common)
 							<option value="{{ $title_common->common_number }}"
@@ -28,7 +28,7 @@
 						</select>
 					</label>
 					<label><span class="color_t1n color_b1n">▼学校名</span>
-						<select name="keyword_school">
+						<select name="keyword_school" id="keyword_school">
 							<option value="">-未選択-</option>
 							@foreach ( $search_school as $school )
 							<option value="{{ $school->school_code }}"
@@ -41,7 +41,7 @@
 					</label>
 					<label class="keyword" for="keyword_switch"><span class="color_t1n color_b1n">■キーワード</span><input type="text" id="keywords" readonly="readonly" @if(session('keywords')) value="{{ session('keywords') }}" @endif name="keyword"></label>
 					<div class="buttons">
-						<button type="reset" class="color_t1n color_b1n"><span>リセット</span></button>
+						<button type="submit" class="color_t1n color_b1n" id="reset"><span>リセット</span></button>
 						<button type="submit" class="search color_t1n color_b1n"><span>検索</span></button>
 					</div>
 					
@@ -53,7 +53,7 @@
 									<dd>
 										<ul>
 											@foreach ( $value1_array as $k => $v )
-											<li><label><input type="checkbox" name="keywords[]" value="{{ $v['value2'] }}" data-text="{{ $v['value2'] }}"><strong>{{ $v['value2'] }}</strong></label></li>
+											<li><label><input type="checkbox" id="keywords" name="keywords[]" value="{{ $v['value2'] }}" data-text="{{ $v['value2'] }}"><strong>{{ $v['value2'] }}</strong></label></li>
 											@endforeach
 										</ul>
 									</dd>
@@ -175,6 +175,18 @@
 				}
 			});
 		*/
+		let reset = document.getElementById('reset');
+		let keyword_date = document.getElementById('keyword_date');
+		let keyword_title = document.getElementById('keyword_title');
+		let keyword_school = document.getElementById('keyword_school');
+		let keywords = document.getElementById('keywords');
+
+		reset.addEventListener('click', function() {
+			keyword_date.value = "";
+			keyword_title.value = "";
+			keyword_school.value = "";
+			keywords = "";
+		});
 	</script>
 </body>
 @endsection
