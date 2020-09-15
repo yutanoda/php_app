@@ -64,7 +64,6 @@
 							let logout = document.getElementById('logout');
 							logout_location = logout.href + "/" + location
 							logout.href = logout_location 
-							console.log(logout_location);
 			},
 			// 位置情報取得失敗時
 			function (pos) { 
