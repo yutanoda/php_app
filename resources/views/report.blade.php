@@ -194,7 +194,7 @@
 							@else
 							<textarea name="comment" readonly=""="">{{ $report_detail->comment }}</textarea>
 							<label><span class="color_t1n color_b1n">▼分類</span>
-								<select name="category" readonly=""="">
+								<select name="category" style="pointer-events: none;" tabindex="-1">
 									@foreach ( $report_category as $category ) 
 									@if($report_detail->report_category == $category->common_number)
 									<option value="{{$category->common_number}}" selected>{{ $category->value1 }}</option>
@@ -252,7 +252,7 @@
 							@else
 							<textarea name="comment" readonly="">{{ $t_report->comment }}</textarea>
 							<label><span class="color_t1n color_b1n">▼分類</span>
-								<select name="report_category">
+								<select name="report_category" style="pointer-events: none;" tabindex="-1">
 									<option value="">-未選択-</option>
 									@foreach ( $footer_report_category as $category ) 
 									<option value="{{$category->common_number}}" @if($t_report->report_category == $category->common_number) selected @endif>{{ $category->value1 }}</option>
