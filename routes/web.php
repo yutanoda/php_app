@@ -20,7 +20,7 @@ Route::get('/', function () {
 Route::get('/top', 'TuserController@topPage')->name('top')->middleware(CommonData::class);
 Route::post('/login', 'TuserController@login')->name('login');
 Route::post('/update_content', 'TuserController@updateContent')->name('update_content');
-Route::get('/logout', 'TuserController@logout')->name('logout');
+Route::get('/logout/{logout_location?}', 'TuserController@logout')->name('logout');
 
 // 全社報告書
 // Route::get('/inclusion_result', 'InclusionResultController@index')->name('inclusion_result');
