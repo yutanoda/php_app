@@ -47,11 +47,9 @@
 					<input type="hidden" name="request_id" value="{{ $report_number }}">
 					@if( $t_report->status_flag < 1 )
 					<button type="submit" class="color_t1n color_b1n op" onclick="post_t_report()" name="register" value="register"><span>提出</span></button>
-					@endif
-					@if( $t_report->status_flag < 1 )
 					<button type="submit" class="color_t1n color_b1n op" onclick="return confirm('報告書を削除しますか？　明細も全て削除されます。')" name="register" value="delete"><span>削除</span></button>
-					@endif
 					<button type="submit" class="color_t1n color_b1n op" onclick="return confirm('報告書を追加しますか？　追加後は報告内容を入力し、更新してください。')" name="register" value="add"><span>追加</span></button>
+					@endif
 				</form>
 				@endif
 			</section>
@@ -76,13 +74,13 @@
 							<dl>
 								<dt>営業日</dt>
 								<dd>
-									<input type="date" name="action_date" value="{{ $report_detail->action_date }}" @if ( $control == 1 ) readonly="" @endif>
+									<input type="date" name="action_date" value="{{ $report_detail->action_date }}" @if ( $t_report->status_flag >= 1 ) readonly="" @endif>
 								</dd>
 							</dl>
 							<dl>
 								<dt>種別</dt>
 								<dd>
-									<select name="action_type" @if ( $control == 1 ) readonly="" @endif>
+									<select name="action_type" @if ( $t_report->status_flag >= 1 ) style="pointer-events: none;" tabindex="-1" @endif>
 										@foreach ( $action_type as $action )
 										<option value="{{ $action->common_number }}" @if ( $report_detail->action_type == $action->common_number) selected @endif >{{ $action->value1 }}</option>
 										@endforeach
@@ -92,7 +90,7 @@
 							<dl class="school">
 								<dt>営業校</dt>
 								<dd>
-									<select name="school_code" @if ( $control == 1 ) readonly="" @endif>
+									<select name="school_code" @if ( $t_report->status_flag >= 1 ) style="pointer-events: none;" tabindex="-1" @endif>
 										<option value="">-未選択-</option>
 										@foreach ( $schools as $school )
 										<option value="{{ $school->school_code }}" 
@@ -160,7 +158,7 @@
 							@endif
 						</span>
 						{{-- @elseif( $control == 1 && $authority_flag == '1') $t_staff->staff_type? --}}
-						@elseif( $control == 1 && $staff_type >= 3)
+						@elseif( $staff_type >= 3)
 						<span class="buttons">
 <!-- 							<button type="submit" class="color_t1n color_b1n delete" name="register" value="detail_delete" onclick="return confirm('営業校を削除しますか？　この報告内容のみ削除されます。')">削除</button>	 -->
 							<button type="submit" class="color_t1n color_b1n update" onclick="return confirm('この報告書を更新しますか？')" name="register" value="detail_update">更新</button>
@@ -216,7 +214,7 @@
 					@csrf
 					<input type="hidden" name="request_id" value="{{ $report_number }}">
 					<h1>
-						@if ( $control == 2 )
+						@if( $t_report->status_flag < 1 ) 
 						<span class="buttons">
 							<button type="submit" class="color_t1n color_b1n update" name="register" value="update_footer">更新</button>
 						</span>
@@ -245,12 +243,8 @@
 							<label><span class="color_t1n color_b1n">▼分類</span>
 								<select name="report_category">
 									<option value="">-未選択-</option>
-									@foreach ( $action_type as $action )
-									<option value="{{ $action->common_number }}" 
-										@if ($t_report->report_category == $action->common_number)
-										 selected 
-										@endif
-										>{{ $action->value1 }}</option>
+									@foreach ( $footer_report_category as $category ) 
+									<option value="{{$category->common_number}}" @if($t_report->report_category == $category->common_number) selected @endif>{{ $category->value1 }}</option>
 									@endforeach
 								</select>
 							</label>
