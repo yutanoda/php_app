@@ -57,7 +57,7 @@
     } else {
         window.alert("本ブラウザではGeolocationが使えません");
     }
-</script>
+    </script>
 </body>
 
 </html>

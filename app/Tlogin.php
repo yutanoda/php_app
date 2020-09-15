@@ -9,6 +9,7 @@ class Tlogin extends Model
     protected $fillable = [
 				'login_flag',
 				'logout_datetime',
+				'logout_location',
     ];
     //
 	protected $table = 't_login';
