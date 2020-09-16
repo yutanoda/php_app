@@ -435,6 +435,13 @@ class IndividualResultController extends Controller
                 if (!$request->category) {
                     $request->category = 0;
                 }
+                if ( $request->comment ) {
+                    $comment_datetime = Carbon::now();
+                    $comment_staff_code = $request->staff_code;
+                } else {
+                    $comment_datetime = $data['comment_datetime'];
+                    $comment_staff_code = $data['staff_code'];
+                }
                 Treportdetail::where('report_number', $request->request_id)
                     ->where('detail_number', $request->detail_id)
                     ->update([
@@ -445,6 +452,8 @@ class IndividualResultController extends Controller
                         'report1' => $request->report1,
                         'report2' => $request->report2,
                         'comment' => $request->comment,
+                        'comment_datetime' => $comment_datetime,
+                        'comment_staff_code' => $comment_staff_code,
                         'report_category' => $request->category,
                         'updated_datetime' => Carbon::now()
                     ]);
