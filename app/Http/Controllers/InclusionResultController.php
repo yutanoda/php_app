@@ -140,8 +140,8 @@ class InclusionResultController extends Controller
         // 分類検索
         if ( $request->keyword_category ) {
             $detail_category = Treportdetail::leftjoin('t_report', 't_report_detail.report_number', '=', 't_report.report_number')
-                ->where('t_report.report_category', $request->keyword_category)
-                ->where('t_report_detail.report_category', $request->keyword_category)
+                ->orwhere('t_report.report_category', $request->keyword_category)
+                ->orwhere('t_report_detail.report_category', $request->keyword_category)
                 ->get(['t_report.report_number'])->toArray();
             $reports->whereIn('report_number', $detail_category);
         }
