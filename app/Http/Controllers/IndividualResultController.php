@@ -81,12 +81,14 @@ class IndividualResultController extends Controller
         // キーワード検索
         if ( $request->keywords ) {
 
+            $reports_front = [];
             foreach ($request->keywords as $key => $value) {
-                $reports_front = Treportdetail::orWhere('report1', 'like', '%' . $value . '%')
+                $reports_front1 = Treportdetail::orWhere('report1', 'like','%' . $value . '%')
                 ->orWhere('report2', 'like', '%' . $value . '%')
                 ->orWhere('comment', 'like', '%' . $value . '%')
                 ->get(['report_number'])
                 ->toArray();
+                $reports_front = array_merge($reports_front, $reports_front1);
             }
             foreach ($request->keywords as $key => $value) {
                 $reports_front2 = Treport::orWhere('total_evaluation', 'like', '%' . $value . '%')
@@ -94,8 +96,8 @@ class IndividualResultController extends Controller
                 ->orWhere('comment', 'like', '%' . $value . '%')
                 ->get(['report_number'])
                 ->toArray();
+                $reports_front = array_merge($reports_front, $reports_front2);
             }
-            $reports_front = array_merge($reports_front, $reports_front2);
             $reports->whereIn('report_number', $reports_front);
         }
         
