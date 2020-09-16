@@ -183,8 +183,10 @@ class IndividualResultController extends Controller
             'value1_arrays'=> $collem,
         ];
 
-
-    	return view('individual_result', $data);
+        return response(view('individual_result', $data))
+            ->withHeaders([
+                'Cache-Control' => 'no-store',
+            ]);
     }
 
     /**
@@ -348,7 +350,10 @@ class IndividualResultController extends Controller
             'school_rank' => $school_rank,
         ];
 
-        return view('report', $data);
+        return response(view('report', $data))
+            ->withHeaders([
+                'Cache-Control' => 'no-store',
+            ]);
     
     }
 

@@ -249,8 +249,11 @@ class InclusionResultController extends Controller
             'authority_flag' => $request->authority_flag,
             'report_title' => $report_title,
         ];
-
-    	return view('inclusion_result', $data);
+        
+        return response(view('inclusion_result', $data))
+            ->withHeaders([
+                'Cache-Control' => 'no-store',
+            ]);
     }
 
 }
