@@ -301,7 +301,9 @@ class IndividualResultController extends Controller
             $performance = null;
         } else {
             foreach ($t_report_detail as $key => $value) {
+                $year = date('Y') -1;
                 $performance[$value->detail_number] = Tsalesresult::where('school_code', $value->school_code)
+                                ->where('sale_date', '>=',  $year.'-09-01' )
                                 ->get([
                                     'sale_date',
                                     'item_name',
