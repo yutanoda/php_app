@@ -72,7 +72,7 @@
 								<dt>{{ $report_detail->detail_number }}.</dt>
 							</dl>
 							<dl>
-								<dt>営業</dt>
+								<dt>営業日</dt>
 								<dd>
 									<input type="date" name="action_date" value="{{ $report_detail->action_date }}" @if ( $t_report->status_flag >= 1 ) onfocus="this.blur()" readonly="readonly" @endif>
 								</dd>
