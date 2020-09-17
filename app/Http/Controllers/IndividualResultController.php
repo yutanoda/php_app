@@ -410,8 +410,33 @@ class IndividualResultController extends Controller
                 return redirect(route('detail_report', ['report_number' => $request->request_id]));
                 break;
             case 'update_footer':
-                
-                if ($request->report_category) {
+                if ( $request->comment && $request->report_category) {
+                    Treport::where('report_number', $request->request_id)
+                    ->update(
+                        [
+                            'total_evaluation' => $request->total_evaluation,
+                            'next_action' => $request->next_action,
+                            'update_datetime'=>Carbon::now(),
+                            'comment' => $request->comment,
+                            'comment_datetime' => Carbon::now(),
+                            'comment_staff_code' => $request->staff_code,
+                            'report_category' => $request->report_category,
+                        ]
+                    );
+
+                } elseif($request->comment) {
+                    Treport::where('report_number', $request->request_id)
+                    ->update(
+                        [
+                            'total_evaluation' => $request->total_evaluation,
+                            'next_action' => $request->next_action,
+                            'update_datetime'=>Carbon::now(),
+                            'comment' => $request->comment,
+                            'comment_datetime' => Carbon::now(),
+                            'comment_staff_code' => $request->staff_code,
+                        ]
+                    );
+                } elseif($request->report_category) {
                     Treport::where('report_number', $request->request_id)
                     ->update(
                         [
@@ -432,8 +457,6 @@ class IndividualResultController extends Controller
                             'next_action' => $request->next_action,
                             'update_datetime'=>Carbon::now(),
                             'comment' => $request->comment,
-                            'comment_datetime' => Carbon::now(),
-                            'comment_staff_code' => $request->staff_code,
                         ]
                     );
                 }
@@ -448,14 +471,8 @@ class IndividualResultController extends Controller
                 if (!$request->category) {
                     $request->category = 0;
                 }
-                if ( $request->comment ) {
-                    $comment_datetime = Carbon::now();
-                    $comment_staff_code = $request->staff_code;
-                } else {
-                    $comment_datetime = $data['comment_datetime'];
-                    $comment_staff_code = $data['staff_code'];
-                }
-                Treportdetail::where('report_number', $request->request_id)
+                if ( $request->comment && $request->category) {
+                    Treportdetail::where('report_number', $request->request_id)
                     ->where('detail_number', $request->detail_id)
                     ->update([
                         'action_date' => $request->action_date,
@@ -465,11 +482,58 @@ class IndividualResultController extends Controller
                         'report1' => $request->report1,
                         'report2' => $request->report2,
                         'comment' => $request->comment,
-                        'comment_datetime' => $comment_datetime,
-                        'comment_staff_code' => $comment_staff_code,
+                        'comment_datetime' => Carbon::now(),
+                        'comment_staff_code' => $request->staff_code,
                         'report_category' => $request->category,
                         'updated_datetime' => Carbon::now()
                     ]);
+
+                } elseif ($request->comment) {
+                    Treportdetail::where('report_number', $request->request_id)
+                    ->where('detail_number', $request->detail_id)
+                    ->update([
+                        'action_date' => $request->action_date,
+                        'action_type' => $request->action_type,
+                        'school_code' => $request->school_code,
+                        'note' => $request->note,
+                        'report1' => $request->report1,
+                        'report2' => $request->report2,
+                        'comment' => $request->comment,
+                        'comment_datetime' => Carbon::now(),
+                        'comment_staff_code' => $request->staff_code,
+                        'updated_datetime' => Carbon::now()
+                    ]);
+
+                } elseif ($request->category) {
+                    Treportdetail::where('report_number', $request->request_id)
+                    ->where('detail_number', $request->detail_id)
+                    ->update([
+                        'action_date' => $request->action_date,
+                        'action_type' => $request->action_type,
+                        'school_code' => $request->school_code,
+                        'note' => $request->note,
+                        'report1' => $request->report1,
+                        'report2' => $request->report2,
+                        'comment' => $request->comment,
+                        'comment_datetime' => Carbon::now(),
+                        'comment_staff_code' => $request->staff_code,
+                        'report_category' => $request->category,
+                        'updated_datetime' => Carbon::now()
+                    ]);
+                } else {
+                    Treportdetail::where('report_number', $request->request_id)
+                    ->where('detail_number', $request->detail_id)
+                    ->update([
+                        'action_date' => $request->action_date,
+                        'action_type' => $request->action_type,
+                        'school_code' => $request->school_code,
+                        'note' => $request->note,
+                        'report1' => $request->report1,
+                        'report2' => $request->report2,
+                        'comment' => $request->comment,
+                        'updated_datetime' => Carbon::now()
+                    ]);
+                }
                 return redirect(route('detail_report', ['report_number' => $request->request_id]))->with('control', $request->control);
                 break;
             default:
