@@ -279,13 +279,7 @@
 			keyword_category.value = "";
 			keywords = "";
 		});
-		//ページ移動ボタン
-		let firstButton = document.getElementsByClassName('icon item');
-		window.alert(firstButton[0].aria-disabled);
-		firstButton[0].aria-disabled = false;
-		firstButton[0].addEventListener('click', function() {
-			
-		});
+
 	</script>
 </body>
 @endsection
