@@ -206,7 +206,7 @@
 				{{ $reports->links('vendor.pagination.semantic-ui') }}
 			</ul>
 			<section class="page-fraction">
-				<p>7/25</p>
+				<p>@if (isset($_GET["page"]))　{{ htmlspecialchars($_GET["page"]) }} @else 1 @endif /{{ $max_page_num }}</p>
 			</section>
 		</nav>
 
@@ -279,6 +279,7 @@
 			keyword_category.value = "";
 			keywords = "";
 		});
+
 	</script>
 </body>
 @endsection

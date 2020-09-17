@@ -167,7 +167,12 @@ class InclusionResultController extends Controller
             }
             $reports->whereIn('report_number', $reports_front);
         }
-
+        //ページ数
+        if($reports) {
+            $reports_num = $reports->count();
+            $max_page_num = ceil($reports_num / 20);
+        }
+    
         $reports = $reports->orderBy('submitted_datetime', 'DESC')->paginate($displayed_results->value1);
 
         // 検索結果を保持
@@ -248,6 +253,7 @@ class InclusionResultController extends Controller
             'branch_name' => $request->branch_name,
             'authority_flag' => $request->authority_flag,
             'report_title' => $report_title,
+            'max_page_num' => $max_page_num,
         ];
         
         return response(view('inclusion_result', $data))
