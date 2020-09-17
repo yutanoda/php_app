@@ -46,7 +46,7 @@
 					@csrf
 					<input type="hidden" name="request_id" value="{{ $report_number }}">
 					@if( $t_report->status_flag < 1 )
-					<button type="submit" class="color_t1n color_b1n op" onclick="post_t_report()" name="register" value="register"><span>提出</span></button>
+					<button type="submit" class="color_t1n color_b1n op" onclick="post_t_report()" name="register" value="register" id="submit_register"><span>提出</span></button>
 					<button type="submit" class="color_t1n color_b1n op" onclick="return confirm('報告書を削除しますか？　明細も全て削除されます。')" name="register" value="delete"><span>削除</span></button>
 					<button type="submit" class="color_t1n color_b1n op" onclick="return confirm('報告書を追加しますか？　追加後は報告内容を入力し、更新してください。')" name="register" value="add"><span>追加</span></button>
 					@endif
@@ -285,10 +285,30 @@
 			}
 		});
 
+		
+		$("#submit_register").click(function(){
+			let report1 = document.getElementsByName('report1');
+			let report2 = document.getElementsByName('report2');
+			let arrayNum = report1.length;
+			let count = 0;
+			
+			for (i = 0; i < arrayNum; i++) {
+				if (report1[i].value == "" && report2[i].value == "") {
+					count ++;
+     	 	}
+			}
+
+      if (count > 0) {
+        let checked = confirm('報告内容が登録されていないため、提出できません。');
+        return false;
+      } else {
+				return confirm('報告書を提出しますか？　提出後は変更できません。');
+			}
+		});
 
 		// 明細情報が一切ないときには提出させない
+		/*
 		var post_t_report = function post_t_report(){
-			console.log('clock');
 			id = [];
 			$(function(){
 				$('.detail_id').each(function(){
@@ -301,6 +321,7 @@
 				}
 			});
 		}
+		*/
 
 
 		$('textarea').each(function(){
