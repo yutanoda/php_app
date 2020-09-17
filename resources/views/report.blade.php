@@ -214,6 +214,7 @@
 				<form action="{{ url('report_register') }}" method="post">
 					@csrf
 					<input type="hidden" name="request_id" value="{{ $report_number }}">
+					<input type="hidden" name="control" value= {{ $control }}>
 					<h1>
 						@if( $t_report->status_flag < 1 ) 
 						<span class="buttons">

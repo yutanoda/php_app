@@ -431,7 +431,7 @@ class IndividualResultController extends Controller
                                 'report_category' => $request->report_category,
                             ]
                         );
-                return redirect(route('detail_report', ['report_number' => $request->request_id]));
+                return redirect(route('detail_report', ['report_number' => $request->request_id]))->with('control', $request->control);
                 break;
             case 'detail_delete':
                 Treportdetail::where('report_number', $request->request_id)
