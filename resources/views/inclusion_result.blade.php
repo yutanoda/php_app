@@ -206,7 +206,7 @@
 				{{ $reports->links('vendor.pagination.semantic-ui') }}
 			</ul>
 			<section class="page-fraction">
-				<p>@if (isset($_GET["page"]))　{{ htmlspecialchars($_GET["page"]) }} @else 1 @endif /{{ $reports_num }}</p>
+				<p>@if (isset($_GET["page"]))　{{ htmlspecialchars($_GET["page"]) }} @else 1 @endif /{{ $max_page_num }}</p>
 			</section>
 		</nav>
 
@@ -278,6 +278,13 @@
 			keyword_rank.value = "";
 			keyword_category.value = "";
 			keywords = "";
+		});
+		//ページ移動ボタン
+		let firstButton = document.getElementsByClassName('icon item');
+		window.alert(firstButton[0].aria-disabled);
+		firstButton[0].aria-disabled = false;
+		firstButton[0].addEventListener('click', function() {
+			
 		});
 	</script>
 </body>
