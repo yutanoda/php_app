@@ -410,27 +410,33 @@ class IndividualResultController extends Controller
                 return redirect(route('detail_report', ['report_number' => $request->request_id]));
                 break;
             case 'update_footer':
-                if ( $request->comment ) {
-                    $comment_datetime = Carbon::now();
-                    $comment_staff_code = $request->staff_code;
+                
+                if ($request->report_category) {
+                    Treport::where('report_number', $request->request_id)
+                    ->update(
+                        [
+                            'total_evaluation' => $request->total_evaluation,
+                            'next_action' => $request->next_action,
+                            'update_datetime'=>Carbon::now(),
+                            'comment' => $request->comment,
+                            'comment_datetime' => Carbon::now(),
+                            'comment_staff_code' => $request->staff_code,
+                            'report_category' => $request->report_category,
+                        ]
+                    );
                 } else {
-                    $data = Treport::where('report_number', $request->request_id)->first()->toArray();
-                    $comment_datetime = $data['comment_datetime'];
-                    $comment_staff_code = $data['staff_code'];
-                    $request->report_category = $data['report_category'];
+                    Treport::where('report_number', $request->request_id)
+                    ->update(
+                        [
+                            'total_evaluation' => $request->total_evaluation,
+                            'next_action' => $request->next_action,
+                            'update_datetime'=>Carbon::now(),
+                            'comment' => $request->comment,
+                            'comment_datetime' => Carbon::now(),
+                            'comment_staff_code' => $request->staff_code,
+                        ]
+                    );
                 }
-                Treport::where('report_number', $request->request_id)
-                        ->update(
-                            [
-                                'total_evaluation' => $request->total_evaluation,
-                                'next_action' => $request->next_action,
-                                'update_datetime'=>Carbon::now(),
-                                'comment' => $request->comment,
-                                'comment_datetime' => $comment_datetime,
-                                'comment_staff_code' => $comment_staff_code,
-                                'report_category' => $request->report_category,
-                            ]
-                        );
                 return redirect(route('detail_report', ['report_number' => $request->request_id]))->with('control', $request->control);
                 break;
             case 'detail_delete':
