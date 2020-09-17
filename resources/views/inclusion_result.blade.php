@@ -206,7 +206,7 @@
 				{{ $reports->links('vendor.pagination.semantic-ui') }}
 			</ul>
 			<section class="page-fraction">
-				<p>7/25</p>
+				<p>@if (isset($_GET["page"]))　{{ htmlspecialchars($_GET["page"]) }} @else 1 @endif /{{ $reports_num }}</p>
 			</section>
 		</nav>
 
