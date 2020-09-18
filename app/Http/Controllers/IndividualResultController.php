@@ -315,7 +315,9 @@ class IndividualResultController extends Controller
                                 ]);
                 if ( $value->school_code ) {
                     array_push($school_code_array, $value->school_code);
-                    $sum[$value->detail_number] = Tsalesresult::where('school_code', $value->school_code)->sum('sales_amount');
+                    $sum[$value->detail_number] = Tsalesresult::where('school_code', $value->school_code)
+                                ->where('sale_date', '>=',  $year.'-09-01' )
+                                ->sum('sales_amount');
                 }
                 if ( $value->school_rank ) {
                     $school_rank[$value->detail_number] = Tcommon::where('common_id', 'school_rank')
