@@ -267,6 +267,14 @@ class IndividualResultController extends Controller
             }
         }
 
+        if (session('return_num')){
+            $return_num = session('return_num');
+            $request->session()->forget('return_num');
+        } else {
+            $return_num = 0;
+        }
+
+
         // ヘッダー・フッター部分
         $t_report = Treport::where('valid_flag', 1)
                     ->where('report_number', $request->report_number)->first();
@@ -333,6 +341,7 @@ class IndividualResultController extends Controller
 
         $data = [
             'control' => $control,
+            'return_num' => $return_num,
             'staff_name' => $request->staff_name,
             'branch_name' => $request->branch_name,
             'authority_flag' => $request->authority_flag,
@@ -460,7 +469,9 @@ class IndividualResultController extends Controller
                         ]
                     );
                 }
-                return redirect(route('detail_report', ['report_number' => $request->request_id]))->with('control', $request->control);
+                return redirect(route('detail_report', ['report_number' => $request->request_id]))
+                        ->with('return_num', $request->return_num)
+                        ->with('control', $request->control);
                 break;
             case 'detail_delete':
                 Treportdetail::where('report_number', $request->request_id)
@@ -534,7 +545,9 @@ class IndividualResultController extends Controller
                         'updated_datetime' => Carbon::now()
                     ]);
                 }
-                return redirect(route('detail_report', ['report_number' => $request->request_id]))->with('control', $request->control);
+                return redirect(route('detail_report', ['report_number' => $request->request_id]))
+                    ->with('return_num', $request->return_num)
+                    ->with('control', $request->control);
                 break;
             default:
                 break;
