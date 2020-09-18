@@ -1,5 +1,4 @@
 @extends('common.layout')
-
 @section('title')
 @if ($control == 1)
 	全社報告書

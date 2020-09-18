@@ -80,13 +80,13 @@
 					<label><span class="color_t1n color_b1n">▼ランク</span>
 						<select name="keyword_rank" id="keyword_rank">
 							<option value="">-未選択-</option>
-							@foreach($rank_commons as $rank_common)
-							<option value="{{ $rank_common }}"
-								@if( session('keyword_rank') && $rank_common == session('keyword_rank') )
-								selected
-								@endif
-								>{{ $rank_common}}</option>
-							@endforeach
+							<option value="A" @if( session('keyword_rank') && "A" == session('keyword_rank') ) selected @endif >A</option>
+							<option value="B" @if( session('keyword_rank') && "B" == session('keyword_rank') ) selected @endif >B</option>
+							<option value="C" @if( session('keyword_rank') && "C" == session('keyword_rank') ) selected @endif >C</option>
+							<option value="D" @if( session('keyword_rank') && "D" == session('keyword_rank') ) selected @endif >D</option>
+							<option value="E" @if( session('keyword_rank') && "E" == session('keyword_rank') ) selected @endif >E</option>
+							<option value="F" @if( session('keyword_rank') && "F" == session('keyword_rank') ) selected @endif >F</option>
+							<option value="J" @if( session('keyword_rank') && "J" == session('keyword_rank') ) selected @endif >J</option>
 						</select>
 					</label>
 					<label><span class="color_t1n color_b1n">▼分類</span>
