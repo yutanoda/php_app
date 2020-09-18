@@ -328,7 +328,7 @@ class IndividualResultController extends Controller
                                 ->where('sale_date', '>=',  $year.'-09-01' )
                                 ->sum('sales_amount');
                 }
-                if ( $value->school_rank || $value->school_rank == 0) {
+                if ( $value->school_rank || $value->school_rank === 0) {
                     $school_rank[$value->detail_number] = Tcommon::where('common_id', 'school_rank')
                     ->where('common_number', $value->school_rank)
                     ->first(['value1'])->toArray();
