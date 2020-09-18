@@ -81,11 +81,11 @@
 						<select name="keyword_rank" id="keyword_rank">
 							<option value="">-未選択-</option>
 							@foreach($rank_commons as $rank_common)
-							<option value="{{ $rank_common }}"
-								@if( session('keyword_rank') && $rank_common == session('keyword_rank') )
+							<option value="{{ $rank_common->common_number }}"
+								@if( session('keyword_rank') && $rank_common->common_number == session('keyword_rank') )
 								selected
 								@endif
-								>{{ $rank_common}}</option>
+								>{{ $rank_common->value1}}</option>
 							@endforeach
 						</select>
 					</label>

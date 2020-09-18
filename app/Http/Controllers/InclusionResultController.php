@@ -51,7 +51,10 @@ class InclusionResultController extends Controller
         $school_commons = Tschool::select('school_name', 'prefecture_code', 'school_code')
             ->get();
         // プルダウン　ランク条件
-        $rank_commons = ['J', 'A', 'B', 'C', 'D', 'E', 'F'];
+        $rank_commons = Tcommon::where('valid_flag', 1)
+            ->where('common_id', 'school_rank')
+            ->get(['value1', 'common_number']);
+
         // プルダウン　分類条件
         $category_commons = Tcommon::select('value1', 'common_number')->where('valid_flag', 1)
             ->where('common_id', 'report_category')
@@ -99,30 +102,7 @@ class InclusionResultController extends Controller
             }
 
             if ( $request->keyword_rank ) {
-                $school_rank = $request->keyword_rank;
-                switch ($school_rank) {
-                case 'J':
-                    $school_code = Tschool::where('school_rank', [0])->get(['school_code']);
-                    break;
-                case 'A':
-                    $school_code = Tschool::where('school_rank', [1, 2])->get(['school_code']);
-                    break;
-                case 'B':
-                    $school_code = Tschool::where('school_rank', [3, 4])->get(['school_code']);
-                    break;
-                case 'C':
-                    $school_code = Tschool::where('school_rank', [5, 6])->get(['school_code']);
-                    break;
-                case 'D':
-                    $school_code = Tschool::where('school_rank', [7, 8])->get(['school_code']);
-                    break;
-                case 'E':
-                    $school_code = Tschool::where('school_rank', [9, 10])->get(['school_code']);
-                    break;
-                case 'F':
-                    $school_code = Tschool::where('school_rank', [11])->get(['school_code']);
-                    break;
-                }
+                $school_code = Tschool::where('school_rank', $request->keyword_rank)->get(['school_code']);
                 $report_number_school_code = Treportdetail::whereIn('school_code', $school_code)->get(['report_number']);
                 $reports->whereIn('report_number', $report_number_school_code);
             }
