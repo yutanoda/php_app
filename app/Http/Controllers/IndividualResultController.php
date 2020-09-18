@@ -298,6 +298,7 @@ class IndividualResultController extends Controller
         $school_code_array = [];
         $school_rank = [];
         $sum = [];
+        $test = 0;
 
         if ( $t_report_detail->isEmpty() ) {
             $performance = null;
@@ -317,7 +318,7 @@ class IndividualResultController extends Controller
                     array_push($school_code_array, $value->school_code);
                     $sum[$value->detail_number] = Tsalesresult::where('school_code', $value->school_code)->sum('sales_amount');
                 }
-                if ( $value->school_rank ) {
+                if ( $value->school_rank || $value->school_rank == 0) {
                     $school_rank[$value->detail_number] = Tcommon::where('common_id', 'school_rank')
                     ->where('common_number', $value->school_rank)
                     ->first(['value1'])->toArray();

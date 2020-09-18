@@ -1,5 +1,5 @@
 @extends('common.layout')
-
+{{ var_dump($school_rank) }}
 @section('title')
 @if ($control == 1)
 	全社報告書
