@@ -102,15 +102,15 @@ class InclusionResultController extends Controller
             }
 
             if ( $request->keyword_rank ) {
-                $commons = Tcommon::where('common_id', 'shool_rank')
+                $common_numbers = Tcommon::where('common_id', 'school_rank')
                     ->where('value1', $request->keyword_rank)
-                    ->get(['common_number']);
-                
-                $school_code = Tschool::whereIn('school_rank', $commons)->get(['school_code']);
+                    ->get(['common_number'])
+                    ->toArray();
+
+                $school_code = Tschool::whereIn('school_rank', $common_numbers)->get(['school_code']);
                 $report_number_school_code = Treportdetail::whereIn('school_code', $school_code)->get(['report_number']);
                 $reports->whereIn('report_number', $report_number_school_code);
             }
-
         }
         // 営業所検索
         if( $request->keyword_branch ){
