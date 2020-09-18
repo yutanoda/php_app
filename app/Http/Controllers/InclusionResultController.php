@@ -78,7 +78,7 @@ class InclusionResultController extends Controller
                     $reports->whereIn('report_number', $reports_front);
                 } else {
                     // 指定校なし 未選択の場合は選択都道府県に該当する学校全てが検索対象
-                    $search_school_code = Tschool::where('prefecture_code', $request->prefecture_code)->get(['school_code'])->toArray();
+                    $search_school_code = Tschool::where('prefecture_code', $request->keyword_prefecture)->get(['school_code'])->toArray();
                     $reports_front = Treportdetail::whereIn('school_code', $search_school_code)->get(['report_number']);
                     $reports->whereIn('report_number', $reports_front);
                 }
