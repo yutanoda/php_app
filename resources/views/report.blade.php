@@ -52,8 +52,8 @@
 				</form>
 				@endif
 			</section>
-			@if ( $return_num == 1 )
-				<a href="javascript:history.go(-2);" class="color_t1n color_b1n op">戻る</a>
+			@if ( session('return_num')  )
+				<a href="javascript:history.go(-{{ $return_num + 1}});" class="color_t1n color_b1n op">戻る</a>
 			@else 
 				<a href="javascript:history.back();" class="color_t1n color_b1n op">戻る</a>
 			@endif
@@ -165,7 +165,7 @@
 						@endif
 					<label><span>面談者：</span><input name="note" type="text" @if ($report_detail->note !== NULL) value="{{ $report_detail->note }}" @endif id="input" @if ($t_report->status_flag >= 1) readonly="" @endif></label></h1>
 					<input type="hidden" name="control" value= {{ $control }}>
-					<input type="hidden" name="return_num" value=1>
+					<input type="hidden" name="return_num" value= {{ $return_num }}>
 					<input type="checkbox" id="journal1_switch" class="journal_switch" checked="checked">
 					<article class="journal">
 						<section class="employee">
@@ -215,15 +215,15 @@
 					@csrf
 					<input type="hidden" name="request_id" value="{{ $report_number }}">
 					<input type="hidden" name="control" value= {{ $control }}>
-					<input type="hidden" name="return_num" value=1>
+					<input type="hidden" name="return_num" value={{ $return_num }}>
 					<h1>
 						@if( $t_report->status_flag < 1 ) 
 						<span class="buttons">
-							<button type="submit" class="color_t1n color_b1n update" name="register" value="update_footer">更新</button>
+							<button type="submit" class="color_t1n color_b1n update" onclick="return confirm('この報告書を更新しますか？')" name="register" value="update_footer">更新</button>
 						</span>
 						@elseif( $staff_type >= 3 )
 						<span class="buttons">
-							<button type="submit" class="color_t1n color_b1n update" name="register" value="update_footer">更新</button>
+							<button type="submit" class="color_t1n color_b1n update" onclick="return confirm('この報告書を更新しますか？')" name="register" value="update_footer">更新</button>
 						</span>
 						@endif
 					</h1>
@@ -306,6 +306,10 @@
 				return confirm('報告書を提出しますか？　提出後は変更できません。');
 			}
 		});
+
+		//フッターの更新
+
+
 
 		// 明細情報が一切ないときには提出させない
 		/*

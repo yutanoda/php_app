@@ -269,7 +269,6 @@ class IndividualResultController extends Controller
 
         if (session('return_num')){
             $return_num = session('return_num');
-            $request->session()->forget('return_num');
         } else {
             $return_num = 0;
         }
@@ -326,6 +325,7 @@ class IndividualResultController extends Controller
                     array_push($school_code_array, $value->school_code);
                     $sum[$value->detail_number] = Tsalesresult::where('school_code', $value->school_code)
                                 ->where('sale_date', '>=',  $year.'-09-01' )
+                                ->orderBy('sale_date', 'asc')
                                 ->sum('sales_amount');
                 }
                 if ( $value->school_rank || $value->school_rank === 0) {
@@ -340,7 +340,7 @@ class IndividualResultController extends Controller
         $report_category = Tcommon::where('valid_flag', 1)->where('common_id', 'report_category')->get();
         $footer_report_category = Tcommon::where('valid_flag', 1)->where('common_id', 'report_category')->get();
         $t_staff = Tstaff::where('staff_code', $t_report->staff_code)->first();
-        $school = Tschool::where('assigned_staff_code', $t_staff->staff_code)->get(); 
+        $school = Tschool::where('assigned_staff_code', $t_staff->staff_code)->orderBy('school_name', 'asc')->get(); 
 
         $data = [
             'control' => $control,
@@ -473,7 +473,7 @@ class IndividualResultController extends Controller
                     );
                 }
                 return redirect(route('detail_report', ['report_number' => $request->request_id]))
-                        ->with('return_num', $request->return_num)
+                        ->with('return_num', $request->return_num + 1)
                         ->with('control', $request->control);
                 break;
             case 'detail_delete':
@@ -549,7 +549,7 @@ class IndividualResultController extends Controller
                     ]);
                 }
                 return redirect(route('detail_report', ['report_number' => $request->request_id]))
-                    ->with('return_num', $request->return_num)
+                    ->with('return_num', $request->return_num + 1)
                     ->with('control', $request->control);
                 break;
             default:
