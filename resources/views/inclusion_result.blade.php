@@ -4,8 +4,6 @@
 全体報告書
 @endsection
 
-
-
 @section('content')
 <!-- 全社報告書 -->
 <body class="search hy">
@@ -217,13 +215,14 @@
 	<script type="text/javascript">
 
 		// 都道府県が未選択で学校検索をクリックした場合、都道府県を選択するようメッセージ表示
-		$('#keyword_school').click(function(){
+		/*$('#keyword_school').click(function(){
 			var prefecture = $('#prefecture_id').val();
 			if ( prefecture == '' ) {
 				alert('都道府県から選択してください。');
 			}
 		});
-// 第一学習社HSの削除
+		*/
+		// 第一学習社HSの削除
 			$('#result > article > ul > li.content > article > h1').each(function(){
 				var hs = $(this).text();
 				if ( hs.indexOf('第一学習社HS') != -1) {
@@ -256,6 +255,7 @@
 			});
 		});
 
+
 		let reset = document.getElementById('reset');
 
 		let keyword_date = document.getElementById('keyword_date');
@@ -279,7 +279,6 @@
 			keyword_category.value = "";
 			keywords = "";
 		});
-
 	</script>
 </body>
 @endsection

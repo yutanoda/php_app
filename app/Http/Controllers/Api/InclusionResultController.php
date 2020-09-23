@@ -13,7 +13,7 @@ class InclusionResultController extends Controller
     public function index(Request $request)
     {
         $prefecture_id = $request->prefecture_id;
-        $data = Tschool::where('prefecture_code', $prefecture_id)->get(['school_name', 'school_code']);
+        $data = Tschool::where('prefecture_code', $prefecture_id)->orderBy('school_name', 'asc')->get(['school_name', 'school_code']);
         return $data;
     }
 

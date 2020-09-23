@@ -32,6 +32,7 @@ class IndividualResultController extends Controller
         $displayed_results = Tcommon::where('common_id', 'max_page_record')->first(['value1']);
         // 学校名
         $search_school = Tschool::where('assigned_staff_code', $request->staff_code)
+        ->orderBy('school_name', 'asc')
         ->get(['school_code', 'school_name']);
         //　キーワード条件
         $commons_cate = Tcommon::where('common_id', 'keyword')->groupBy('value1')->get(['value1']);

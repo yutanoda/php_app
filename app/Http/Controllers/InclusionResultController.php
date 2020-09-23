@@ -47,9 +47,7 @@ class InclusionResultController extends Controller
         // プルダウン　都道府県条件
         $prefecture_commons = Tprefecture::select('prefecture_name', 'prefecture_code')
             ->get();
-        // プルダウン　学校条件
-        $school_commons = Tschool::select('school_name', 'prefecture_code', 'school_code')
-            ->get();
+    
         // プルダウン　ランク条件
         $rank_commons = Tcommon::where('valid_flag', 1)
             ->where('common_id', 'school_rank')
@@ -70,7 +68,7 @@ class InclusionResultController extends Controller
             $reports->where('submitted_datetime', 'like', $request->keyword_date.'%');
         }
         // タイトル・検索・ランク条件検索
-        if ( $request->keyword_title || $request->keyword_rank || $request->keyword_prefecture ) {
+        if ( $request->keyword_title || $request->keyword_rank || $request->keyword_prefecture || $request->keyword_school) {
 
             // 学校名の未選択も可能にし、未選択の場合は選択都道府県に該当する学校全てが検索対象
             if ( $request->keyword_prefecture ) {
@@ -85,6 +83,10 @@ class InclusionResultController extends Controller
                     $reports_front = Treportdetail::whereIn('school_code', $search_school_code)->get(['report_number']);
                     $reports->whereIn('report_number', $reports_front);
                 }
+            } else {
+                $reports_front = Treportdetail::where('school_code', $request->keyword_school)
+                    ->get(['report_number']);
+                    $reports->whereIn('report_number', $reports_front);
             }
 
             if( $request->keyword_title ){
@@ -168,6 +170,18 @@ class InclusionResultController extends Controller
         $request->session()->flash('keyword_rank', $request->keyword_rank);
         $request->session()->flash('keyword_category', $request->keyword_category);
         $request->session()->flash('keyword_date', $request->keyword_date);
+
+        // プルダウン　学校条件
+        if (session('keyword_prefecture')) {
+            $prefecture_id = session('keyword_prefecture');
+            $school_commons = Tschool::where('prefecture_code', $prefecture_id)
+            ->orderBy('school_name', 'asc')
+            ->get(['school_name', 'school_code']);
+        } else {
+            $school_commons = Tschool::select('school_name', 'prefecture_code', 'school_code')
+            ->orderBy('school_name', 'asc')
+            ->get();
+        }
 
         if ( is_array($request->keywords) ) {
             $keywords = implode($request->keywords, ',');
