@@ -420,7 +420,8 @@ class IndividualResultController extends Controller
                 $t_report_detail->note = null;
                 $t_report_detail->comment_datetime = null;
                 $t_report_detail->save();
-                return redirect(route('detail_report', ['report_number' => $request->request_id]));
+                return redirect(route('detail_report', ['report_number' => $request->request_id]))
+                    ->with('return_num', $request->return_num + 1);
                 break;
             case 'update_footer':
                 if ( $request->comment && $request->report_category) {
@@ -480,7 +481,8 @@ class IndividualResultController extends Controller
             case 'detail_delete':
                 Treportdetail::where('report_number', $request->request_id)
                     ->where('detail_number', $request->detail_id)->delete();
-                return redirect(route('detail_report', ['report_number' => $request->request_id]));
+                return redirect(route('detail_report', ['report_number' => $request->request_id]))
+                    ->with('return_num', $request->return_num + 1);
                 break;
             case 'detail_update':
                 if (!$request->category) {
