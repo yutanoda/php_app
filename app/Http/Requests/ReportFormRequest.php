@@ -36,9 +36,9 @@ class ReportFormRequest extends FormRequest
         return [
             'request_id.required' => '報告書NOが不正です。一覧画面から再度選択してください。',
             'request_id.numeric' => '報告書NOは整数でなければいけません。',
-            // 'action_type.required_if' => '営業日・種別・営業校が正しいか確認してください。',
-            // 'action_date.required_if' => '営業日・種別・営業校が正しいか確認してください。',
-            // 'school_code.required_if' => '営業日・種別・営業校が正しいか確認してください。',
+            // 'action_type.required_if' => '営業日・種別・訪問校が正しいか確認してください。',
+            // 'action_date.required_if' => '営業日・種別・訪問校が正しいか確認してください。',
+            // 'school_code.required_if' => '営業日・種別・訪問校が正しいか確認してください。',
         ];
     }
 
