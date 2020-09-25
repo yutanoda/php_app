@@ -61,7 +61,7 @@
 		<div id="report">
 			<section>
 				@foreach ($t_report_detail as $report_detail)
-				<form action="{{ url('report_register') }}" method="post">
+				<form action="{{ url('report_register') }}" method="post" name="detail_report_form">
 					@csrf
 					<input type="hidden" name="request_id" value="{{ $report_number }}">
 					<input type="hidden" name="detail_id" value="{{ $report_detail->detail_number }}" class="detail_id">
@@ -151,7 +151,7 @@
 					<h1>
 						@if ( $control == 2 && $t_report->status_flag < 1)
 						<span class="buttons">
-							<button type="submit" class="color_t1n color_b1n delete" name="register" value="detail_delete" onclick="return confirm('営業校を削除しますか？　この報告内容のみ削除されます。')">削除</button>	
+							<button type="submit" class="color_t1n color_b1n delete" name="register" value="detail_delete" id="detail_delete" onclick="return confirm('営業校を削除しますか？　この報告内容のみ削除されます。')">削除</button>	
 							@if( $t_report->status_flag < 1 )
 							<button type="submit" class="color_t1n color_b1n update" onclick="return confirm('この報告書を更新しますか？')" name="register" value="detail_update">更新</button>
 							@endif
@@ -219,11 +219,11 @@
 					<h1>
 						@if( $t_report->status_flag < 1 ) 
 						<span class="buttons">
-							<button type="submit" class="color_t1n color_b1n update" onclick="return confirm('この報告書を更新しますか？')" name="register" value="update_footer">更新</button>
+							<button type="submit" class="color_t1n color_b1n update" onclick="return confirm('この報告書を更新しますか？')" name="register" value="update_footer" id="update_footer">更新</button>
 						</span>
 						@elseif( $staff_type >= 3 )
 						<span class="buttons">
-							<button type="submit" class="color_t1n color_b1n update" onclick="return confirm('この報告書を更新しますか？')" name="register" value="update_footer">更新</button>
+							<button type="submit" class="color_t1n color_b1n update" onclick="return confirm('この報告書を更新しますか？')" name="register" value="update_footer" id="update_footer">更新</button>
 						</span>
 						@endif
 					</h1>
@@ -286,7 +286,7 @@
 			}
 		});
 
-		
+		//提出
 		$("#submit_register").click(function(){
 			let report1 = document.getElementsByName('report1');
 			let report2 = document.getElementsByName('report2');
@@ -307,9 +307,14 @@
 			}
 		});
 
-		//フッターの更新
-
-
+		$("#detail_delete").click(function(){
+			let detail_report_form = document.getElementsByName('detail_report_form');
+			if(detail_report_form.length <= 1) {
+				let checked = confirm('削除できません。営業報告書は最低1つ以上は必要です。');
+        return false;
+			}
+		});
+		
 
 		// 明細情報が一切ないときには提出させない
 		/*
