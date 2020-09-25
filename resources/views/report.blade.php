@@ -87,7 +87,7 @@
 								</dd>
 							</dl>
 							<dl class="school">
-								<dt>営業校</dt>
+								<dt>訪問校</dt>
 								<dd>
 									<select name="school_code" @if ( $t_report->status_flag >= 1 ) style="pointer-events: none;" tabindex="-1" @endif>
 										<option value="">-未選択-</option>
@@ -99,7 +99,6 @@
 											>{{ $school->school_name }}</option>
 										@endforeach
 									</select>
-									{{ $report_detail->prefecture_name }}{{ $report_detail->address }}
 								</dd>
 							</dl>
 							<dl>
@@ -129,7 +128,7 @@
 							<tr>
 								<th class="date">実績日付</th>
 								<th class="product">商品</th>
-								<th class="quantity">数量</th>
+								<th class="quantity">人数</th>
 								<th class="grade">学年</th>
 								<th class="total">金額</th>
 							</tr>
@@ -151,7 +150,7 @@
 					<h1>
 						@if ( $control == 2 && $t_report->status_flag < 1)
 						<span class="buttons">
-							<button type="submit" class="color_t1n color_b1n delete" name="register" value="detail_delete" onclick="return confirm('営業校を削除しますか？　この報告内容のみ削除されます。')">削除</button>	
+							<button type="submit" class="color_t1n color_b1n delete" name="register" value="detail_delete" onclick="return confirm('訪問校を削除しますか？　この報告内容のみ削除されます。')">削除</button>	
 							@if( $t_report->status_flag < 1 )
 							<button type="submit" class="color_t1n color_b1n update" onclick="return confirm('この報告書を更新しますか？')" name="register" value="detail_update">更新</button>
 							@endif
@@ -159,7 +158,7 @@
 						{{-- @elseif( $control == 1 && $authority_flag == '1') $t_staff->staff_type? --}}
 						@elseif( $staff_type >= 3)
 						<span class="buttons">
-<!-- 							<button type="submit" class="color_t1n color_b1n delete" name="register" value="detail_delete" onclick="return confirm('営業校を削除しますか？　この報告内容のみ削除されます。')">削除</button>	 -->
+<!-- 							<button type="submit" class="color_t1n color_b1n delete" name="register" value="detail_delete" onclick="return confirm('訪問校を削除しますか？　この報告内容のみ削除されます。')">削除</button>	 -->
 							<button type="submit" class="color_t1n color_b1n update" onclick="return confirm('この報告書を更新しますか？')" name="register" value="detail_update">更新</button>
 						</span>
 						@endif
@@ -281,7 +280,7 @@
 			var action_type = $(this).parent('.buttons').parent('h1').prev('.achievement').find('dl:nth-child(3) > dd > select').val();
 			var school_code = $(this).parent('.buttons').parent('h1').prev('.achievement').find('dl:nth-child(4) > dd > select').val();
 			if (!date || !action_type || !school_code) {
-				alert('営業日・種別・営業校が正しいか確認してください。');
+				alert('営業日・種別・訪問校が正しいか確認してください。');
 				return false;
 			}
 		});

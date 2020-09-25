@@ -65,7 +65,7 @@
 								<dd>訪問/面談営業</dd>
 							</dl>
 							<dl>
-								<dt>営業校</dt>
+								<dt>訪問校</dt>
 								<dd>大谷高校（京都市東山区）</dd>
 							</dl>
 							<dl>
@@ -85,7 +85,7 @@
 							<tr>
 								<th class="date">実績日付</th>
 								<th class="product">商品</th>
-								<th class="quantity">数量</th>
+								<th class="quantity">人数</th>
 								<th class="grade">学年</th>
 								<th class="total">金額</th>
 							</tr>
@@ -168,7 +168,7 @@
 								<dd>電話営業</dd>
 							</dl>
 							<dl>
-								<dt>営業校</dt>
+								<dt>訪問校</dt>
 								<dd>京都成章高校（京都市西京区）</dd>
 							</dl>
 							<dl>
@@ -188,7 +188,7 @@
 							<tr>
 								<th class="date">実績日付</th>
 								<th class="product">商品</th>
-								<th class="quantity">数量</th>
+								<th class="quantity">人数</th>
 								<th class="grade">学年</th>
 								<th class="total">金額</th>
 							</tr>
