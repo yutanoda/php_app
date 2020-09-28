@@ -20,7 +20,7 @@
 		<nav>
 			<ul>
 				<li><a href="info.html" class="color_t1n color_b1n"><span>回覧</span></a></li>
-				<li><strong class="color_t1 color_b1"><span>全社報告書</span></strong></li>
+				<li class="active"><label for="navi_switch"><strong class="color_t1 color_b1"><span>全社報告書</span></strong></label></li>
 				<li><a href="individual_search.html" class="color_t1n color_b1n"><span>個別報告書</span></a></li>
 				<li><a href="correspondence_search.html" class="color_t1n color_b1n"><span>要望・提案書</span></a></li>
 				<li><a href="#" class="color_t1n color_b1n"><span>営業集計</span></a></li>
