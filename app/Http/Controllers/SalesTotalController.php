@@ -9,6 +9,8 @@ use App\Treport;
 use App\Tproposal;
 use App\Tschool;
 use App\Treportdetail;
+use App\Tcommon;
+use Carbon\Carbon;
 
 
 class SalesTotalController extends Controller
@@ -25,22 +27,46 @@ class SalesTotalController extends Controller
         foreach ( $staffs as $staff ) {
             $staff_code = $staff->staff_code;
 
+            if ( $request->start_date && $request->end_date) {
+   
+                $start_date = new Carbon($request->start_date);
+                $end_date = new Carbon($request->end_date);
+
+            } else {
+                //システム開始日
+                $start_date = new Carbon('2020-08-01');
+                
+                //加算日（t_common/common_id=max_summary_spanの日数（value1）をプラスした日付）
+                $add_day = Tcommon::where('common_id', 'max_summary_span')->first(['value1'])['value1'];
+                //終了日
+                $end_date = $start_date->copy()->addDay($add_day);
+            }
+            //開始日と終了日の差
+            $diff = ($end_date->timestamp - $start_date->timestamp) / (60 * 60 * 24) + 1;
+            
             //報告書数
             $t_report_sum[$staff_code] = Treport::where('staff_code', $staff_code)
                                                     ->where('valid_flag', 1)
                                                     ->where('status_flag', 1)
+                                                    ->where('submitted_datetime', '>=',  $start_date )
+                                                    ->where('submitted_datetime', '<=',  $end_date )
                                                     ->count();
             //要望書数
             $t_proposal_sum[$staff_code] = Tproposal::where('staff_code', $staff_code)
                                                     ->where('valid_flag', 1)
                                                     ->where('status_flag', 1)
+                                                    ->where('submitted_datetime', '>=',  $start_date )
+                                                    ->where('submitted_datetime', '<=',  $end_date )
                                                     ->count();
 
             $t_report_ids = Treport::where('staff_code', $staff_code)
                                 ->where('valid_flag', 1)
                                 ->where('status_flag', 1)
+                                ->where('submitted_datetime', '>=',  $start_date )
+                                ->where('submitted_datetime', '<=',  $end_date )
                                 ->get(['report_number']);
             
+
             $t_report_detail = Treportdetail::whereIn('report_number', $t_report_ids);
 
             //営業校数(t_report_detailの合計)
@@ -74,6 +100,22 @@ class SalesTotalController extends Controller
             $t_report_detail_mail_sum[$staff_code] = Treportdetail::whereIn('report_number', $t_report_ids)
                                                             ->where('action_type', 5)
                                                             ->count();
+            
+            //週ごとの校数
+            $week = 1;
+            while($diff >= 7) {
+                
+                $week_start_date = $start_date->copy()->addDay(($week - 1) * 7);
+                $week_end_date = $start_date->copy()->addDay($week * 7);
+
+                $t_report_detail_week_sum[$staff_code][$week] = Treportdetail::whereIn('report_number', $t_report_ids)
+                                                                    ->where('created_datetime', '>=',  $week_start_date )
+                                                                    ->where('created_datetime', '<=',  $week_end_date )
+                                                                    ->count();
+                $diff = $diff - 7;
+                $week++;
+            }
+
         }
 
         $data = [
@@ -91,6 +133,12 @@ class SalesTotalController extends Controller
             't_report_detail_appointment_sum' => $t_report_detail_appointment_sum,
             't_report_detail_tel_sum' => $t_report_detail_tel_sum,
             't_report_detail_mail_sum' => $t_report_detail_mail_sum,
+            'start_date' => $start_date,
+            'end_date' => $end_date,
+            'diff' => $diff,
+            't_report_detail_week_sum' => $t_report_detail_week_sum,
+            'week_start_date' => $week_start_date,
+            'week_end_date' => $week_end_date,
         ];
         
     	return view('totalsales_result', $data);

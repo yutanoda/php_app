@@ -69,9 +69,7 @@ class IndividualResultController extends Controller
                         $reports->whereIn('report_number', $reports_front2);
                     }
                 }
-
             }
-
         }
     
         // 日付検索
