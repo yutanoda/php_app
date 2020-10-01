@@ -9,18 +9,13 @@
   <input type="checkbox" id="keyword_switch">
 	@include('common_header')
 	<main>
-		{{ $start_date }}
-		{{ $end_date }}
-		{{ $diff }}
-		{{ $week_start_date }}
-		{{ $week_end_date }}
 		<div>
 			<section id="search">
 			<form action="{{url('sales_total')}}" method="GET" name="search">
-				<label><span class="color_t1n color_b1n">■集計期間</span><input type="date" value="2020-09-01" name="start_date"></label>
-				<label><span class="color_t1n color_b1n">〜</span><input type="date" value="2020-11-23" name="end_date"></label>
+				<label><span class="color_t1n color_b1n">■集計期間</span><input type="date" @if(session('start_date')) value="{{ session('start_date') }}" @endif name="start_date" id="start_date"></label>
+				<label><span class="color_t1n color_b1n">〜</span><input type="date" @if(session('end_date')) value="{{ session('end_date') }}" @endif name="end_date" id="end_date"></label>
 				<div class="buttons">
-					<button type="reset" class="color_t1n color_b1n"><span>リセット</span></button>
+					<button type="submit" class="color_t1n color_b1n" id="reset"><span>リセット</span></button>
 					<button type="submit" class="search color_t1n color_b1n"><span>検索</span></button>
 				</div>
 			</form>
@@ -82,36 +77,97 @@
 						<dd class="type">{{ $t_report_detail_tel_sum[$staff->staff_code] }}</dd>
 						<dt class="type">ﾒｰﾙ</dt>
 						<dd class="type">{{ $t_report_detail_mail_sum[$staff->staff_code] }}</dd>
+
 						<dt class="week">週1校数</dt>
-						<dd class="week">{{ $t_report_detail_week_sum[$staff->staff_code][1] }}</dd>
+						<dd class="week">
+						@if (isset($t_report_detail_week_sum[$staff->staff_code][1]))
+							{{ $t_report_detail_week_sum[$staff->staff_code][1] }} 
+						@endif
+						</dd>
 						<dt class="week">週2校数</dt>
-						<dd class="week">{{ $t_report_detail_week_sum[$staff->staff_code][2] }}</dd>
+						<dd class="week">
+						@if (isset($t_report_detail_week_sum[$staff->staff_code][2]))
+							{{ $t_report_detail_week_sum[$staff->staff_code][2] }} 
+						@endif
+						</dd>
 						<dt class="week">週3校数</dt>
-						<dd class="week">{{ $t_report_detail_week_sum[$staff->staff_code][3] }}</dd>
+						<dd class="week">
+						@if (isset($t_report_detail_week_sum[$staff->staff_code][3]))
+							{{ $t_report_detail_week_sum[$staff->staff_code][3] }} 
+						@endif
+						</dd>
 						<dt class="week">週4校数</dt>
-						<dd class="week">{{ $t_report_detail_week_sum[$staff->staff_code][4] }}</dd>
+						<dd class="week">
+						@if (isset($t_report_detail_week_sum[$staff->staff_code][4]))
+							{{ $t_report_detail_week_sum[$staff->staff_code][4] }} 
+						@endif
+						</dd>
 						<dt class="week">週5校数</dt>
-						<dd class="week">{{ $t_report_detail_week_sum[$staff->staff_code][5] }}</dd>
+						<dd class="week">
+						@if (isset($t_report_detail_week_sum[$staff->staff_code][5]))
+							{{ $t_report_detail_week_sum[$staff->staff_code][5] }} 
+						@endif
+						</dd>
 						<dt class="week">週6校数</dt>
-						<dd class="week">{{ $t_report_detail_week_sum[$staff->staff_code][6] }}</dd>
+						<dd class="week">
+						@if (isset($t_report_detail_week_sum[$staff->staff_code][6]))
+							{{ $t_report_detail_week_sum[$staff->staff_code][6] }} 
+						@endif
+						</dd>
 						<dt class="week">週7校数</dt>
-						<dd class="week">{{ $t_report_detail_week_sum[$staff->staff_code][7] }}</dd>
+						<dd class="week">
+						@if (isset($t_report_detail_week_sum[$staff->staff_code][7]))
+							{{ $t_report_detail_week_sum[$staff->staff_code][7] }} 
+						@endif
+						</dd>
 						<dt class="week">週8校数</dt>
-						<dd class="week">{{ $t_report_detail_week_sum[$staff->staff_code][8] }}</dd>
+						<dd class="week">
+						@if (isset($t_report_detail_week_sum[$staff->staff_code][8]))
+							{{ $t_report_detail_week_sum[$staff->staff_code][8] }} 
+						@endif
+						</dd>
 						<dt class="week">週9校数</dt>
-						<dd class="week">{{ $t_report_detail_week_sum[$staff->staff_code][9] }}</dd>
+						<dd class="week">
+						@if (isset($t_report_detail_week_sum[$staff->staff_code][9]))
+							{{ $t_report_detail_week_sum[$staff->staff_code][9] }} 
+						@endif
+						</dd>
 						<dt class="week">週10校数</dt>
-						<dd class="week">{{ $t_report_detail_week_sum[$staff->staff_code][10] }}</dd>
+						<dd class="week">
+						@if (isset($t_report_detail_week_sum[$staff->staff_code][10]))
+							{{ $t_report_detail_week_sum[$staff->staff_code][10] }} 
+						@endif
+						</dd>
 						<dt class="week">週11校数</dt>
-						<dd class="week">{{ $t_report_detail_week_sum[$staff->staff_code][11] }}</dd>
+						<dd class="week">
+						@if (isset($t_report_detail_week_sum[$staff->staff_code][11]))
+							{{ $t_report_detail_week_sum[$staff->staff_code][11] }} 
+						@endif
+						</dd>
 						<dt class="week">週12校数</dt>
-						<dd class="week">{{ $t_report_detail_week_sum[$staff->staff_code][12] }}</dd>
+						<dd class="week">
+						@if (isset($t_report_detail_week_sum[$staff->staff_code][12]))
+							{{ $t_report_detail_week_sum[$staff->staff_code][12] }} 
+						@endif
+						</dd>
           </dl>
           @endforeach
 				</article>
 			</section>
 		</div>
 	</main>
+<script type="text/javascript">
+
+	let reset = document.getElementById('reset');
+	let start_date = document.getElementById('start_date');
+	let end_date = document.getElementById('end_date');
+
+
+	reset.addEventListener('click', function() {
+		start_date.value = "";
+		end_date.value = "";
+	});
+</script>
 </body>
 @endsection
 

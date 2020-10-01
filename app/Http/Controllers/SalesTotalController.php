@@ -103,11 +103,15 @@ class SalesTotalController extends Controller
             
             //週ごとの校数
             $week = 1;
-            while($diff >= 7) {
+            while($diff > 0) {
                 
                 $week_start_date = $start_date->copy()->addDay(($week - 1) * 7);
-                $week_end_date = $start_date->copy()->addDay($week * 7);
-
+                if ($diff < 7) {
+                    $week_end_date = $end_date;
+                } else {
+                    $week_end_date = $start_date->copy()->addDay($week * 7 - 1);
+                }
+                
                 $t_report_detail_week_sum[$staff_code][$week] = Treportdetail::whereIn('report_number', $t_report_ids)
                                                                     ->where('created_datetime', '>=',  $week_start_date )
                                                                     ->where('created_datetime', '<=',  $week_end_date )
@@ -117,6 +121,10 @@ class SalesTotalController extends Controller
             }
 
         }
+        //検索結果をsessionで保持
+
+        $request->session()->flash('start_date', $request->start_date);
+        $request->session()->flash('end_date', $request->end_date);
 
         $data = [
             'staff_name' => $request->staff_name,
@@ -140,6 +148,7 @@ class SalesTotalController extends Controller
             'week_start_date' => $week_start_date,
             'week_end_date' => $week_end_date,
         ];
+        
         
     	return view('totalsales_result', $data);
     }
