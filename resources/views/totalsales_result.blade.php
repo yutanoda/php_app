@@ -78,78 +78,14 @@
 						<dt class="type">ﾒｰﾙ</dt>
 						<dd class="type">{{ $t_report_detail_mail_sum[$staff->staff_code] }}</dd>
 
-						<dt class="week">週1校数</dt>
-						<dd class="week">
-						@if (isset($t_report_detail_week_sum[$staff->staff_code][1]))
-							{{ $t_report_detail_week_sum[$staff->staff_code][1] }} 
-						@endif
-						</dd>
-						<dt class="week">週2校数</dt>
-						<dd class="week">
-						@if (isset($t_report_detail_week_sum[$staff->staff_code][2]))
-							{{ $t_report_detail_week_sum[$staff->staff_code][2] }} 
-						@endif
-						</dd>
-						<dt class="week">週3校数</dt>
-						<dd class="week">
-						@if (isset($t_report_detail_week_sum[$staff->staff_code][3]))
-							{{ $t_report_detail_week_sum[$staff->staff_code][3] }} 
-						@endif
-						</dd>
-						<dt class="week">週4校数</dt>
-						<dd class="week">
-						@if (isset($t_report_detail_week_sum[$staff->staff_code][4]))
-							{{ $t_report_detail_week_sum[$staff->staff_code][4] }} 
-						@endif
-						</dd>
-						<dt class="week">週5校数</dt>
-						<dd class="week">
-						@if (isset($t_report_detail_week_sum[$staff->staff_code][5]))
-							{{ $t_report_detail_week_sum[$staff->staff_code][5] }} 
-						@endif
-						</dd>
-						<dt class="week">週6校数</dt>
-						<dd class="week">
-						@if (isset($t_report_detail_week_sum[$staff->staff_code][6]))
-							{{ $t_report_detail_week_sum[$staff->staff_code][6] }} 
-						@endif
-						</dd>
-						<dt class="week">週7校数</dt>
-						<dd class="week">
-						@if (isset($t_report_detail_week_sum[$staff->staff_code][7]))
-							{{ $t_report_detail_week_sum[$staff->staff_code][7] }} 
-						@endif
-						</dd>
-						<dt class="week">週8校数</dt>
-						<dd class="week">
-						@if (isset($t_report_detail_week_sum[$staff->staff_code][8]))
-							{{ $t_report_detail_week_sum[$staff->staff_code][8] }} 
-						@endif
-						</dd>
-						<dt class="week">週9校数</dt>
-						<dd class="week">
-						@if (isset($t_report_detail_week_sum[$staff->staff_code][9]))
-							{{ $t_report_detail_week_sum[$staff->staff_code][9] }} 
-						@endif
-						</dd>
-						<dt class="week">週10校数</dt>
-						<dd class="week">
-						@if (isset($t_report_detail_week_sum[$staff->staff_code][10]))
-							{{ $t_report_detail_week_sum[$staff->staff_code][10] }} 
-						@endif
-						</dd>
-						<dt class="week">週11校数</dt>
-						<dd class="week">
-						@if (isset($t_report_detail_week_sum[$staff->staff_code][11]))
-							{{ $t_report_detail_week_sum[$staff->staff_code][11] }} 
-						@endif
-						</dd>
-						<dt class="week">週12校数</dt>
-						<dd class="week">
-						@if (isset($t_report_detail_week_sum[$staff->staff_code][12]))
-							{{ $t_report_detail_week_sum[$staff->staff_code][12] }} 
-						@endif
-						</dd>
+						@for ($i = 0; $i < 12; $i++) 
+							<dt class="week">週{{ $i + 1}}校数</dt>
+							<dd class="week">
+							@if (isset($t_report_detail_week_sum[$staff->staff_code][$i + 1]))
+								{{ $t_report_detail_week_sum[$staff->staff_code][$i + 1] }} 
+							@endif
+							</dd>
+						@endfor
           </dl>
           @endforeach
 				</article>
