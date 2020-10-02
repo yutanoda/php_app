@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\DB;
 
 class SalesTotalController extends Controller
 {
-    
      /**
      * 営業集計　初期表示
      * @param Request $request [description]
@@ -148,12 +147,9 @@ class SalesTotalController extends Controller
             't_report_detail_mail_sum' => $t_report_detail_mail_sum,
             'start_date' => $start_date,
             'end_date' => $end_date,
-            'diff' => $diff,
             't_report_detail_week_sum' => $t_report_detail_week_sum,
-            'week_start_date' => $week_start_date,
-            'week_end_date' => $week_end_date,
+            'add_day' => $add_day,
         ];
-        
         
     	return view('totalsales_result', $data);
     }

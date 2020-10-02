@@ -12,8 +12,8 @@
 		<div>
 			<section id="search">
 			<form action="{{url('sales_total')}}" method="GET" name="search">
-				<label><span class="color_t1n color_b1n">■集計期間</span><input type="date" @if(session('start_date')) value="{{ session('start_date') }}" @endif name="start_date" id="start_date"></label>
-				<label><span class="color_t1n color_b1n">〜</span><input type="date" @if(session('end_date')) value="{{ session('end_date') }}" @endif name="end_date" id="end_date"></label>
+				<label><span class="color_t1n color_b1n">■集計期間</span><input type="date" value= @if(session('start_date')) "{{ session('start_date') }}" @else {{ mb_substr($start_date, 0, 10) }} @endif name="start_date" id="start_date"></label>
+				<label><span class="color_t1n color_b1n">〜</span><input type="date" value= @if(session('end_date')) "{{ session('end_date') }}" @else {{ mb_substr($end_date, 0, 10) }} @endif name="end_date" id="end_date"></label>
 				<div class="buttons">
 					<button type="submit" class="color_t1n color_b1n" id="reset"><span>リセット</span></button>
 					<button type="submit" class="search color_t1n color_b1n"><span>検索</span></button>
@@ -93,7 +93,7 @@
 		</div>
 	</main>
 <script type="text/javascript">
-
+	//リセットボタン
 	let reset = document.getElementById('reset');
 	let start_date = document.getElementById('start_date');
 	let end_date = document.getElementById('end_date');
@@ -102,6 +102,36 @@
 	reset.addEventListener('click', function() {
 		start_date.value = "";
 		end_date.value = "";
+	});
+
+	//集計期間ボタン
+
+	let max_summary_span = {{ $add_day }};
+
+	start_date.addEventListener('change', function() {
+		let date1 = new Date(start_date.value);
+		let date2 = new Date(end_date.value);
+		let diff = ((date2 - date1) / (60 * 60 * 24 * 1000));
+		if (start_date.value > end_date.value) {
+			let checked = confirm('集計終了日が開始日より小さいです');
+      return false;
+		} else if (diff > max_summary_span) {
+			let checked = confirm("集計期間が長すぎます。" +　max_summary_span + "日以内に設定して下さい。");
+      return false;
+		}
+	});
+
+	end_date.addEventListener('change', function() {
+		let date1 = new Date(start_date.value);
+		let date2 = new Date(end_date.value);
+		let diff = ((date2 - date1) / (60 * 60 * 24 * 1000));
+		if (start_date.value > end_date.value) {
+			let checked = confirm('集計終了日が開始日より小さいです');
+      return false;
+		} else if (diff > max_summary_span) {
+			let checked = confirm("集計期間が長すぎます。" +　max_summary_span + "日以内に設定して下さい。");
+      return false;
+		}
 	});
 </script>
 </body>
