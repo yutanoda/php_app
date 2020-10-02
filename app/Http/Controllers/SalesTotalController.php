@@ -23,7 +23,8 @@ class SalesTotalController extends Controller
      */
     public function Index(Request $request)
     {
-        $staffs = Tstaff::all();
+        $staffs = Tstaff::orderBy('staff_code', 'asc')->get();
+       
         //加算日（t_common/common_id=max_summary_spanの日数（value1）をプラスした日付）
         $add_day = Tcommon::where('common_id', 'max_summary_span')->first(['value1'])['value1'];
 
