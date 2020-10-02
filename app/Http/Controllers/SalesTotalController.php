@@ -11,6 +11,7 @@ use App\Tschool;
 use App\Treportdetail;
 use App\Tcommon;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 
 class SalesTotalController extends Controller
@@ -23,6 +24,8 @@ class SalesTotalController extends Controller
     public function Index(Request $request)
     {
         $staffs = Tstaff::all();
+        //加算日（t_common/common_id=max_summary_spanの日数（value1）をプラスした日付）
+        $add_day = Tcommon::where('common_id', 'max_summary_span')->first(['value1'])['value1'];
 
         foreach ( $staffs as $staff ) {
             $staff_code = $staff->staff_code;
@@ -36,8 +39,7 @@ class SalesTotalController extends Controller
                 //システム開始日
                 $start_date = new Carbon('2020-08-01');
                 
-                //加算日（t_common/common_id=max_summary_spanの日数（value1）をプラスした日付）
-                $add_day = Tcommon::where('common_id', 'max_summary_span')->first(['value1'])['value1'];
+                
                 //終了日
                 $end_date = $start_date->copy()->addDay($add_day);
             }
@@ -64,8 +66,10 @@ class SalesTotalController extends Controller
                                 ->where('status_flag', 1)
                                 ->where('submitted_datetime', '>=',  $start_date )
                                 ->where('submitted_datetime', '<=',  $end_date )
-                                ->get(['report_number']);
+                                ->get(['report_number'])
+                                ->toArray();
             
+            //ここをt_reportの子モデルの取り出しにできないか
 
             $t_report_detail = Treportdetail::whereIn('report_number', $t_report_ids);
 
