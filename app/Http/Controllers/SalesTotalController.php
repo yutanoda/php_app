@@ -23,6 +23,7 @@ class SalesTotalController extends Controller
     public function Index(Request $request)
     {
         $staffs = Tstaff::orderBy('staff_code', 'asc')->get();
+        //$staffs = Tstaff::with('treports')->orderBy('staff_code', 'asc')->get();
        
         //加算日（t_common/common_id=max_summary_spanの日数（value1）をプラスした日付）
         $add_day = Tcommon::where('common_id', 'max_summary_span')->first(['value1'])['value1'];
@@ -47,21 +48,21 @@ class SalesTotalController extends Controller
             $diff = ($end_date->timestamp - $start_date->timestamp) / (60 * 60 * 24) + 1;
             
             //報告書数
-            $t_report_sum[$staff_code] = Treport::where('staff_code', $staff_code)
-                                                    ->where('valid_flag', 1)
-                                                    ->where('status_flag', 1)
-                                                    ->where('submitted_datetime', '>=',  $start_date )
-                                                    ->where('submitted_datetime', '<=',  $end_date )
-                                                    ->count();
+            $t_report_sum[$staff_code] = $staff->treports()
+                                            ->where('valid_flag', 1)
+                                            ->where('status_flag', 1)
+                                            ->where('submitted_datetime', '>=',  $start_date )
+                                            ->where('submitted_datetime', '<=',  $end_date )
+                                            ->count();
             //要望書数
-            $t_proposal_sum[$staff_code] = Tproposal::where('staff_code', $staff_code)
+            $t_proposal_sum[$staff_code] = $staff->tproposals()
                                                     ->where('valid_flag', 1)
                                                     ->where('status_flag', 1)
                                                     ->where('submitted_datetime', '>=',  $start_date )
                                                     ->where('submitted_datetime', '<=',  $end_date )
                                                     ->count();
 
-            $t_report_ids = Treport::where('staff_code', $staff_code)
+            $t_report_ids = $staff->treports()
                                 ->where('valid_flag', 1)
                                 ->where('status_flag', 1)
                                 ->where('submitted_datetime', '>=',  $start_date )

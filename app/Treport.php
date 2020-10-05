@@ -20,6 +20,6 @@ class Treport extends Model
 	}
 	public function treportdetails()
 	{
-		return $this->hasMany(Treportdetail::class, 'report_number');
+		return $this->hasMany(Treportdetail::class, 'report_number', 'report_number');
 	}
 }

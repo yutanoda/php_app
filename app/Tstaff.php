@@ -10,9 +10,14 @@ class Tstaff extends Model
 	protected $table = 't_staff';
 	public $timestamps = false;
 	
-	public function treport()
+	public function treports()
 	{
-			return $this->hasOne(Treport::class, 'staff_code');
+			return $this->hasMany(Treport::class, 'staff_code', 'staff_code');
+	}
+
+	public function tproposals()
+	{
+			return $this->hasMany(Tproposal::class, 'staff_code', 'staff_code');
 	}
 
 	public function tbranch()
