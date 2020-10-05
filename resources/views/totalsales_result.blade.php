@@ -12,8 +12,8 @@
 		<div>
 			<section id="search">
 			<form action="{{url('sales_total')}}" method="GET" name="search">
-				<label><span class="color_t1n color_b1n">■集計期間</span><input type="date" value= @if(session('start_date')) "{{ session('start_date') }}" @else {{ mb_substr($start_date, 0, 10) }} @endif name="start_date" id="start_date"></label>
-				<label><span class="color_t1n color_b1n">〜</span><input type="date" value= @if(session('end_date')) "{{ session('end_date') }}" @else {{ mb_substr($end_date, 0, 10) }} @endif name="end_date" id="end_date"></label>
+				<label><span class="color_t1n color_b1n">■集計期間</span><input type="date" name="start_date" id="start_date"></label>
+				<label><span class="color_t1n color_b1n">〜</span><input type="date" name="end_date" id="end_date"></label>
 				<div class="buttons">
 					<button type="submit" class="color_t1n color_b1n" id="reset"><span>リセット</span></button>
 					<button type="submit" class="search color_t1n color_b1n"><span>検索</span></button>
@@ -58,34 +58,11 @@
             <dd class="staff color_t2 color_b2"><label class="staffname" for= "switch_staff{{ $loop->index }}"><strong>{{ $staff->staff_name }}</strong><span class="staffinfo"><a href="tel:{{ $staff->mobile_phone_number }}" class="tel">{{ $staff->mobile_phone_number }}</a><a href="mailto:{{ $staff->mobile_email }}" class="mail">{{ $staff->mobile_email }}</a><a href="mailto:{{ $staff->pc_email }}" class="mail">{{ $staff->pc_email }}</a><a href="mailto:{{ $staff->tablet_email }}" class="mail">{{ $staff->tablet_email }}</a></span><span class="closer"></span></label></dd>
             <div class="controller color_t2 color_b2"><label for="switch_staff1"><!-- ←for Countup --></label></div>
             <dt class="report">報告書数</dt>
-            <dd class="report"><a href="#" class="color_t1">{{ $t_report_sum[$staff->staff_code] }}</a></dd>
-            <dt class="proposal">依頼書数</dt>
-            <dd class="proposal"><a href="#" class="color_t1">{{ $t_proposal_sum[$staff->staff_code] }}</a></dd>
-            <dt class="school">営業校数</dt>
-            <dd class="school">{{ $t_report_detail_sum[$staff->staff_code] }}</dd>
-            <dt class="new">新規数</dt>
-            <dd class="new">{{ $t_report_detail_new_sum[$staff->staff_code] }}</dd>
-            <dt class="continue">継続数</dt>
-            <dd class="continue">{{ $t_report_detail_existing_sum[$staff->staff_code] }}</dd>
-            <dt class="type">入校</dt>
-						<dd class="type">{{ $t_report_detail_meeting_sum[$staff->staff_code] }}</dd>
-						<dt class="type">事務</dt>
-						<dd class="type">{{ $t_report_detail_office_sum[$staff->staff_code] }}</dd>
-						<dt class="type">アポ</dt>
-						<dd class="type">{{ $t_report_detail_appointment_sum[$staff->staff_code] }}</dd>
-						<dt class="type">電話</dt>
-						<dd class="type">{{ $t_report_detail_tel_sum[$staff->staff_code] }}</dd>
-						<dt class="type">ﾒｰﾙ</dt>
-						<dd class="type">{{ $t_report_detail_mail_sum[$staff->staff_code] }}</dd>
-
-						@for ($i = 0; $i < 12; $i++) 
-							<dt class="week">週{{ $i + 1}}校数</dt>
-							<dd class="week">
-							@if (isset($t_report_detail_week_sum[$staff->staff_code][$i + 1]))
-								{{ $t_report_detail_week_sum[$staff->staff_code][$i + 1] }} 
-							@endif
-							</dd>
-						@endfor
+						<dd class="report"><a href="#" class="color_t1">{{ $staff->treports_count }}</a></dd>
+						<dt class="proposal">依頼書数</dt>
+						<dd class="proposal"><a href="#" class="color_t1">{{ $staff->tproposals_count }}</a></dd>
+						<dt class="school">営業校数</dt>
+            <dd class="school">{{ $staff->treportdetails_count }}</dd>
           </dl>
           @endforeach
 				</article>
@@ -93,46 +70,7 @@
 		</div>
 	</main>
 <script type="text/javascript">
-	//リセットボタン
-	let reset = document.getElementById('reset');
-	let start_date = document.getElementById('start_date');
-	let end_date = document.getElementById('end_date');
 
-
-	reset.addEventListener('click', function() {
-		start_date.value = "";
-		end_date.value = "";
-	});
-
-	//集計期間ボタン
-
-	let max_summary_span = {{ $add_day }};
-
-	start_date.addEventListener('change', function() {
-		let date1 = new Date(start_date.value);
-		let date2 = new Date(end_date.value);
-		let diff = ((date2 - date1) / (60 * 60 * 24 * 1000));
-		if (start_date.value > end_date.value) {
-			let checked = confirm('集計終了日が開始日より小さいです');
-      return false;
-		} else if (diff > max_summary_span) {
-			let checked = confirm("集計期間が長すぎます。" +　max_summary_span + "日以内に設定して下さい。");
-      return false;
-		}
-	});
-
-	end_date.addEventListener('change', function() {
-		let date1 = new Date(start_date.value);
-		let date2 = new Date(end_date.value);
-		let diff = ((date2 - date1) / (60 * 60 * 24 * 1000));
-		if (start_date.value > end_date.value) {
-			let checked = confirm('集計終了日が開始日より小さいです');
-      return false;
-		} else if (diff > max_summary_span) {
-			let checked = confirm("集計期間が長すぎます。" +　max_summary_span + "日以内に設定して下さい。");
-      return false;
-		}
-	});
 </script>
 </body>
 @endsection
