@@ -25,10 +25,12 @@ class TuserController extends Controller
      */
     public function login(loginFormRequest $request) {
 
-        $user_record = Tuser::where('user_id', $request->user_id)->where('valid_flag', 1)->first();
+        $user_record = Tuser::where('user_id', $request->user_id)->first();
         // ユーザーアカウントの有効・無効
-        if ( empty($user_record) ) {
-                return redirect()->back()->with('flash_message', 'ユーザー名、またはパスワードが間違っています。');
+        if ($user_record && $user_record->valid_flag === 0 ) {
+                return redirect()->back()->with('flash_message', 'アカウントがロックされました。管理者に確認してください。');
+        } else if (empty($user_record)) {
+            return redirect()->back()->with('flash_message', 'ユーザー名、またはパスワードが間違っています。');
         }
 
         if( $request->login_password == $user_record->login_password ){
