@@ -17,7 +17,7 @@
 				<article>
 					<dl>
 						<dt>報告No.</dt>
-						<dd>{{ $report_number }}</dd>
+						<dd>{{ sprintf('%05d', $report_number) }}</dd>
 					</dl>
 					<dl>
 						<dt>提出者：</dt>
