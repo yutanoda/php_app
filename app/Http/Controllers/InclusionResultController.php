@@ -93,12 +93,11 @@ class InclusionResultController extends Controller
             if( $request->keyword_title ){
                 // タイトル検索
                 if ( $request->keyword_title == 1 ){
-                    $reports_front2 = Treportdetail::whereNotNull('report1')
+                    $reports_front2 = Treportdetail::where('report1', '!=', '')
                     ->get(['report_number']);
                     $reports->whereIn('report_number', $reports_front2);
                 } elseif ( $request->keyword_title == 2 ) {
-                    $reports_front2 = Treportdetail::whereNotNull('report2')
-                    ->where('report1', NULL)
+                    $reports_front2 = Treportdetail::where('report2', '!=', '')
                     ->get(['report_number']);
                     $reports->whereIn('report_number', $reports_front2);
                 }
