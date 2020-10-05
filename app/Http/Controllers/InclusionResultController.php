@@ -83,7 +83,8 @@ class InclusionResultController extends Controller
                     $reports_front = Treportdetail::whereIn('school_code', $search_school_code)->get(['report_number']);
                     $reports->whereIn('report_number', $reports_front);
                 }
-            } else {
+            } 
+            else if ( $request->keyword_school ){
                 $reports_front = Treportdetail::where('school_code', $request->keyword_school)
                     ->get(['report_number']);
                     $reports->whereIn('report_number', $reports_front);
