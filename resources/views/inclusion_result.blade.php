@@ -160,7 +160,7 @@
 						@foreach ($reports as $report)
 						<input type="checkbox" id="tablerow{{$loop->iteration}}_switch" class="tablerow_switch">
 						<ul class="tbody" style="height: 83px;">
-							<li class="no" data-th="No.">{{ $report->report_number }}<a href="{{ url('detail_report', $report->report_number) }}" class="color_t1n color_b1n">詳細</a></li>							
+							<li class="no" data-th="No.">{{ sprintf('%05d', $report->report_number) }}<a href="{{ url('detail_report', $report->report_number) }}" class="color_t1n color_b1n">詳細</a></li>							
 							<li class="date" data-th="提出日：">{{ $report->submitted_datetime->format('Y/m/d') }}</li>
 								<li class="user" data-th="提出者：">{{$report->tstaff->staff_name}}</li>
 								<li class="branch" data-th="営業所：">{{$report->tbranch->branch_name}}</li>
