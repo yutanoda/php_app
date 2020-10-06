@@ -10,6 +10,8 @@
 	<input type="checkbox" id="keyword_switch">
 	@include('common_header')
 	<main>
+			{{  var_dump(explode(",", session('keywords')) ) }}
+
 		<div>
 			<section id="search">
 				<form name="search" action="{{url('/inclusion_result')}}" method="GET">
@@ -109,26 +111,40 @@
 						<dl>
 						@foreach ($value1_arrays as $key => $value1_array)
 						<dt class="color_t2 color_b2">{{ $key }}</dt>
-									<dd>
-										<ul>
-											@foreach ( $value1_array as $k => $v )
-											<li><label><input type="checkbox" name="keywords[]" value="{{ $v['value2'] }}" data-text="{{ $v['value2'] }}"><strong>{{ $v['value2'] }}</strong></label></li>
-											@endforeach
-										</ul>
-									</dd>
+							<dd>
+								<ul>
+									@foreach ( $value1_array as $k => $v )
+									<li>
+										<label>
+										<input 
+											type="checkbox" 
+											name="keywords[]" 
+											value="{{ $v['value2'] }}"
+											data-text="{{ $v['value2'] }}"
+											@if (session('keywords'))
+												@if (in_array($v['value2'], explode(",", session('keywords')), true) )
+													checked="checked" 
+												@endif 
+											@endif
+										><strong>{{ $v['value2'] }}</strong>
+										</label>
+									</li>
+									@endforeach
+								</ul>
+							</dd>
 						@endforeach
-								<script language="javascript" type="text/javascript">
-									const func1 = () => {
-										const arr1 = [];
-										const elements = document.getElementsByName("keywords[]");
-										for (let i=0; i<elements.length; i++){
-											if(elements[i].checked){ //(color1[i].checked === true)と同じ
-													arr1.push(elements[i].value);
-												}
-										}
-											document.getElementById( "keywords" ).value = arr1;
+							<script language="javascript" type="text/javascript">
+								const func1 = () => {
+									const arr1 = [];
+									const elements = document.getElementsByName("keywords[]");
+									for (let i=0; i<elements.length; i++){
+										if(elements[i].checked){ //(color1[i].checked === true)と同じ
+												arr1.push(elements[i].value);
+											}
 									}
-								</script>
+										document.getElementById( "keywords" ).value = arr1;
+								}
+							</script>
 						</dl>
 						<label class="close_keywords" for="keyword_switch" onclick="func1()"></label></article>
 					</div>
