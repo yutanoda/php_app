@@ -101,6 +101,14 @@
 								0
 							@endif
 						</dd>
+						<dt class="type">入校</dt>
+						<dd class="type">
+							@if (array_key_exists($staff->staff_code, $meeting_sum))
+								{{ $meeting_sum[$staff->staff_code] }}  
+							@else 
+								0
+							@endif
+						</dd>
           </dl>
           @endforeach
 				</article>

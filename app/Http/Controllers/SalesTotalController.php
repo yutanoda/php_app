@@ -103,7 +103,21 @@ class SalesTotalController extends Controller
         }else {
             $existing_sum = [];
         }
-        
+
+        //入校
+        $counts6 = DB::select('SELECT t_staff.staff_code,count(*) AS cnt FROM t_staff 
+                    JOIN t_report  ON t_staff.staff_code = t_report.staff_code
+                    JOIN t_report_detail ON t_report.report_number = t_report_detail.report_number
+                    WHERE t_report.status_flag = 1 AND t_report.valid_flag = 1 AND t_report_detail.action_type = 1
+                    GROUP BY t_staff.staff_code');
+        if ($counts6) {
+            foreach ($counts6 as $count6) {
+                $meeting_sum[$count6->staff_code] = $count6->cnt;
+            }
+        }else {
+            $meeting_sum = [];
+        }
+
         
         
         //検索結果をsessionで保持
@@ -121,6 +135,7 @@ class SalesTotalController extends Controller
             'treport_detail_sum' => $treport_detail_sum,
             'new_sum' => $new_sum,
             'existing_sum' => $existing_sum,
+            'meeting_sum' => $meeting_sum,
         ];
         
     	return view('totalsales_result', $data);
