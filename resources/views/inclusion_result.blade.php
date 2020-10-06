@@ -10,8 +10,6 @@
 	<input type="checkbox" id="keyword_switch">
 	@include('common_header')
 	<main>
-			{{  var_dump(explode(",", session('keywords')) ) }}
-
 		<div>
 			<section id="search">
 				<form name="search" action="{{url('/inclusion_result')}}" method="GET">
@@ -283,6 +281,7 @@
 		let keyword_rank = document.getElementById('keyword_rank');
 		let keyword_category = document.getElementById('keyword_category');
 		let keywords = document.getElementById('keywords');
+		let keywords_input = document.getElementsByName('keywords[]');
 
 		reset.addEventListener('click', function() {
 			keyword_date.value = "";
@@ -294,6 +293,9 @@
 			keyword_rank.value = "";
 			keyword_category.value = "";
 			keywords = "";
+			for (let i = 0; i < keywords_input.length; i++) {
+				keywords_input[i].value = "";
+			}
 		});
 	</script>
 </body>
