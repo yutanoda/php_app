@@ -58,11 +58,16 @@
             <dd class="staff color_t2 color_b2"><label class="staffname" for= "switch_staff{{ $loop->index }}"><strong>{{ $staff->staff_name }}</strong><span class="staffinfo"><a href="tel:{{ $staff->mobile_phone_number }}" class="tel">{{ $staff->mobile_phone_number }}</a><a href="mailto:{{ $staff->mobile_email }}" class="mail">{{ $staff->mobile_email }}</a><a href="mailto:{{ $staff->pc_email }}" class="mail">{{ $staff->pc_email }}</a><a href="mailto:{{ $staff->tablet_email }}" class="mail">{{ $staff->tablet_email }}</a></span><span class="closer"></span></label></dd>
             <div class="controller color_t2 color_b2"><label for="switch_staff1"><!-- ←for Countup --></label></div>
             <dt class="report">報告書数</dt>
-						<dd class="report"><a href="#" class="color_t1">{{ $staff->treports_count }}</a></dd>
-						<dt class="proposal">依頼書数</dt>
-						<dd class="proposal"><a href="#" class="color_t1">{{ $staff->tproposals_count }}</a></dd>
-						<dt class="school">営業校数</dt>
-            <dd class="school">{{ $staff->treportdetails_count }}</dd>
+						<dd class="report">
+							<a href="#" class="color_t1">
+							@if (array_key_exists($staff->staff_code, $treport_sum))
+								{{ $treport_sum[$staff->staff_code] }}  
+							@else 
+								0
+							@endif
+							</a>
+						</dd>
+
           </dl>
           @endforeach
 				</article>

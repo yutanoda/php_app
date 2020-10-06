@@ -37,30 +37,14 @@ class SalesTotalController extends Controller
             $end_date = $start_date->copy()->addDay($add_day);
         }
 
-        $staffs = Tstaff::query()
-        ->withCount([
-            'treports' => function($query) use ($start_date, $end_date) {
-                $query->where('valid_flag', 1)
-                      ->where('status_flag', 1)
-                      ->where('submitted_datetime', '>=', $start_date )
-                      ->where('submitted_datetime', '<=', $end_date );
-            },
-            'tproposals' => function($query) use ($start_date, $end_date) {
-                $query->where('valid_flag', 1)
-                      ->where('status_flag', 1)
-                      ->where('submitted_datetime', '>=', $start_date )
-                      ->where('submitted_datetime', '<=', $end_date );
-            },
-            'treportdetails' => function($query) use ($start_date, $end_date) {
-                $query->whereHas('treport', function($query){
-                    $query->where('status_flag', 1);
-                })
-                ->where('updated_datetime', '>=', $start_date )
-                ->where('updated_datetime', '<=', $end_date );
-            },
-        ])
-        ->orderBy('staff_code', 'asc')
-        ->get();
+        $staffs = Tstaff::all();
+
+        //報告書数
+        $counts1 = DB::select('select staff_code,count(*) as cnt from t_report group by staff_code');
+        foreach ($counts1 as $count1) {
+            $treport_sum[$count1->staff_code] = $count1->cnt;
+        }
+
        
         //検索結果をsessionで保持
 
@@ -72,8 +56,8 @@ class SalesTotalController extends Controller
             'branch_name' => $request->branch_name,
             'authority_flag' => $request->authority_flag,
             'staffs' => $staffs,
-            'start_date' => $start_date,
-            'end_date' => $end_date,
+            'treport_sum' => $treport_sum,
+
         ];
         
     	return view('totalsales_result', $data);
