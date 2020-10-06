@@ -33,6 +33,7 @@
 						<dt class="type">入校</dt>
 						<dt class="type">事務</dt>
 						<dt class="type">アポ</dt>
+						<dt class="type">預け</dt>
 						<dt class="type">電話</dt>
 						<dt class="type">ﾒｰﾙ</dt>
 						<dt class="week">週1校数</dt>

@@ -117,9 +117,8 @@ class SalesTotalController extends Controller
         }else {
             $meeting_sum = [];
         }
+        //
 
-        
-        
         //検索結果をsessionで保持
 
         $request->session()->flash('start_date', $request->start_date);
