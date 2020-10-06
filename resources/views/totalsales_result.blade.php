@@ -67,7 +67,40 @@
 							@endif
 							</a>
 						</dd>
-
+						<dt class="proposal">要望書数</dt>
+            <dd class="proposal">
+							<a href="#" class="color_t1">
+								@if (array_key_exists($staff->staff_code, $tproposal_sum))
+								{{ $tproposal_sum[$staff->staff_code] }}  
+								@else 
+									0
+								@endif
+							</a>
+						</dd>
+						<dt class="school">営業校数</dt>
+            <dd class="school">
+							@if (array_key_exists($staff->staff_code, $treport_detail_sum))
+								{{ $treport_detail_sum[$staff->staff_code] }}  
+							@else 
+								0
+							@endif
+						</dd>
+						<dt class="new">新規数</dt>
+            <dd class="new">
+							@if (array_key_exists($staff->staff_code, $new_sum))
+								{{ $new_sum[$staff->staff_code] }}  
+							@else 
+								0
+							@endif
+						</dd>
+						<dt class="continue">継続数</dt>
+            <dd class="continue">
+							@if (array_key_exists($staff->staff_code, $existing_sum))
+								{{ $existing_sum[$staff->staff_code] }}  
+							@else 
+								0
+							@endif
+						</dd>
           </dl>
           @endforeach
 				</article>

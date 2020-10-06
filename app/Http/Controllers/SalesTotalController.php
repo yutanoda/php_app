@@ -40,12 +40,72 @@ class SalesTotalController extends Controller
         $staffs = Tstaff::all();
 
         //報告書数
-        $counts1 = DB::select('select staff_code,count(*) as cnt from t_report group by staff_code');
-        foreach ($counts1 as $count1) {
-            $treport_sum[$count1->staff_code] = $count1->cnt;
+        $counts1 = DB::select('SELECT t_staff.staff_code,count(*) AS cnt FROM t_staff JOIN t_report  ON t_staff.staff_code = t_report.staff_code
+                   WHERE t_report.status_flag = 1 AND t_report.valid_flag = 1 GROUP BY t_staff.staff_code');
+        if ($counts1) {
+            foreach ($counts1 as $count1) {
+                $treport_sum[$count1->staff_code] = $count1->cnt;
+            }
+        }else {
+            $treport_sum = [];
         }
 
-       
+        //要望書数
+        $counts2 = DB::select('SELECT t_staff.staff_code,count(*) AS cnt FROM t_staff JOIN t_proposal  ON t_staff.staff_code = t_proposal.staff_code
+                   WHERE t_proposal.status_flag = 1 AND t_proposal.valid_flag = 1 GROUP BY t_staff.staff_code');
+        if ($counts2) {
+            foreach ($counts2 as $count2) {
+                $tproposal_sum[$count2->staff_code] = $count2->cnt;
+            }
+        }else {
+            $tproposal_sum = [];
+        }
+
+        //営業校数
+        $counts3 = DB::select('SELECT t_staff.staff_code,count(*) AS cnt FROM t_staff 
+                    JOIN t_report  ON t_staff.staff_code = t_report.staff_code
+                    JOIN t_report_detail ON t_report.report_number = t_report_detail.report_number
+                    WHERE t_report.status_flag = 1 AND t_report.valid_flag = 1
+                    GROUP BY t_staff.staff_code');
+        if ($counts3) {
+            foreach ($counts3 as $count3) {
+                $treport_detail_sum[$count3->staff_code] = $count3->cnt;
+            }
+        }else {
+            $treport_detail_sum = [];
+        }
+
+        //新規数
+        $counts4 = DB::select('SELECT t_staff.staff_code,count(*) AS cnt FROM t_staff 
+                    JOIN t_report  ON t_staff.staff_code = t_report.staff_code
+                    JOIN t_report_detail ON t_report.report_number = t_report_detail.report_number
+                    WHERE t_report.status_flag = 1 AND t_report.valid_flag = 1 AND t_report_detail.report1 != ""
+                    GROUP BY t_staff.staff_code');
+        
+        if ($counts4) {
+            foreach ($counts4 as $count4) {
+                $new_sum[$count4->staff_code] = $count4->cnt;
+            }
+        }else {
+            $new_sum = [];
+        }
+
+        //継続数
+        $counts5 = DB::select('SELECT t_staff.staff_code,count(*) AS cnt FROM t_staff 
+                    JOIN t_report  ON t_staff.staff_code = t_report.staff_code
+                    JOIN t_report_detail ON t_report.report_number = t_report_detail.report_number
+                    WHERE t_report.status_flag = 1 AND t_report.valid_flag = 1 AND t_report_detail.report2 != ""
+                    GROUP BY t_staff.staff_code');
+        if ($counts5) {
+            foreach ($counts5 as $count5) {
+                $existing_sum[$count5->staff_code] = $count5->cnt;
+            }
+        }else {
+            $existing_sum = [];
+        }
+        
+        
+        
         //検索結果をsessionで保持
 
         $request->session()->flash('start_date', $request->start_date);
@@ -57,7 +117,10 @@ class SalesTotalController extends Controller
             'authority_flag' => $request->authority_flag,
             'staffs' => $staffs,
             'treport_sum' => $treport_sum,
-
+            'tproposal_sum' => $tproposal_sum,
+            'treport_detail_sum' => $treport_detail_sum,
+            'new_sum' => $new_sum,
+            'existing_sum' => $existing_sum,
         ];
         
     	return view('totalsales_result', $data);
