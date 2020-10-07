@@ -42,7 +42,11 @@ class SalesTotalController extends Controller
         $diff = ($end_date->timestamp - $start_date->timestamp) / (60 * 60 * 24) + 1;
 
         //抽出するスタッフ
-        $staffs = Tstaff::orderBy('staff_code', 'asc')->get();
+        if ($request->staff_type >= 3 ) {
+            $staffs = Tstaff::where('staff_type', 1)->where('valid_flag', 1)->orderBy('staff_code', 'asc')->get();
+        } else {
+            $staffs = Tstaff::where('staff_code', $request->staff_code)->get();
+        }
 
         //報告書数
         $counts1 = DB::select('SELECT t_staff.staff_code,count(*) AS cnt FROM t_staff JOIN t_report  ON t_staff.staff_code = t_report.staff_code
@@ -189,11 +193,27 @@ class SalesTotalController extends Controller
         }
 
         //週ごとの営業校の集計
-
         
+        $week = 1;
+        while($diff > 0) {
+            $week_start_date = $start_date->copy()->addDay(($week - 1) * 7);
+            if ($diff <= 7) {
+                $week_end_date = $end_date;
+            } else {
+                $week_end_date = $start_date->copy()->addDay($week * 7 - 1);
+            }
+            $counts12 = DB::select('SELECT t_staff.staff_code,count(*) AS cnt FROM t_staff 
+            JOIN t_report  ON t_staff.staff_code = t_report.staff_code
+            JOIN t_report_detail ON t_report.report_number = t_report_detail.report_number
+            WHERE t_report.status_flag = 1 AND t_report.valid_flag = 1 AND t_report.submitted_datetime >="' . $week_start_date . '" AND t_report.submitted_datetime <="' . $week_end_date . '"GROUP BY t_staff.staff_code');
 
-
-
+            foreach ($counts12 as $count12) {
+                $week_sum[$count12->staff_code][$week] = $count12->cnt;
+            }
+        
+            $diff = $diff - 7;
+            $week++;
+        }
 
         //検索結果をsessionで保持
 
@@ -216,6 +236,7 @@ class SalesTotalController extends Controller
             'depo_sum' => $depo_sum,
             'tel_sum' => $tel_sum,
             'mail_sum' => $mail_sum,
+            'week_sum' => $week_sum,
             'start_date' => $start_date,
             'end_date' => $end_date,
             'add_day' => $add_day,

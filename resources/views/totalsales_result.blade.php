@@ -150,8 +150,19 @@
 								0
 							@endif
 						</dd>
+					@for ($i = 0; $i < 12; $i++) 
+						<dt class="week">週{{ $i + 1}}校数</dt>
+						<dd class="week">
+						@if (isset($week_sum[$staff->staff_code][$i + 1]))
+							{{ $week_sum[$staff->staff_code][$i + 1] }} 
+						@else 
+							0
+						@endif
+						</dd>
+					@endfor
+					<div class="controller color_t2 color_b2"><label for="switch_staff2"></label></div>
           </dl>
-          @endforeach
+					@endforeach
 				</article>
 			</section>
 		</div>
