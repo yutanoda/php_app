@@ -109,26 +109,40 @@
 						<dl>
 						@foreach ($value1_arrays as $key => $value1_array)
 						<dt class="color_t2 color_b2">{{ $key }}</dt>
-									<dd>
-										<ul>
-											@foreach ( $value1_array as $k => $v )
-											<li><label><input type="checkbox" name="keywords[]" value="{{ $v['value2'] }}" data-text="{{ $v['value2'] }}"><strong>{{ $v['value2'] }}</strong></label></li>
-											@endforeach
-										</ul>
-									</dd>
+							<dd>
+								<ul>
+									@foreach ( $value1_array as $k => $v )
+									<li>
+										<label>
+										<input 
+											type="checkbox" 
+											name="keywords[]" 
+											value="{{ $v['value2'] }}"
+											data-text="{{ $v['value2'] }}"
+											@if (session('keywords'))
+												@if (in_array($v['value2'], explode(",", session('keywords')), true) )
+													checked="checked" 
+												@endif 
+											@endif
+										><strong>{{ $v['value2'] }}</strong>
+										</label>
+									</li>
+									@endforeach
+								</ul>
+							</dd>
 						@endforeach
-								<script language="javascript" type="text/javascript">
-									const func1 = () => {
-										const arr1 = [];
-										const elements = document.getElementsByName("keywords[]");
-										for (let i=0; i<elements.length; i++){
-											if(elements[i].checked){ //(color1[i].checked === true)と同じ
-													arr1.push(elements[i].value);
-												}
-										}
-											document.getElementById( "keywords" ).value = arr1;
+							<script language="javascript" type="text/javascript">
+								const func1 = () => {
+									const arr1 = [];
+									const elements = document.getElementsByName("keywords[]");
+									for (let i=0; i<elements.length; i++){
+										if(elements[i].checked){ //(color1[i].checked === true)と同じ
+												arr1.push(elements[i].value);
+											}
 									}
-								</script>
+										document.getElementById( "keywords" ).value = arr1;
+								}
+							</script>
 						</dl>
 						<label class="close_keywords" for="keyword_switch" onclick="func1()"></label></article>
 					</div>
@@ -267,6 +281,7 @@
 		let keyword_rank = document.getElementById('keyword_rank');
 		let keyword_category = document.getElementById('keyword_category');
 		let keywords = document.getElementById('keywords');
+		let keywords_input = document.getElementsByName('keywords[]');
 
 		reset.addEventListener('click', function() {
 			keyword_date.value = "";
@@ -278,6 +293,9 @@
 			keyword_rank.value = "";
 			keyword_category.value = "";
 			keywords = "";
+			for (let i = 0; i < keywords_input.length; i++) {
+				keywords_input[i].value = "";
+			}
 		});
 	</script>
 </body>
