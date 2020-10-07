@@ -48,16 +48,30 @@
 					<div id="keyword"><article>
 						<h1 class="color_t1n color_b1n">キーワード選択</h1>
 						<dl>
-						@foreach ($value1_arrays as $key => $value1_array)
-						<dt class="color_t2 color_b2">{{ $key }}</dt>
-									<dd>
-										<ul>
-											@foreach ( $value1_array as $k => $v )
-											<li><label><input type="checkbox" id="keywords" name="keywords[]" value="{{ $v['value2'] }}" data-text="{{ $v['value2'] }}"><strong>{{ $v['value2'] }}</strong></label></li>
-											@endforeach
-										</ul>
-									</dd>
-						@endforeach
+							@foreach ($value1_arrays as $key => $value1_array)
+							<dt class="color_t2 color_b2">{{ $key }}</dt>
+								<dd>
+									<ul>
+										@foreach ( $value1_array as $k => $v )
+										<li>
+											<label>
+											<input 
+												type="checkbox" 
+												name="keywords[]" 
+												value="{{ $v['value2'] }}"
+												data-text="{{ $v['value2'] }}"
+												@if (session('keywords'))
+													@if (in_array($v['value2'], explode(",", session('keywords')), true) )
+														checked="checked" 
+													@endif 
+												@endif
+											><strong>{{ $v['value2'] }}</strong>
+											</label>
+										</li>
+										@endforeach
+									</ul>
+								</dd>
+							@endforeach
 								<script language="javascript" type="text/javascript">
 									const func1 = () => {
 										const arr1 = [];
@@ -104,7 +118,7 @@
 						@foreach ($reports as $report)
 						<input type="checkbox" id="tablerow{{$loop->iteration}}_switch" class="tablerow_switch">
 						<ul class="tbody" style="height: 83px;">
-							<li class="no" data-th="No.">{{ $report->report_number }}
+							<li class="no" data-th="No.">{{ sprintf('%05d', $report->report_number) }}
 								<a href="{{ url('detail_report', $report->report_number) }}" class="color_t1n color_b1n">詳細</a>
 							</li>
 							@if ( $report->status_flag==0 )
@@ -180,12 +194,16 @@
 		let keyword_title = document.getElementById('keyword_title');
 		let keyword_school = document.getElementById('keyword_school');
 		let keywords = document.getElementById('keywords');
+		let keywords_input = document.getElementsByName('keywords[]');
 
 		reset.addEventListener('click', function() {
 			keyword_date.value = "";
 			keyword_title.value = "";
 			keyword_school.value = "";
 			keywords = "";
+			for (let i = 0; i < keywords_input.length; i++) {
+				keywords_input[i].value = "";
+			}
 		});
 	</script>
 </body>
