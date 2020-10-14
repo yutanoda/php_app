@@ -18,8 +18,8 @@ class Treport extends Model
 	{
 		return $this->belongsTo(Tbranch::class, 'branch_code', 'branch_code');
 	}
-	public function treportdetail()
+	public function treportdetails()
 	{
-		return $this->belongsTo(Treportdetail::class, 'report_number', 'report_number');
+		return $this->hasMany(Treportdetail::class, 'report_number', 'report_number');
 	}
 }

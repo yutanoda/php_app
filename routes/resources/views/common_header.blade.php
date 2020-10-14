@@ -40,15 +40,14 @@
 		@else
 		<li><a href="{{ route('correspondence_result') }}" class="color_t1n color_b1n"><span>要望・提案書</span></a></li>
 		@endif
-		-->
 
-
-		@if(request()->path() == 'sales_total')
-		<li><strong class="color_t1 color_b1"><span>営業集計</span></strong></li>
-		@else
-		<li><a href="{{ route('sales_total') }}" class="color_t1n color_b1n"><span>営業集計</span></a></li>
-		@endif
-
+		@if($authority_flag != 1)
+			@if(request()->path() == 'sales_total')
+			<li><strong class="color_t1 color_b1"><span>営業集計</span></strong></li>
+			@else
+			<li><a href="{{ route('sales_total') }}" class="color_t1n color_b1n"><span>営業集計</span></a></li>
+			@endif
+		@endif -->
 	</ul>
 </nav>
 </header>
