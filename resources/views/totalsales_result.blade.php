@@ -9,6 +9,7 @@
   <input type="checkbox" id="keyword_switch">
 	@include('common_header')
 	<main>
+
 		<div>
 			<section id="search">
 			<form action="{{url('sales_total')}}" method="GET" name="search">
@@ -51,12 +52,12 @@
           </dl>
 
           @foreach($staffs as $staff)
-          <input type="checkbox" id= {{ "switch_staff" . $loop->index }} class="staff_switch"><!-- ←id Countup -->
+          <input type="checkbox" id= {{ "switch_staff" . ($loop->index + 1) }} class="staff_switch"><!-- ←id Countup -->
 					<dl class="tbody">
 						<dt class= "branch color_t2 color_b2">営業所</dt>
             <dd class="branch color_t2 color_b2">{{ $staff->tbranch->branch_name }}</dd>
             <dt class="staff color_t2 color_b2">担当者名</dt>
-            <dd class="staff color_t2 color_b2"><label class="staffname" for= "switch_staff{{ $loop->index }}"><strong>{{ $staff->staff_name }}</strong><span class="staffinfo"><a href="tel:{{ $staff->mobile_phone_number }}" class="tel">{{ $staff->mobile_phone_number }}</a><a href="mailto:{{ $staff->mobile_email }}" class="mail">{{ $staff->mobile_email }}</a><a href="mailto:{{ $staff->pc_email }}" class="mail">{{ $staff->pc_email }}</a><a href="mailto:{{ $staff->tablet_email }}" class="mail">{{ $staff->tablet_email }}</a></span><span class="closer"></span></label></dd>
+            <dd class="staff color_t2 color_b2"><label class="staffname" for= "switch_staff{{ $loop->index + 1 }}"><strong>{{ $staff->staff_name }}</strong><span class="staffinfo"><a href="tel:{{ $staff->mobile_phone_number }}" class="tel">{{ $staff->mobile_phone_number }}</a><a href="mailto:{{ $staff->mobile_email }}" class="mail">{{ $staff->mobile_email }}</a><a href="mailto:{{ $staff->pc_email }}" class="mail">{{ $staff->pc_email }}</a><a href="mailto:{{ $staff->tablet_email }}" class="mail">{{ $staff->tablet_email }}</a></span><span class="closer"></span></label></dd>
             <div class="controller color_t2 color_b2"><label for="switch_staff1"><!-- ←for Countup --></label></div>
             <dt class="report">報告書数</dt>
 						<dd class="report">
@@ -159,8 +160,8 @@
 							0
 						@endif
 						</dd>
+						<div class="controller color_t2 color_b2"><label for= {{ "switch_staff" . ($loop->index + 1) }} ></label></div>
 					@endfor
-					<div class="controller color_t2 color_b2"><label for="switch_staff2"></label></div>
           </dl>
 					@endforeach
 				</article>
