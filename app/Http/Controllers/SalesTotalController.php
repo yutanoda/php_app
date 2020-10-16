@@ -31,11 +31,12 @@ class SalesTotalController extends Controller
             $end_date = new Carbon($request->end_date);
 
         } else {
-            //システム開始日
-            $start_date = new Carbon('2020-08-01');
-            
+          
             //終了日
-            $end_date = $start_date->copy()->addDay($add_day);
+            $end_date = Carbon::today();
+            //システム開始日
+            $start_date = $end_date->copy()->subDay($add_day);
+            
         }
 
         //開始日と終了日の差
@@ -206,11 +207,14 @@ class SalesTotalController extends Controller
             JOIN t_report  ON t_staff.staff_code = t_report.staff_code
             JOIN t_report_detail ON t_report.report_number = t_report_detail.report_number
             WHERE t_report.status_flag = 1 AND t_report.valid_flag = 1 AND t_report.submitted_datetime >="' . $week_start_date . '" AND t_report.submitted_datetime <="' . $week_end_date . '"GROUP BY t_staff.staff_code');
-
-            foreach ($counts12 as $count12) {
-                $week_sum[$count12->staff_code][$week] = $count12->cnt;
+            if ($counts12) {
+                foreach ($counts12 as $count12) {
+                    $week_sum[$count12->staff_code][$week] = $count12->cnt;
+                }
+            } else {
+                $week_sum = NULL;
             }
-        
+    
             $diff = $diff - 7;
             $week++;
         }

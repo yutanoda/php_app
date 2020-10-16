@@ -50,7 +50,6 @@
 						<dt class="week">週11校数</dt>
 						<dt class="week">週12校数</dt>
           </dl>
-
           @foreach($staffs as $staff)
           <input type="checkbox" id= {{ "switch_staff" . ($loop->index + 1) }} class="staff_switch"><!-- ←id Countup -->
 					<dl class="tbody">
