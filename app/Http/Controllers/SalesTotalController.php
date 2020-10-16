@@ -31,11 +31,12 @@ class SalesTotalController extends Controller
             $end_date = new Carbon($request->end_date);
 
         } else {
-            //システム開始日
-            $start_date = new Carbon('2020-08-01');
-            
+          
             //終了日
-            $end_date = $start_date->copy()->addDay($add_day);
+            $end_date = Carbon::today();
+            //システム開始日
+            $start_date = $end_date->copy()->subDay($add_day);
+            
         }
 
         //開始日と終了日の差
