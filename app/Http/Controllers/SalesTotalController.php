@@ -50,13 +50,24 @@ class SalesTotalController extends Controller
         }
 
         //報告書数
-        $counts1 = DB::select('SELECT t_staff.staff_code,count(*) AS cnt FROM t_staff JOIN t_report  ON t_staff.staff_code = t_report.staff_code
-                                WHERE t_report.status_flag = 1 AND t_report.valid_flag = 1 AND t_report.submitted_datetime >="' . $start_date . '" AND t_report.submitted_datetime <="' . $end_date . '"GROUP BY t_staff.staff_code');
+        $counts1 = DB::select('SELECT t_staff.staff_code, t_report.report_number FROM t_staff 
+                                JOIN t_report  ON t_staff.staff_code = t_report.staff_code
+                                JOIN t_report_detail ON t_report.report_number = t_report_detail.report_number
+                                WHERE t_report.status_flag = 1 AND t_report.valid_flag = 1 AND t_report_detail.action_date >="' . $start_date . '" AND t_report_detail.action_date <="' . $end_date . '"ORDER BY t_staff.staff_code');
+                   
         if ($counts1) {
+            $treport_sum = [];
+            $report_number_temp = 0;
             foreach ($counts1 as $count1) {
-                $treport_sum[$count1->staff_code] = $count1->cnt;
+                if(!array_key_exists($count1->staff_code, $treport_sum)){
+                    $treport_sum[$count1->staff_code] = 1;
+                    $report_number_temp = $count1->report_number;
+                } else if(array_key_exists($count1->staff_code, $treport_sum) && $count1->report_number !== $report_number_temp){
+                    $treport_sum[$count1->staff_code] = $treport_sum[$count1->staff_code] + 1;
+                    $report_number_temp = $count1->report_number;
+                } 
             }
-        }else {
+        } else {
             $treport_sum = [];
         }
 
@@ -75,7 +86,7 @@ class SalesTotalController extends Controller
         $counts3 = DB::select('SELECT t_staff.staff_code,count(*) AS cnt FROM t_staff 
                     JOIN t_report  ON t_staff.staff_code = t_report.staff_code
                     JOIN t_report_detail ON t_report.report_number = t_report_detail.report_number
-                    WHERE t_report.status_flag = 1 AND t_report.valid_flag = 1 AND t_report.submitted_datetime >="' . $start_date . '" AND t_report.submitted_datetime <="' . $end_date . '"GROUP BY t_staff.staff_code');
+                    WHERE t_report.status_flag = 1 AND t_report.valid_flag = 1 AND t_report_detail.action_date >="' . $start_date . '" AND t_report_detail.action_date <="' . $end_date . '"GROUP BY t_staff.staff_code');
         if ($counts3) {
             foreach ($counts3 as $count3) {
                 $treport_detail_sum[$count3->staff_code] = $count3->cnt;
@@ -88,7 +99,7 @@ class SalesTotalController extends Controller
         $counts4 = DB::select('SELECT t_staff.staff_code,count(*) AS cnt FROM t_staff 
                     JOIN t_report  ON t_staff.staff_code = t_report.staff_code
                     JOIN t_report_detail ON t_report.report_number = t_report_detail.report_number
-                    WHERE t_report.status_flag = 1 AND t_report.valid_flag = 1 AND t_report_detail.report1 != "" AND t_report.submitted_datetime >="' . $start_date . '" AND t_report.submitted_datetime <="' . $end_date . '"GROUP BY t_staff.staff_code');
+                    WHERE t_report.status_flag = 1 AND t_report.valid_flag = 1 AND t_report_detail.report1 != "" AND t_report_detail.action_date >="' . $start_date . '" AND t_report_detail.action_date <="' . $end_date . '"GROUP BY t_staff.staff_code');
         
         if ($counts4) {
             foreach ($counts4 as $count4) {
@@ -102,7 +113,7 @@ class SalesTotalController extends Controller
         $counts5 = DB::select('SELECT t_staff.staff_code,count(*) AS cnt FROM t_staff 
                     JOIN t_report  ON t_staff.staff_code = t_report.staff_code
                     JOIN t_report_detail ON t_report.report_number = t_report_detail.report_number
-                    WHERE t_report.status_flag = 1 AND t_report.valid_flag = 1 AND t_report_detail.report2 != "" AND t_report.submitted_datetime >="' . $start_date . '" AND t_report.submitted_datetime <="' . $end_date . '"GROUP BY t_staff.staff_code');
+                    WHERE t_report.status_flag = 1 AND t_report.valid_flag = 1 AND t_report_detail.report2 != "" AND t_report_detail.action_date >="' . $start_date . '" AND t_report_detail.action_date <="' . $end_date . '"GROUP BY t_staff.staff_code');
         if ($counts5) {
             foreach ($counts5 as $count5) {
                 $existing_sum[$count5->staff_code] = $count5->cnt;
@@ -115,7 +126,7 @@ class SalesTotalController extends Controller
         $counts6 = DB::select('SELECT t_staff.staff_code,count(*) AS cnt FROM t_staff 
                     JOIN t_report  ON t_staff.staff_code = t_report.staff_code
                     JOIN t_report_detail ON t_report.report_number = t_report_detail.report_number
-                    WHERE t_report.status_flag = 1 AND t_report.valid_flag = 1 AND t_report_detail.action_type = 1 AND t_report.submitted_datetime >="' . $start_date . '" AND t_report.submitted_datetime <="' . $end_date . '"GROUP BY t_staff.staff_code');
+                    WHERE t_report.status_flag = 1 AND t_report.valid_flag = 1 AND t_report_detail.action_type = 1 AND t_report_detail.action_date >="' . $start_date . '" AND t_report_detail.action_date <="' . $end_date . '"GROUP BY t_staff.staff_code');
         if ($counts6) {
             foreach ($counts6 as $count6) {
                 $meeting_sum[$count6->staff_code] = $count6->cnt;
@@ -127,7 +138,7 @@ class SalesTotalController extends Controller
         $counts7 = DB::select('SELECT t_staff.staff_code,count(*) AS cnt FROM t_staff 
                     JOIN t_report  ON t_staff.staff_code = t_report.staff_code
                     JOIN t_report_detail ON t_report.report_number = t_report_detail.report_number
-                    WHERE t_report.status_flag = 1 AND t_report.valid_flag = 1 AND t_report_detail.action_type = 2 AND t_report.submitted_datetime >="' . $start_date . '" AND t_report.submitted_datetime <="' . $end_date . '"GROUP BY t_staff.staff_code');
+                    WHERE t_report.status_flag = 1 AND t_report.valid_flag = 1 AND t_report_detail.action_type = 2 AND t_report_detail.action_date >="' . $start_date . '" AND t_report_detail.action_date <="' . $end_date . '"GROUP BY t_staff.staff_code');
 
         if ($counts7) {
             foreach ($counts7 as $count7) {
@@ -141,7 +152,7 @@ class SalesTotalController extends Controller
         $counts8 = DB::select('SELECT t_staff.staff_code,count(*) AS cnt FROM t_staff 
                     JOIN t_report  ON t_staff.staff_code = t_report.staff_code
                     JOIN t_report_detail ON t_report.report_number = t_report_detail.report_number
-                    WHERE t_report.status_flag = 1 AND t_report.valid_flag = 1 AND t_report_detail.action_type = 3 AND t_report.submitted_datetime >="' . $start_date . '" AND t_report.submitted_datetime <="' . $end_date . '"GROUP BY t_staff.staff_code');
+                    WHERE t_report.status_flag = 1 AND t_report.valid_flag = 1 AND t_report_detail.action_type = 3 AND t_report_detail.action_date >="' . $start_date . '" AND t_report_detail.action_date <="' . $end_date . '"GROUP BY t_staff.staff_code');
 
         if ($counts8) {
             foreach ($counts8 as $count8) {
@@ -155,7 +166,7 @@ class SalesTotalController extends Controller
         $counts9 = DB::select('SELECT t_staff.staff_code,count(*) AS cnt FROM t_staff 
                     JOIN t_report  ON t_staff.staff_code = t_report.staff_code
                     JOIN t_report_detail ON t_report.report_number = t_report_detail.report_number
-                    WHERE t_report.status_flag = 1 AND t_report.valid_flag = 1 AND t_report_detail.action_type = 4 AND t_report.submitted_datetime >="' . $start_date . '" AND t_report.submitted_datetime <="' . $end_date . '"GROUP BY t_staff.staff_code');
+                    WHERE t_report.status_flag = 1 AND t_report.valid_flag = 1 AND t_report_detail.action_type = 4 AND t_report_detail.action_date >="' . $start_date . '" AND t_report_detail.action_date <="' . $end_date . '"GROUP BY t_staff.staff_code');
 
         if ($counts9) {
             foreach ($counts9 as $count9) {
@@ -169,7 +180,7 @@ class SalesTotalController extends Controller
         $counts10 = DB::select('SELECT t_staff.staff_code,count(*) AS cnt FROM t_staff 
                     JOIN t_report  ON t_staff.staff_code = t_report.staff_code
                     JOIN t_report_detail ON t_report.report_number = t_report_detail.report_number
-                    WHERE t_report.status_flag = 1 AND t_report.valid_flag = 1 AND t_report_detail.action_type = 5 AND t_report.submitted_datetime >="' . $start_date . '" AND t_report.submitted_datetime <="' . $end_date . '"GROUP BY t_staff.staff_code');
+                    WHERE t_report.status_flag = 1 AND t_report.valid_flag = 1 AND t_report_detail.action_type = 5 AND t_report_detail.action_date >="' . $start_date . '" AND t_report_detail.action_date <="' . $end_date . '"GROUP BY t_staff.staff_code');
 
         if ($counts10) {
             foreach ($counts10 as $count10) {
@@ -183,7 +194,7 @@ class SalesTotalController extends Controller
         $counts11 = DB::select('SELECT t_staff.staff_code,count(*) AS cnt FROM t_staff 
                     JOIN t_report  ON t_staff.staff_code = t_report.staff_code
                     JOIN t_report_detail ON t_report.report_number = t_report_detail.report_number
-                    WHERE t_report.status_flag = 1 AND t_report.valid_flag = 1 AND t_report_detail.action_type = 6 AND t_report.submitted_datetime >="' . $start_date . '" AND t_report.submitted_datetime <="' . $end_date . '"GROUP BY t_staff.staff_code');
+                    WHERE t_report.status_flag = 1 AND t_report.valid_flag = 1 AND t_report_detail.action_type = 6 AND t_report_detail.action_date >="' . $start_date . '" AND t_report_detail.action_date <="' . $end_date . '"GROUP BY t_staff.staff_code');
 
         if ($counts11) {
             foreach ($counts11 as $count11) {
@@ -206,13 +217,10 @@ class SalesTotalController extends Controller
             $counts12 = DB::select('SELECT t_staff.staff_code,count(*) AS cnt FROM t_staff 
             JOIN t_report  ON t_staff.staff_code = t_report.staff_code
             JOIN t_report_detail ON t_report.report_number = t_report_detail.report_number
-            WHERE t_report.status_flag = 1 AND t_report.valid_flag = 1 AND t_report.submitted_datetime >="' . $week_start_date . '" AND t_report.submitted_datetime <="' . $week_end_date . '"GROUP BY t_staff.staff_code');
-            if ($counts12) {
-                foreach ($counts12 as $count12) {
-                    $week_sum[$count12->staff_code][$week] = $count12->cnt;
-                }
-            } else {
-                $week_sum = NULL;
+            WHERE t_report.status_flag = 1 AND t_report.valid_flag = 1 AND t_report_detail.action_date >="' . $week_start_date . '" AND t_report_detail.action_date <="' . $week_end_date . '"GROUP BY t_staff.staff_code');
+
+            foreach ($counts12 as $count12) {
+                $week_sum[$count12->staff_code][$week] = $count12->cnt;
             }
     
             $diff = $diff - 7;
