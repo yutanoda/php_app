@@ -61,8 +61,6 @@
 							<a href="#" class="color_t1">
 							@if (array_key_exists($staff->staff_code, $treport_sum))
 								{{ $treport_sum[$staff->staff_code] }}  
-							@else 
-								0
 							@endif
 							</a>
 						</dd>
@@ -71,8 +69,6 @@
 							<a href="#" class="color_t1">
 								@if (array_key_exists($staff->staff_code, $tproposal_sum))
 								{{ $tproposal_sum[$staff->staff_code] }}  
-								@else 
-									0
 								@endif
 							</a>
 						</dd>
@@ -80,72 +76,54 @@
             <dd class="school">
 							@if (array_key_exists($staff->staff_code, $treport_detail_sum))
 								{{ $treport_detail_sum[$staff->staff_code] }}  
-							@else 
-								0
 							@endif
 						</dd>
 						<dt class="new">新規数</dt>
             <dd class="new">
 							@if (array_key_exists($staff->staff_code, $new_sum))
 								{{ $new_sum[$staff->staff_code] }}  
-							@else 
-								0
 							@endif
 						</dd>
 						<dt class="continue">継続数</dt>
             <dd class="continue">
 							@if (array_key_exists($staff->staff_code, $existing_sum))
 								{{ $existing_sum[$staff->staff_code] }}  
-							@else 
-								0
 							@endif
 						</dd>
 						<dt class="type">入校</dt>
 						<dd class="type">
 							@if (array_key_exists($staff->staff_code, $meeting_sum))
 								{{ $meeting_sum[$staff->staff_code] }}  
-							@else 
-								0
 							@endif
 						</dd>
 						<dt class="type">事務</dt>
 						<dd class="type">
 							@if (array_key_exists($staff->staff_code, $office_sum))
 								{{ $office_sum[$staff->staff_code] }}  
-							@else 
-								0
 							@endif
 						</dd>
 						<dt class="type">アポ</dt>
 						<dd class="type">
 							@if (array_key_exists($staff->staff_code, $appointment_sum))
 								{{ $appointment_sum[$staff->staff_code] }}  
-							@else 
-								0
 							@endif
 						</dd>
 						<dt class="type">預け</dt>
 						<dd class="type">
 							@if (array_key_exists($staff->staff_code, $depo_sum))
 								{{ $depo_sum[$staff->staff_code] }}  
-							@else 
-								0
 							@endif
 						</dd>
 						<dt class="type">電話</dt>
 						<dd class="type">
 							@if (array_key_exists($staff->staff_code, $tel_sum))
 								{{ $tel_sum[$staff->staff_code] }}  
-							@else 
-								0
 							@endif
 						</dd>
 						<dt class="type">メール</dt>
 						<dd class="type">
 							@if (array_key_exists($staff->staff_code, $mail_sum))
 								{{ $mail_sum[$staff->staff_code] }}  
-							@else 
-								0
 							@endif
 						</dd>
 					@for ($i = 0; $i < 12; $i++) 
@@ -153,8 +131,6 @@
 						<dd class="week">
 						@if (isset($week_sum[$staff->staff_code][$i + 1]))
 							{{ $week_sum[$staff->staff_code][$i + 1] }} 
-						@else 
-							0
 						@endif
 						</dd>
 					@endfor
